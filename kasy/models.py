@@ -46,6 +46,12 @@ class Serwisant(models.Model):
 	imie			= models.CharField(max_length=15)
 	nr_plomby		= models.IntegerField()
 
+	def __str__(self):
+		return self.nazwisko + ' ' + self.imie
+
+	class Meta:
+		verbose_name_plural = 'Serwisanci'
+
 
 class Urzad_skarbowy(models.Model):
 	nazwa 			= models.CharField(max_length=25)
