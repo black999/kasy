@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program do zarządania urządzeniami fiskalnymi</title>
+</head>
+<body>
+    <div>
+        <a href="{% url 'nowa_kasa' %}"><span>Dodaj kase</span></a>
+        <a href="{% url 'nowy_podatnik' %}"><span>Dodaj podatnika</span></a>
+    </div>
+    {% block content %}
+        tu bedzie content        
+    {% endblock content %}
+
+</body>
+</html>
