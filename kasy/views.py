@@ -1,25 +1,30 @@
 from django.shortcuts import render, redirect
 from .forms import KasaForm, PodatnikForm
-from django.utils import timezone
-from .models import Model_kasy, Urzad_skarbowy, Podatnik
+from .models import Model_kasy, Urzad_skarbowy, Podatnik, Kasa
+from django.views.generic.list import ListView
 
 
 def home(request):
     return render(request, 'kasy/base.html')
 
 
+class ListaKas(ListView):
+    template_name = 'kasy/lista_kas.html'
+    # queryset = Kasa.objects.all()
+    model = Kasa
+    context_object_name = 'kasy'
+
+
 def nowa_kasa(request):
     if request.method == 'POST':
         form = KasaForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             kasa = form.save(commit=False)
             kasa.model_kasy = Model_kasy.objects.get(
                 pk=request.POST['model_kasy'])
             kasa.urzad_skarbowy = Urzad_skarbowy.objects.get(
                 pk=request.POST['urzad_skarbowy'])
             kasa.podatnik = Podatnik.objects.get(pk=request.POST['podatnik'])
-            # kasa.data_fisk = timezone.now()
-            # kasa.ostatni_przeg = timezone.now()
             kasa.save()
             return redirect('home')
     else:

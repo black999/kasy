@@ -1,0 +1,15 @@
+{% extends "kasy/base.html" %}
+
+{% block content %}
+    <table>
+    {% for kasa in kasy %}
+        <tr>
+            <td>{{ kasa.model_kasy }}</td> 
+            <td>{{ kasa.nr_unikatowy |upper}}</td>
+            <td>{{ kasa.nr_fabryczny }}</td>
+            <td>{{ kasa.data_fisk }}</td>
+            <td>{{ kasa.podatnik }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}

@@ -5,8 +5,11 @@
 </head>
 <body>
     <div>
-        <a href="{% url 'nowa_kasa' %}"><span>Dodaj kase</span></a>
-        <a href="{% url 'nowy_podatnik' %}"><span>Dodaj podatnika</span></a>
+        <ul>
+            <li><a href="{% url 'nowa_kasa' %}"><span>Dodaj kase</span></a></li>
+            <li><a href="{% url 'nowy_podatnik' %}"><span>Dodaj podatnika</span></a></li>
+            <li><a href="{% url 'lista_kas' %}">Lista kas</a></li>
+        </ul>
     </div>
     {% block content %}
         tu bedzie content        

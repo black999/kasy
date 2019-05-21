@@ -1,9 +1,10 @@
 from django.db import models
 
 PRZEGLAD = [
-	('1', 'Roczny'),
-	('2', 'Dwutletni')
+    ('1', 'Roczny'),
+    ('2', 'Dwuletni')
 ]
+
 
 class Producent_kasy(models.Model):
     nazwa = models.CharField(max_length=25)
@@ -44,7 +45,7 @@ class Podatnik(models.Model):
     telefon = models.CharField(max_length=12)
 
     def __str__(self):
-    	return self.nazwa + " " + self.nazwa_cd
+        return self.nazwa + " " + self.nazwa_cd
 
 
 class Serwisant(models.Model):
@@ -67,7 +68,7 @@ class Urzad_skarbowy(models.Model):
     miasto = models.CharField(max_length=25)
 
     def __str__(self):
-    	return self.nazwa + " " + self.miasto
+        return self.nazwa + " " + self.miasto
 
     class Meta:
         verbose_name_plural = "Urzędy Skarbowe"
@@ -83,6 +84,9 @@ class Kasa(models.Model):
     data_fisk = models.DateField()
     ostatni_przeg = models.DateField(blank=True, null=True)
     cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD)
+
+    def __str__(self):
+        return self.model_kasy
 
 
 class Przeglad(models.Model):
