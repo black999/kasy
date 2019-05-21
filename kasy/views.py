@@ -18,8 +18,8 @@ def nowa_kasa(request):
             kasa.urzad_skarbowy = Urzad_skarbowy.objects.get(
                 pk=request.POST['urzad_skarbowy'])
             kasa.podatnik = Podatnik.objects.get(pk=request.POST['podatnik'])
-            kasa.data_fisk = timezone.now()
-            kasa.ostatni_przeg = timezone.now()
+            # kasa.data_fisk = timezone.now()
+            # kasa.ostatni_przeg = timezone.now()
             kasa.save()
             return redirect('home')
     else:

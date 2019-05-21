@@ -1,5 +1,9 @@
 from django.db import models
 
+PRZEGLAD = [
+	('1', 'Roczny'),
+	('2', 'Dwutletni')
+]
 
 class Producent_kasy(models.Model):
     nazwa = models.CharField(max_length=25)
@@ -77,8 +81,8 @@ class Kasa(models.Model):
         Urzad_skarbowy, on_delete=models.CASCADE)
     podatnik = models.ForeignKey(Podatnik, on_delete=models.CASCADE)
     data_fisk = models.DateField()
-    ostatni_przeg = models.DateField()
-    cykl_przeg = models.CharField(max_length=1)
+    ostatni_przeg = models.DateField(blank=True, null=True)
+    cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD)
 
 
 class Przeglad(models.Model):
