@@ -3,7 +3,9 @@
 {% block content %}
    <form method="POST">
         {% csrf_token %}
-        {{ form.as_p}}
+        <table>{{ form.data_fisk.field }}
+            {{ form.as_table}}
+        </table>
         <button type="submit">Zapisz</button>
    </form> 
 {% endblock content %}

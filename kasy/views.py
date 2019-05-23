@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import KasaForm, PodatnikForm
 from .models import Model_kasy, Urzad_skarbowy, Podatnik, Kasa
 from django.views.generic.list import ListView
@@ -29,7 +29,13 @@ def nowa_kasa(request):
             return redirect('home')
     else:
         form = KasaForm()
-    return render(request, 'kasy/nowa_kasa.html', {'form': form})
+    return render(request, 'kasy/kasa_edycja.html', {'form': form})
+
+
+def kasa_edycja(request, pk):
+    kasa = get_object_or_404(Kasa, pk=pk)
+    form = KasaForm(instance=kasa)
+    return render(request, 'kasy/kasa_edycja.html', {'form': form})
 
 
 def nowy_podatnik(request):

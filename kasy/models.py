@@ -86,7 +86,7 @@ class Kasa(models.Model):
     cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD)
 
     def __str__(self):
-        return self.model_kasy
+        return self.model_kasy.nazwa
 
 
 class Przeglad(models.Model):

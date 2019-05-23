@@ -4,7 +4,7 @@
     <table>
     {% for kasa in kasy %}
         <tr>
-            <td>{{ kasa.model_kasy }}</td> 
+            <td><a href="{% url 'kasa_edycja' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
             <td>{{ kasa.nr_unikatowy |upper}}</td>
             <td>{{ kasa.nr_fabryczny }}</td>
             <td>{{ kasa.data_fisk }}</td>
