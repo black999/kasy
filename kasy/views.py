@@ -23,10 +23,11 @@ def kasa_dodaj(request):
             kasa = form.save(commit=False)
             kasa.model_kasy = Model_kasy.objects.get(
                 pk=request.POST['model_kasy'])
-            kasa.urzad_skarbowy = Urzad_skarbowy.objects.get(
-                pk=request.POST['urzad_skarbowy'])
             kasa.podatnik = Podatnik.objects.get(pk=request.POST['podatnik'])
-            kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(360)
+            if kasa.cykl_przeg == '1':
+                kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(360)
+            else:
+                kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(720)
             kasa.save()
             return redirect('home')
     else:
