@@ -1,0 +1,15 @@
+{% extends "kasy/base.html" %}
+
+{% block content %}
+
+    <h3>{{ podatnik.nazwa }} {{ podatnik.cd }}</h3>
+    <p>ul. {{ podatnik.ulica }} {{ podatnik.nr_domu }}</p>
+    <p>{{ podatnik.kod_pocztowy }} {{ podatnik.miasto }}</p>
+    <p>NIP: {{ podatnik.nip }}</p>
+    <p>tel. {{ podatnik.telefon }}</p>
+
+    <a href="javascript:history.go(-1)">powrót</a>
+    
+{% endblock content %}
+
+

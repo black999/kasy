@@ -6,10 +6,10 @@
 <body>
     <div>
         <ul>
-            <li><a href="{% url 'nowa_kasa' %}"><span>Dodaj kase</span></a></li>
-            <li><a href="{% url 'nowy_podatnik' %}"><span>Dodaj podatnika</span></a></li>
-            <li><a href="{% url 'lista_kas' %}">Lista kas</a></li>
-            <li><a href="{% url 'lista_podatnik' %}">Lista podatników</a></li>
+            <li><a href="{% url 'kasa_dodaj' %}"><span>Dodaj kase</span></a></li>
+            <li><a href="{% url 'podatnik_dodaj' %}"><span>Dodaj podatnika</span></a></li>
+            <li><a href="{% url 'kasa_lista' %}">Lista kas</a></li>
+            <li><a href="{% url 'podatnik_lista' %}">Lista podatników</a></li>
         </ul>
     </div>
     {% block content %}

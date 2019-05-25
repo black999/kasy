@@ -1,6 +1,7 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
+
    <form method="POST">
         {% csrf_token %}
         <table>
@@ -8,4 +9,7 @@
         </table>
         <button type="submit">Zapisz</button>
    </form> 
+
+   <a href="javascript:history.go(-1)">powrót</a>
+
 {% endblock content %}

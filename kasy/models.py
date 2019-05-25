@@ -82,7 +82,7 @@ class Kasa(models.Model):
         Urzad_skarbowy, on_delete=models.CASCADE)
     podatnik = models.ForeignKey(Podatnik, on_delete=models.CASCADE)
     data_fisk = models.DateField()
-    ostatni_przeg = models.DateField(blank=True, null=True)
+    nastepny_przeg = models.DateField(blank=True, null=True)
     cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD)
 
     def __str__(self):

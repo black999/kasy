@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import KasaForm, PodatnikForm
 from .models import Model_kasy, Urzad_skarbowy, Podatnik, Kasa
 from django.views.generic.list import ListView
+import datetime
 
 
 def home(request):
@@ -9,13 +10,13 @@ def home(request):
 
 
 class ListaKas(ListView):
-    template_name = 'kasy/lista_kas.html'
+    template_name = 'kasy/kasa_lista.html'
     # queryset = Kasa.objects.all()
     model = Kasa
     context_object_name = 'kasy'
 
 
-def nowa_kasa(request):
+def kasa_dodaj(request):
     if request.method == 'POST':
         form = KasaForm(request.POST)
         if form.is_valid():
@@ -25,6 +26,7 @@ def nowa_kasa(request):
             kasa.urzad_skarbowy = Urzad_skarbowy.objects.get(
                 pk=request.POST['urzad_skarbowy'])
             kasa.podatnik = Podatnik.objects.get(pk=request.POST['podatnik'])
+            kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(360)
             kasa.save()
             return redirect('home')
     else:
@@ -38,7 +40,12 @@ def kasa_edycja(request, pk):
     return render(request, 'kasy/kasa_edycja.html', {'form': form})
 
 
-def nowy_podatnik(request):
+def kasa_detale(request, pk):
+    kasa = get_object_or_404(Kasa, pk=pk)
+    return render(request, 'kasy/kasa_detale.html', {'kasa': kasa})
+
+
+def podatnik_dodaj(request):
     if request.method == 'POST':
         form = PodatnikForm(request.POST)
         if form.is_valid():
@@ -46,8 +53,21 @@ def nowy_podatnik(request):
             return redirect('home')
     else:
         form = PodatnikForm()
-    return render(request, 'kasy/nowy_podatnik.html', {'form': form})
+    return render(request, 'kasy/podatnik_edycja.html', {'form': form})
 
-def lista_podatnik(request):
-    podatnicy =Podatnik.objects.all()
-    return render(request, 'kasy/lista_podatnik.html', {'podatnicy' : podatnicy})
+
+def podatnik_lista(request):
+    podatnicy = Podatnik.objects.all()
+    return render(request, 'kasy/podatnik_lista.html',
+                  {'podatnicy': podatnicy})
+
+
+def podatnik_detale(request, pk):
+    podatnik = get_object_or_404(Podatnik, pk=pk)
+    return render(request, 'kasy/podatnik_detale.html',
+                  {'podatnik': podatnik})
+
+def podatnik_edycja(request, pk):
+    podatnik = get_object_or_404(Podatnik, pk=pk)
+    form = PodatnikForm(instance=podatnik)
+    return render(request, 'kasy/podatnik_edycja.html', {'form': form})
