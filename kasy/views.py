@@ -47,3 +47,7 @@ def nowy_podatnik(request):
     else:
         form = PodatnikForm()
     return render(request, 'kasy/nowy_podatnik.html', {'form': form})
+
+def lista_podatnik(request):
+    podatnicy =Podatnik.objects.all()
+    return render(request, 'kasy/lista_podatnik.html', {'podatnicy' : podatnicy})

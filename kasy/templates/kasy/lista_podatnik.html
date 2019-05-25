@@ -1,0 +1,10 @@
+{% extends "kasy/base.html" %}
+
+{% block content %}
+    {% for podatnik in podatnicy %}
+        <h3>Podatnik nr {{forloop.counter}}</h3>
+        <p>{{ podatnik.nazwa }}</p>
+        <p>{{ podatnik.nip }}</p><br>
+    {% endfor %}
+    
+{% endblock content %}
