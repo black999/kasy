@@ -69,8 +69,9 @@ def podatnik_dodaj(request):
     if request.method == 'POST':
         form = PodatnikForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            podatnik = form.save(commit=False)
+            podatnik.save()
+            return redirect('podatnik_detale', pk=podatnik.pk)
     else:
         form = PodatnikForm()
     return render(request, 'kasy/podatnik_edycja.html', {'form': form})

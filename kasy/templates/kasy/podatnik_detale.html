@@ -8,7 +8,9 @@
     <p>NIP: {{ podatnik.nip }}</p>
     <p>tel. {{ podatnik.telefon }}</p>
     <br>
-    <h3>Lista kas :</h3>
+
+    <h3>Lista urządzeń fiskalnych :</h3>
+    {% if kasy %}
     <table>
         <tr>
             <th>Model</th>
@@ -18,13 +20,16 @@
         </tr>
         {% for kasa in kasy %}
             <tr>
-                <td>{{ kasa.model_kasy }}</td>
+                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
                 <td>{{ kasa.nr_unikatowy }}</td>
                 <td>{{ kasa.nr_fabryczny }}</td>
                 <td>{{ kasa.data_fisk }}</td>
             </tr>
         {% endfor %} 
     </table>
+    {% else %}
+    <p>Podatnik jeszcze nie posiada urządzeń fiskalnych</p>
+    {% endif %}
 
     <a href="javascript:history.go(-1)">powrót</a>
     

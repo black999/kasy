@@ -61,7 +61,7 @@ class Podatnik(models.Model):
         Urzad_skarbowy, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nazwa + " " + self.nazwa_cd
+        return self.nazwa
 
 
 class Serwisant(models.Model):
