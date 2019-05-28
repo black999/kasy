@@ -2,11 +2,29 @@
 
 {% block content %}
 
-    <h3>{{ podatnik.nazwa }} {{ podatnik.cd }}</h3>
+    <h3>{{ podatnik.nazwa }} {{ podatnik.cd }}<a href="{% url 'kasa_dodaj' pk=podatnik.pk %}">dodaj urządzenie</a></h3>
     <p>ul. {{ podatnik.ulica }} {{ podatnik.nr_domu }}</p>
     <p>{{ podatnik.kod_pocztowy }} {{ podatnik.miasto }}</p>
     <p>NIP: {{ podatnik.nip }}</p>
     <p>tel. {{ podatnik.telefon }}</p>
+    <br>
+    <h3>Lista kas :</h3>
+    <table>
+        <tr>
+            <th>Model</th>
+            <th>Nr. unikatowy</th>
+            <th>Nr. fabryczny</th>
+            <th>Data fiskalizacji</th>
+        </tr>
+        {% for kasa in kasy %}
+            <tr>
+                <td>{{ kasa.model_kasy }}</td>
+                <td>{{ kasa.nr_unikatowy }}</td>
+                <td>{{ kasa.nr_fabryczny }}</td>
+                <td>{{ kasa.data_fisk }}</td>
+            </tr>
+        {% endfor %} 
+    </table>
 
     <a href="javascript:history.go(-1)">powrót</a>
     

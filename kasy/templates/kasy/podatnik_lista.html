@@ -1,10 +1,18 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-    {% for podatnik in podatnicy %}
-        <h3>Podatnik nr {{forloop.counter}}</h3>
-        <p>{{ podatnik.nazwa }}</p>
-        <p>{{ podatnik.nip }}</p><br>
-    {% endfor %}
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>NIP</th>
+        </tr>
+        {% for podatnik in podatnicy %}
+            <tr>
+                <td><a href="{% url 'podatnik_detale' pk=podatnik.pk %}">{{ podatnik.nazwa }} {{ podatenik.nazwa_cd }}</a></td>
+                <td>{{ podatnik.nip }}</td>
+            </tr>         
+        {% endfor %}
+        </tr>
+    </table>
     
 {% endblock content %}

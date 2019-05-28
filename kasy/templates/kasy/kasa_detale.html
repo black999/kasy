@@ -8,6 +8,20 @@
     <p><strong>podatnik : </strong>{{ kasa.podatnik }}</p>
     <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
     <p><strong>nastepny przegląd : </strong>{{ kasa.nastepny_przeg }}</p>
+    <br>
+    <h3>Przeglądy :</h3>
+    {% for przeglad in przeglady %}
+        <p>{{ przeglad.data }} {{ przeglad.serwisant }}</p> 
+    {% endfor %}
+    <br>
+    <h3>Nowy przegląd</h3>
+    <form method="POST" action="{% url 'kasa_przeglad' pk=kasa.pk %}">
+        {% csrf_token %}
+        {{ form.as_p}}         
+        <button type="submit">zapisz</button>
+    </form>
+
+
 
     <a href="javascript:history.go(-1)">powrót</a>
     

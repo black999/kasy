@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import KasaForm, PodatnikForm
-from .models import Model_kasy, Urzad_skarbowy, Podatnik, Kasa
+from .forms import KasaForm, PodatnikForm, PrzegladForm
+from .models import Model_kasy, Urzad_skarbowy, Podatnik, Kasa, Przeglad
 from django.views.generic.list import ListView
 import datetime
 
@@ -16,20 +16,20 @@ class ListaKas(ListView):
     context_object_name = 'kasy'
 
 
-def kasa_dodaj(request):
+def kasa_dodaj(request, pk):
     if request.method == 'POST':
         form = KasaForm(request.POST)
         if form.is_valid():
             kasa = form.save(commit=False)
             kasa.model_kasy = Model_kasy.objects.get(
                 pk=request.POST['model_kasy'])
-            kasa.podatnik = Podatnik.objects.get(pk=request.POST['podatnik'])
+            kasa.podatnik = Podatnik.objects.get(pk=pk)
             if kasa.cykl_przeg == '1':
                 kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(360)
             else:
                 kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(720)
             kasa.save()
-            return redirect('home')
+            return redirect('podatnik_detale', pk=pk)
     else:
         form = KasaForm()
     return render(request, 'kasy/kasa_edycja.html', {'form': form})
@@ -42,8 +42,27 @@ def kasa_edycja(request, pk):
 
 
 def kasa_detale(request, pk):
+    form = PrzegladForm()
     kasa = get_object_or_404(Kasa, pk=pk)
-    return render(request, 'kasy/kasa_detale.html', {'kasa': kasa})
+    przeglady = Przeglad.objects.filter(kasa=pk)
+    return render(request, 'kasy/kasa_detale.html',
+                  {'kasa': kasa, 'form': form, 'przeglady': przeglady})
+
+
+def kasa_przeglad(request, pk):
+    if request.method == 'POST':
+        form = PrzegladForm(request.POST)
+        if form.is_valid():
+            przeglad = form.save(commit=False)
+            kasa = Kasa.objects.get(pk=pk)
+            if kasa.cykl_przeg == '1':
+                kasa.nastepny_przeg = przeglad.data + datetime.timedelta(360)
+            else:
+                kasa.nastepny_przeg = przeglad.data + datetime.timedelta(720)
+            kasa.save()
+            przeglad.kasa = kasa
+            przeglad.save()
+            return redirect('kasa_detale', pk=pk)
 
 
 def podatnik_dodaj(request):
@@ -64,9 +83,11 @@ def podatnik_lista(request):
 
 
 def podatnik_detale(request, pk):
+    kasy = Kasa.objects.filter(podatnik=pk)
     podatnik = get_object_or_404(Podatnik, pk=pk)
     return render(request, 'kasy/podatnik_detale.html',
-                  {'podatnik': podatnik})
+                  {'podatnik': podatnik, 'kasy': kasy})
+
 
 def podatnik_edycja(request, pk):
     podatnik = get_object_or_404(Podatnik, pk=pk)
