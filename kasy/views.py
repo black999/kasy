@@ -24,10 +24,7 @@ def kasa_dodaj(request, pk):
             kasa.model_kasy = Model_kasy.objects.get(
                 pk=request.POST['model_kasy'])
             kasa.podatnik = Podatnik.objects.get(pk=pk)
-            if kasa.cykl_przeg == '1':
-                kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(360)
-            else:
-                kasa.nastepny_przeg = kasa.data_fisk + datetime.timedelta(720)
+            kasa.nastepny_przeglad(kasa.data_fisk)
             kasa.save()
             return redirect('podatnik_detale', pk=pk)
     else:
@@ -55,10 +52,7 @@ def kasa_przeglad(request, pk):
         if form.is_valid():
             przeglad = form.save(commit=False)
             kasa = Kasa.objects.get(pk=pk)
-            if kasa.cykl_przeg == '1':
-                kasa.nastepny_przeg = przeglad.data + datetime.timedelta(360)
-            else:
-                kasa.nastepny_przeg = przeglad.data + datetime.timedelta(720)
+            kasa.nastepny_przeglad(przeglad.data)
             kasa.save()
             przeglad.kasa = kasa
             przeglad.save()

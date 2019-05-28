@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 PRZEGLAD = [
     ('1', 'Roczny'),
@@ -61,7 +62,10 @@ class Podatnik(models.Model):
         Urzad_skarbowy, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nazwa
+        if self.nazwa_cd:
+            return self.nazwa + " " + self.nazwa_cd
+        else:
+            return self.nazwa 
 
 
 class Serwisant(models.Model):
@@ -87,6 +91,12 @@ class Kasa(models.Model):
 
     def __str__(self):
         return self.model_kasy.nazwa
+
+    def nastepny_przeglad(self, data):
+        if self.cykl_przeg == '1':
+            self.nastepny_przeg = data + datetime.timedelta(360)
+        else:
+            self.nastepny_przeg = data + datetime.timedelta(720)
 
 
 class Przeglad(models.Model):
