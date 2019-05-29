@@ -103,3 +103,4 @@ class Przeglad(models.Model):
     kasa = models.ForeignKey(Kasa, on_delete=models.CASCADE)
     serwisant = models.ForeignKey(Serwisant, on_delete=models.CASCADE)
     data = models.DateField()
+    info = models.CharField(max_length=60, blank=True, null=True)
