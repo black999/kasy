@@ -85,9 +85,10 @@ class Kasa(models.Model):
     nr_unikatowy = models.CharField(max_length=12)
     nr_fabryczny = models.CharField(max_length=12)
     podatnik = models.ForeignKey(Podatnik, on_delete=models.CASCADE)
+    miejsce_inst = models.CharField(max_length=60, default='siedziba firmy')
     data_fisk = models.DateField()
     nastepny_przeg = models.DateField(blank=True, null=True)
-    cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD)
+    cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD, default='1')
 
     def __str__(self):
         return self.model_kasy.nazwa
@@ -102,5 +103,6 @@ class Kasa(models.Model):
 class Przeglad(models.Model):
     kasa = models.ForeignKey(Kasa, on_delete=models.CASCADE)
     serwisant = models.ForeignKey(Serwisant, on_delete=models.CASCADE)
-    data = models.DateField()
+    data = models.DateField(default=0)
+    ilosc_raportow = models.IntegerField()
     info = models.CharField(max_length=60, blank=True, null=True)

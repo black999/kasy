@@ -2,37 +2,44 @@
 
 {% block content %}
 
-    <h3>{{ podatnik.nazwa }} {{ podatnik.nazwa_cd }} <a href="{% url 'kasa_dodaj' pk=podatnik.pk %}">dodaj urządzenie</a></h3>
-    <p>ul. {{ podatnik.ulica }} {{ podatnik.nr_domu }}</p>
-    <p>{{ podatnik.kod_pocztowy }} {{ podatnik.miasto }}</p>
-    <p>NIP: {{ podatnik.nip }}</p>
-    <p>tel. {{ podatnik.telefon }}</p>
-    <br>
+<div class="row">
+    <div class="col-8">
+        <h3>{{ podatnik.nazwa }} {% if podatnik.nazwa_cd %} {{ podatnik.nazwa_cd }} {% endif %}</h3>
+        <small><a href="{% url 'kasa_dodaj' pk=podatnik.pk %}">dodaj urządzenie</a></small>
+        <p><strong>ulica : </strong>{{ podatnik.ulica }} {{ podatnik.nr_domu }}</p>
+        <p><strong>miasto : </strong>{{ podatnik.kod_pocztowy }} {{ podatnik.miasto }}</p>
+        <p><strong>NIP : </strong> {{ podatnik.nip }}</p>
+        <p><strong>tel. : </strong>{{ podatnik.telefon }}</p>
+        <br>
 
-    <h3>Lista urządzeń fiskalnych :</h3>
-    {% if kasy %}
-    <table>
-        <tr>
-            <th>Model</th>
-            <th>Nr. unikatowy</th>
-            <th>Nr. fabryczny</th>
-            <th>Data fiskalizacji</th>
-        </tr>
-        {% for kasa in kasy %}
+        <h3>Lista urządzeń fiskalnych :</h3>
+        {% if kasy %}
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Model</th>
+                    <th>Nr. unikatowy</th>
+                    <th>Nr. fabryczny</th>
+                    <th>Data fiskalizacji</th>
+                </tr>
+            </thead>
+            {% for kasa in kasy %}
             <tr>
                 <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
                 <td>{{ kasa.nr_unikatowy }}</td>
                 <td>{{ kasa.nr_fabryczny }}</td>
                 <td>{{ kasa.data_fisk }}</td>
             </tr>
-        {% endfor %} 
-    </table>
-    {% else %}
-    <p>Podatnik jeszcze nie posiada urządzeń fiskalnych</p>
-    {% endif %}
+            {% endfor %} 
+        </table>
+        {% else %}
+        <p>Podatnik jeszcze nie posiada urządzeń fiskalnych</p>
+        {% endif %}
+        <br>
+        <a href="javascript:history.go(-1)">powrót</a>
+    </div>
+</div>
 
-    <a href="javascript:history.go(-1)">powrót</a>
-    
 {% endblock content %}
 
 

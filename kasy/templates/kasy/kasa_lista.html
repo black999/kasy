@@ -1,7 +1,15 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-    <table>
+    <table class="table table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>model kasy</th>
+                <th>nr. unikatowy</th>
+                <th>nr. fabryczny</th>
+                <th>właścicel</th>
+            </tr>
+        </thead>
     {% for kasa in kasy %}
         <tr>
             <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
