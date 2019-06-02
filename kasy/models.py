@@ -84,6 +84,7 @@ class Kasa(models.Model):
     model_kasy = models.ForeignKey(Model_kasy, on_delete=models.CASCADE)
     nr_unikatowy = models.CharField(max_length=12)
     nr_fabryczny = models.CharField(max_length=12)
+    nr_nadany = models.CharField(max_length=15,blank=True, null=True)
     podatnik = models.ForeignKey(Podatnik, on_delete=models.CASCADE)
     miejsce_inst = models.CharField(max_length=60, default='siedziba firmy')
     data_fisk = models.DateField()

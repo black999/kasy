@@ -5,6 +5,7 @@
     <h3>Kasa {{ kasa.model_kasy }} <a href="{% url 'kasa_edycja' pk=kasa.pk %}">edycja</a></h3>
     <p><strong>nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
     <p><strong>nr. fabryczny : </strong>{{ kasa.nr_fabryczny }}</p>
+    <p><strong>nr. nadany : </strong>{% if kasa.nr_nadany %} {{ kasa.nr_nadany }} {% endif %}</p>
     <p><strong>podatnik : </strong>{{ kasa.podatnik }}</p>
     <p><strong>miejsce inst. : </strong>{{ kasa.miejsce_inst }}</p>
     <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
