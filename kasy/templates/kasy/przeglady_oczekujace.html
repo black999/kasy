@@ -1,22 +1,23 @@
 {% extends "kasy/base.html" %}
 {% block content %}
-    <h3>Najbliższe przeglądy</h3>
-    <table class="table">
-       <thead>
-           <tr>
-               <th>model</th>
-               <th>podatnik</th>
-               <th>data nast. przegladu</th>
-           </tr>
-       </thead> 
-{% for kasa in kasy %}
-    <tr>
-                  <th>{{ kasa.model_kasy }}</th>
-               <th>{{ kasa.podatnik }}</th>
-               <th>{{ kasa.nastepny_przeg }}</th>
-    </tr>
-    
-{% endfor %}
-    </table>
-    
+<h3>Najbliższe przeglądy</h3>
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>model</th>
+            <th>podatnik</th>
+            <th>data nast. przegladu</th>
+        </tr>
+    </thead> 
+    <tbody>
+        {% for kasa in kasy %}
+        <tr>
+            <td>{{ kasa.model_kasy }}</td>
+            <td>{{ kasa.podatnik }}</td>
+            <td>{{ kasa.nastepny_przeg }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock content %}
