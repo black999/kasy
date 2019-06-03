@@ -8,7 +8,7 @@ PRZEGLAD = [
 
 
 class Producent_kasy(models.Model):
-    nazwa = models.CharField(max_length=30)
+    nazwa = models.CharField(max_length=40)
     ulica = models.CharField(max_length=25)
     nr_domu = models.CharField(max_length=6)
     kod_pocztowy = models.CharField(max_length=6)
