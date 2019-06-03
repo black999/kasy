@@ -8,7 +8,7 @@ PRZEGLAD = [
 
 
 class Producent_kasy(models.Model):
-    nazwa = models.CharField(max_length=25)
+    nazwa = models.CharField(max_length=30)
     ulica = models.CharField(max_length=25)
     nr_domu = models.CharField(max_length=6)
     kod_pocztowy = models.CharField(max_length=6)
@@ -82,8 +82,8 @@ class Serwisant(models.Model):
 
 class Kasa(models.Model):
     model_kasy = models.ForeignKey(Model_kasy, on_delete=models.CASCADE)
-    nr_unikatowy = models.CharField(max_length=12)
-    nr_fabryczny = models.CharField(max_length=12)
+    nr_unikatowy = models.CharField(max_length=13, unique=True)
+    nr_fabryczny = models.CharField(max_length=11)
     nr_nadany = models.CharField(max_length=15,blank=True, null=True)
     podatnik = models.ForeignKey(Podatnik, on_delete=models.CASCADE)
     miejsce_inst = models.CharField(max_length=60, default='siedziba firmy')
