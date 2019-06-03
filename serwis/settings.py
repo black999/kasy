@@ -85,7 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'host' : '192.168.0.13',
+            'host' : '192.168.0.11',
             'read_default_file': '/etc/mysql/my.cnf',
         }
     }
