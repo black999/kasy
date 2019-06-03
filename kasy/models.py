@@ -58,7 +58,7 @@ class Podatnik(models.Model):
     gmina = models.CharField(max_length=15)
     poczta = models.CharField(max_length=25)
     telefon = models.CharField(max_length=12)
-    email = models.Charfield(max_length=50, blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
     urzad_skarbowy = models.ForeignKey(
         Urzad_skarbowy, on_delete=models.CASCADE)
 
