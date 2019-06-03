@@ -1,0 +1,22 @@
+{% extends "kasy/base.html" %}
+{% block content %}
+    <h3>Najbliższe przeglądy</h3>
+    <table class="table">
+       <thead>
+           <tr>
+               <th>model</th>
+               <th>podatnik</th>
+               <th>data nast. przegladu</th>
+           </tr>
+       </thead> 
+{% for kasa in kasy %}
+    <tr>
+                  <th>{{ kasa.model_kasy }}</th>
+               <th>{{ kasa.podatnik }}</th>
+               <th>{{ kasa.nastepny_przeg }}</th>
+    </tr>
+    
+{% endfor %}
+    </table>
+    
+{% endblock content %}

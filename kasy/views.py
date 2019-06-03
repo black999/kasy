@@ -6,7 +6,8 @@ import datetime
 
 
 def home(request):
-    return render(request, 'kasy/base.html')
+    kasy = Kasa.objects.order_by('nastepny_przeg')[:10]
+    return render(request, 'kasy/przeglady_oczekujace.html', {'kasy': kasy})
 
 
 class ListaKas(ListView):
