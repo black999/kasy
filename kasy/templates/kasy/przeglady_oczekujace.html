@@ -13,11 +13,12 @@
         {% for kasa in kasy %}
         <tr>
             <td><a href="{% url 'kasa_detale' pk=kasa.pk %}"> {{ kasa.model_kasy }}</a></td>
-            <td>{{ kasa.podatnik }}</td>
+            <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
             <td>{{ kasa.nastepny_przeg }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% include 'kasy/snipets/back.html' %}
 
 {% endblock content %}

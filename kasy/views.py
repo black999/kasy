@@ -16,9 +16,15 @@ class ListaKas(ListView):
     model = Kasa
     context_object_name = 'kasy'
 
-def kasa_szukaj(request, nr_unikatowy):
-    kasy = Kasa.objects.filter(nr_unikatowy__contains=nr_unikatowy) 
-    return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
+
+def kasa_szukaj(request):
+    if request.method == 'POST':
+        kasy = Kasa.objects.filter(
+            nr_unikatowy__contains=request.POST['nr_unikatowy'])
+        return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
+    else:
+        return redirect('home')
+
 
 def kasa_dodaj(request, pk):
     if request.method == 'POST':

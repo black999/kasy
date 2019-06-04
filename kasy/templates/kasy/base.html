@@ -11,8 +11,9 @@
             <a class="nav-link" href="{% url 'podatnik_dodaj' %}">Dodaj podatnika</a>
             <a class="nav-link"  href="{% url 'podatnik_lista' %}">Lista podatników</a>
             <a class="nav-link"  href="{% url 'kasa_lista' %}">Lista kas</a>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="nr. unikatowy" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'kasa_szukaj' %}">
+                {% csrf_token %}
+                <input name='nr_unikatowy' class="form-control mr-sm-2" type="search" placeholder="nr. unikatowy" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
             </form>
         </nav>
