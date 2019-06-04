@@ -12,7 +12,7 @@
     <tbody>
         {% for kasa in kasy %}
         <tr>
-            <td>{{ kasa.model_kasy }}</td>
+            <td><a href="{% url 'kasa_detale' pk=kasa.pk %}"> {{ kasa.model_kasy }}</a></td>
             <td>{{ kasa.podatnik }}</td>
             <td>{{ kasa.nastepny_przeg }}</td>
         </tr>

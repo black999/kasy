@@ -38,6 +38,7 @@ class Urzad_skarbowy(models.Model):
     nr_domu = models.CharField(max_length=6)
     kod_pocztowy = models.CharField(max_length=6)
     miasto = models.CharField(max_length=25)
+    nr_urzedu = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return self.nazwa + " " + self.miasto
@@ -106,5 +107,5 @@ class Przeglad(models.Model):
     kasa = models.ForeignKey(Kasa, on_delete=models.CASCADE)
     serwisant = models.ForeignKey(Serwisant, on_delete=models.CASCADE)
     data = models.DateField(default=0)
-    ilosc_raportow = models.IntegerField()
+    ilosc_raportow = models.PositiveSmallIntegerField()
     info = models.CharField(max_length=60, blank=True, null=True)

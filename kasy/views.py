@@ -16,6 +16,9 @@ class ListaKas(ListView):
     model = Kasa
     context_object_name = 'kasy'
 
+def kasa_szukaj(request, nr_unikatowy):
+    kasy = Kasa.objects.filter(nr_unikatowy__contains=nr_unikatowy) 
+    return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
 
 def kasa_dodaj(request, pk):
     if request.method == 'POST':
