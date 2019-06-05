@@ -4,15 +4,17 @@
 
 <div class="row">
     <div class="col-8">
-        <h3>{{ podatnik.nazwa }} {% if podatnik.nazwa_cd %} {{ podatnik.nazwa_cd }} {% endif %}</h3>
-        <small><a href="{% url 'kasa_dodaj' pk=podatnik.pk %}">dodaj urządzenie</a></small>
+        <h3 style="display: inline">{{ podatnik.nazwa }} {% if podatnik.nazwa_cd %} {{ podatnik.nazwa_cd }} {% endif %}</h3>
+        <span><a href="{% url 'podatnik_edycja' pk=podatnik.pk %}">edycja</a></span>
+        <p></p>
         <p><strong>ulica : </strong>{{ podatnik.ulica }} {{ podatnik.nr_domu }}</p>
         <p><strong>miasto : </strong>{{ podatnik.kod_pocztowy }} {{ podatnik.miasto }}</p>
         <p><strong>NIP : </strong> {{ podatnik.nip }}</p>
         <p><strong>tel. : </strong>{{ podatnik.telefon }}</p>
         <br>
 
-        <h3>Lista urządzeń fiskalnych :</h3>
+        <h3 style="display: inline">Lista urządzeń fiskalnych :</h3>
+        <a href="{% url 'kasa_dodaj' pk=podatnik.pk %}">dodaj urządzenie</a>
         {% if kasy %}
         <table class="table table-sm">
             <thead class="thead-dark">

@@ -44,7 +44,16 @@ def kasa_dodaj(request, pk):
 
 def kasa_edycja(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
-    form = KasaForm(instance=kasa)
+    if request.method == 'POST':
+        form = KasaForm(request.POST, instance=kasa)
+        if form.is_valid():
+            kasa = form.save(commit=False)
+            kasa.nastepny_przeglad(kasa.data_fisk)
+            kasa.save()
+            return redirect('kasa_detale', pk=pk)
+    else:
+        kasa.data_fisk = kasa.data_fisk.strftime('%Y-%m-%d')
+        form = KasaForm(instance=kasa)
     return render(request, 'kasy/kasa_edycja.html', {'form': form})
 
 
@@ -96,5 +105,11 @@ def podatnik_detale(request, pk):
 
 def podatnik_edycja(request, pk):
     podatnik = get_object_or_404(Podatnik, pk=pk)
-    form = PodatnikForm(instance=podatnik)
+    if request.method == 'POST':
+        form = PodatnikForm(request.POST, instance=podatnik)
+        if form.is_valid():
+            form.save()
+            return redirect('podatnik_detale', pk=pk)
+    else:
+        form = PodatnikForm(instance=podatnik)
     return render(request, 'kasy/podatnik_edycja.html', {'form': form})
