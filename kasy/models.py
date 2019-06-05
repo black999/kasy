@@ -54,7 +54,7 @@ class Podatnik(models.Model):
     miasto = models.CharField(max_length=25)
     ulica = models.CharField(max_length=25)
     nr_domu = models.CharField(max_length=6)
-    nip = models.CharField(max_length=10, unique=True)
+    nip = models.CharField(max_length=13, unique=True)
     wojewodzctwo = models.CharField(max_length=15)
     gmina = models.CharField(max_length=15)
     poczta = models.CharField(max_length=25)
