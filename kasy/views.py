@@ -48,7 +48,12 @@ def kasa_edycja(request, pk):
         form = KasaForm(request.POST, instance=kasa)
         if form.is_valid():
             kasa = form.save(commit=False)
-            kasa.nastepny_przeglad(kasa.data_fisk)
+            ostatni_przeglad = Przeglad.objects.filter(
+                kasa=pk).order_by('-data')
+            if ostatni_przeglad.count() > 0:
+                kasa.nastepny_przeglad(ostatni_przeglad[0].data)
+            else:
+                kasa.nastepny_przeglad(kasa.data_fisk)
             kasa.save()
             return redirect('kasa_detale', pk=pk)
     else:
@@ -60,7 +65,7 @@ def kasa_edycja(request, pk):
 def kasa_detale(request, pk):
     form = PrzegladForm()
     kasa = get_object_or_404(Kasa, pk=pk)
-    przeglady = Przeglad.objects.filter(kasa=pk)
+    przeglady = Przeglad.objects.filter(kasa=pk).order_by('-data')
     return render(request, 'kasy/kasa_detale.html',
                   {'kasa': kasa, 'form': form, 'przeglady': przeglady})
 

@@ -22,7 +22,7 @@
                     <th>Model</th>
                     <th>Nr. unikatowy</th>
                     <th>Nr. fabryczny</th>
-                    <th>Data fiskalizacji</th>
+                    <th>Nast. przegląd</th>
                 </tr>
             </thead>
             {% for kasa in kasy %}
@@ -30,7 +30,7 @@
                 <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
                 <td>{{ kasa.nr_unikatowy }}</td>
                 <td>{{ kasa.nr_fabryczny }}</td>
-                <td>{{ kasa.data_fisk }}</td>
+                <td>{{ kasa.nastepny_przeg }}</td>
             </tr>
             {% endfor %} 
         </table>
