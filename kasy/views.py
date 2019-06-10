@@ -12,7 +12,7 @@ def home(request):
 
 class ListaKas(ListView):
     template_name = 'kasy/kasa_lista.html'
-    # queryset = Kasa.objects.all()
+    queryset = Kasa.objects.all().select_related('podatnik')
     model = Kasa
     context_object_name = 'kasy'
 
