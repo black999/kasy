@@ -120,5 +120,5 @@ def podatnik_edycja(request, pk):
     return render(request, 'kasy/podatnik_edycja.html', {'form': form})
 
 def przeglad_ostatnie(request):
-    przeglady = Przeglad.objects.all()[:10]
+    przeglady = Przeglad.objects.all().order_by('-data')[:10]
     return render(request, 'kasy/przeglad_ostatnie.html', {'przeglady': przeglady})
