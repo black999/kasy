@@ -15,15 +15,16 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-            <a class="nav-link" href="{% url 'home' %}">home</a>
+            <a class="nav-link" href="{% url 'home' %}">HOME</a>
             <a class="nav-link" href="{% url 'podatnik_dodaj' %}">Dodaj podatnika</a>
-            <a class="nav-link"  href="{% url 'podatnik_lista' %}">Lista podatników</a>
-            <a class="nav-link"  href="{% url 'kasa_lista' %}">Lista kas</a>
-            <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'kasa_szukaj' %}">
+            <a class="nav-link"  href="{% url 'podatnik_lista' %}">Podatnicy</a>
+            <a class="nav-link"  href="{% url 'kasa_lista' %}">Urządzenia</a>
+            <a class="nav-link"  href="{% url 'przeglad_ostatnie' %}">Przeglądy</a>
+            <!-- <form class="form-inline my-2 my-lg-0" method="POST" action="{% url 'kasa_szukaj' %}">
                 {% csrf_token %}
                 <input name='nr_unikatowy' class="form-control mr-sm-2" type="search" placeholder="nr. unikatowy" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
-            </form>
+            </form> -->
         </nav>
     </div>
     <br><br>

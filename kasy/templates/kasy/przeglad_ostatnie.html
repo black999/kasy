@@ -1,0 +1,29 @@
+{% extends 'kasy/base.html' %}
+
+{% block content %}
+<div class="row">
+	<div class="col-8">
+		<h3>Ostatnie przeglądy </h3>
+		<table class="table table-sm">
+			<thead class="thead-dark">
+				<tr>
+					<th>Data</th>
+					<th>Kasa</th>
+					<th>Podatnik</th>
+					<th>nip</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for przeglad in przeglady %}
+				<tr>
+					<td>{{ przeglad.data }}</td>
+					<td>{{ przeglad.kasa }}</td>
+					<td>{{ przeglad.kasa.podatnik.nazwa }}</td>
+					<td>{{ przeglad.kasa.podatnik.nip }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

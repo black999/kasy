@@ -118,3 +118,7 @@ def podatnik_edycja(request, pk):
     else:
         form = PodatnikForm(instance=podatnik)
     return render(request, 'kasy/podatnik_edycja.html', {'form': form})
+
+def przeglad_ostatnie(request):
+    przeglady = Przeglad.objects.all()[:10]
+    return render(request, 'kasy/przeglad_ostatnie.html', {'przeglady': przeglady})
