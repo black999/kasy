@@ -8,7 +8,8 @@
         <p><strong>nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
         <p><strong>nr. fabryczny : </strong>{{ kasa.nr_fabryczny }}</p>
         <p><strong>nr. nadany : </strong>{% if kasa.nr_nadany %} {{ kasa.nr_nadany }} {% endif %}</p>
-        <p><strong>podatnik : </strong>{{ kasa.podatnik }}</p>
+        <p><strong>podatnik : </strong>
+            <a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></p>
         <p><strong>miejsce inst. : </strong>{{ kasa.miejsce_inst }}</p>
         <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
         <p><strong>cykl przegądów : </strong>{% if kasa.cykl_przeg == '1' %} Roczny {% else %} Dwuletni {% endif %}</p>
