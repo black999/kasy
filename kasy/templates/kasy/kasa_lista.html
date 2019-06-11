@@ -16,15 +16,11 @@
             <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
             <td>{{ kasa.nr_unikatowy |upper}}</td>
             <td>{{ kasa.nr_fabryczny }}</td>
-            <td>{{ kasa.nastepny_przeg }}</td>
+            <td>{{ kasa.nastepny_przeg |date:"d-m-Y" }}</td>
             <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
         </tr>
     {% endfor %}
     </table>
     {% include 'kasy/snipets/back.html' %}
-    <script type="text/javascript">
-    $(document).ready(function(){
-        $('#tab1').DataTable();
-    })
-    </script>
+
 {% endblock content %}
