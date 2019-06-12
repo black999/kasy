@@ -10,6 +10,7 @@ urlpatterns = [
     path('kasa/<int:pk>/detale', views.kasa_detale, name='kasa_detale'),
     path('kasa/<int:pk>/przeglad', views.kasa_przeglad, name='kasa_przeglad'),
     path('kasa/przeglad/ostatnie', views.przeglad_ostatnie, name='przeglad_ostatnie'),
+    path('kasa/przeglad/<int:pk>/faktura', views.przeglad_faktura, name='przeglad_faktura'),
     path('kasa/szukaj', views.kasa_szukaj, name='kasa_szukaj'),
     path('podatnik/dodaj', views.podatnik_dodaj, name='podatnik_dodaj'),
     path('podatnik/lista', views.podatnik_lista, name='podatnik_lista'),

@@ -122,3 +122,9 @@ def podatnik_edycja(request, pk):
 def przeglad_ostatnie(request):
     przeglady = Przeglad.objects.all().order_by('-data')[:10]
     return render(request, 'kasy/przeglad_ostatnie.html', {'przeglady': przeglady})
+
+def przeglad_faktura(request, pk):
+    przeglad = get_object_or_404(Przeglad, pk=pk)
+    przeglad.wystaw_fakture()
+    przeglad.save()
+    return redirect('przeglad_ostatnie')

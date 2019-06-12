@@ -109,3 +109,7 @@ class Przeglad(models.Model):
     data = models.DateField(default=0)
     ilosc_raportow = models.PositiveSmallIntegerField()
     info = models.CharField(max_length=60, blank=True, null=True)
+    faktura = models.BooleanField(default=False)
+
+    def wystaw_fakture(self):
+        self.faktura = True

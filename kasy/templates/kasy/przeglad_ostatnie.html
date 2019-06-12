@@ -11,6 +11,7 @@
 					<th>Kasa</th>
 					<th>Podatnik</th>
 					<th>nip</th>
+					<th>faktura</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,6 +21,14 @@
 					<td>{{ przeglad.kasa }}</td>
 					<td>{{ przeglad.kasa.podatnik.nazwa }}</td>
 					<td>{{ przeglad.kasa.podatnik.nip }}</td>
+					<td align="center">
+					{% if przeglad.faktura %}
+						<span   class="fas fa-check align-items-center"></span>
+					{% else %}
+						<a href="{% url 'przeglad_faktura' pk=przeglad.pk %}" 
+								class="btn btn-sm btn-outline-secondary" role="button">OK</a>
+					{% endif %}
+					</td>
 				</tr>
 				{% endfor %}
 			</tbody>
