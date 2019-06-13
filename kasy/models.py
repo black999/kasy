@@ -92,6 +92,7 @@ class Kasa(models.Model):
     data_fisk = models.DateField()
     nastepny_przeg = models.DateField(blank=True, null=True)
     cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD, default='1')
+    aktywna = models.BooleanField(default=True)
 
     def __str__(self):
         return self.model_kasy.nazwa

@@ -1,18 +1,23 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-    <table id="tab1" class="table table-sm">
-        <thead class="thead-dark">
-            <tr>
-                <th>model kasy</th>
-                <th>nr. unikatowy</th>
-                <th>nr. fabryczny</th>
-                <th>nast. przegląd</th>
-                <th>właścicel</th>
-            </tr>
-        </thead>
-    {% for kasa in kasy %}
+<table id="tab1" class="table table-sm">
+    <thead class="thead-dark">
         <tr>
+            <th>model kasy</th>
+            <th>nr. unikatowy</th>
+            <th>nr. fabryczny</th>
+            <th>nast. przegląd</th>
+            <th>właścicel</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for kasa in kasy %}
+    {% if kasa.aktywna %}
+        <tr>
+    {% else %}
+        <tr style="color:grey"> 
+    {% endif %}
             <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
             <td>{{ kasa.nr_unikatowy |upper}}</td>
             <td>{{ kasa.nr_fabryczny }}</td>
@@ -20,7 +25,8 @@
             <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
         </tr>
     {% endfor %}
-    </table>
-    {% include 'kasy/snipets/back.html' %}
+    </tbody>
+</table>
+{% include 'kasy/snipets/back.html' %}
 
 {% endblock content %}

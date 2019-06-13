@@ -6,7 +6,7 @@ import datetime
 
 
 def home(request):
-    kasy = Kasa.objects.order_by('nastepny_przeg')[:20]
+    kasy = Kasa.objects.filter(aktywna=True).order_by('nastepny_przeg')[:20]
     return render(request, 'kasy/przeglady_oczekujace.html', {'kasy': kasy})
 
 
