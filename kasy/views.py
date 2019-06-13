@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import KasaForm, PodatnikForm, PrzegladForm
-from .models import Model_kasy, Urzad_skarbowy, Podatnik, Kasa, Przeglad
-from django.views.generic.list import ListView
+from .forms import KasaForm, PodatnikForm, PrzegladForm, PrzegladRokMiesiac
+from .models import Model_kasy, Podatnik, Kasa, Przeglad
+# from django.views.generic.list import ListView
 import datetime
 
 
@@ -130,8 +130,27 @@ def podatnik_edycja(request, pk):
 
 
 def przeglad_ostatnie(request):
-    przeglady = Przeglad.objects.all().order_by('-data')[:10]
-    return render(request, 'kasy/przeglad_ostatnie.html', {'przeglady': przeglady})
+    data = datetime.date.today()
+    form = PrzegladRokMiesiac()
+    przeglady = Przeglad.objects.filter(
+        data__year=data.year, data__month=data.month)
+    return render(request,
+                  'kasy/przeglad_ostatnie.html',
+                  {'przeglady': przeglady, 'form': form, 'data': data})
+
+
+def przeglad_rok_miesiac(request, rok, mie):
+    if request.method == 'POST':
+        print(request.POST)
+        return redirect('przeglad_rok_miesiac',
+                        rok=request.POST['rok'], mie=request.POST['mie'])
+    else:
+        data = datetime.date.today()
+        form = PrzegladRokMiesiac({'rok': rok, 'mie': mie})
+        przeglady = Przeglad.objects.filter(data__year=rok, data__month=mie)
+        return render(request,
+                      'kasy/przeglad_ostatnie.html',
+                      {'przeglady': przeglady, 'form': form, 'data': data})
 
 
 def przeglad_faktura(request, pk):

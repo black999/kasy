@@ -11,6 +11,7 @@ urlpatterns = [
     path('kasa/<int:pk>/przeglad', views.kasa_przeglad, name='kasa_przeglad'),
     path('kasa/przeglad/ostatnie', views.przeglad_ostatnie,
          name='przeglad_ostatnie'),
+    path('kasa/przeglad/<int:rok>/<int:mie>', views.przeglad_rok_miesiac, name='przeglad_rok_miesiac'),
     path('kasa/przeglad/<int:pk>/faktura',
          views.przeglad_faktura, name='przeglad_faktura'),
     path('kasa/szukaj', views.kasa_szukaj, name='kasa_szukaj'),
