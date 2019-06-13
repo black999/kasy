@@ -10,11 +10,20 @@ def home(request):
     return render(request, 'kasy/przeglady_oczekujace.html', {'kasy': kasy})
 
 
-class ListaKas(ListView):
-    template_name = 'kasy/kasa_lista.html'
-    queryset = Kasa.objects.all().select_related('podatnik')
-    model = Kasa
-    context_object_name = 'kasy'
+# class ListaKas(ListView, pk):
+#     template_name = 'kasy/kasa_lista.html'
+#     queryset = Kasa.objects.all().select_related('podatnik')
+#     model = Kasa
+#     context_object_name = 'kasy'
+
+def kasa_lista(request, typ):
+    if typ == 'aktywne':
+        kasy = Kasa.objects.filter(aktywna=True).select_related('podatnik')
+    elif typ == 'nieaktywne':
+        kasy = Kasa.objects.filter(aktywna=False).select_related('podatnik')
+    elif typ == 'all':
+        kasy = Kasa.objects.all().select_related('podatnik')
+    return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
 
 
 def kasa_szukaj(request):
@@ -119,9 +128,11 @@ def podatnik_edycja(request, pk):
         form = PodatnikForm(instance=podatnik)
     return render(request, 'kasy/podatnik_edycja.html', {'form': form})
 
+
 def przeglad_ostatnie(request):
     przeglady = Przeglad.objects.all().order_by('-data')[:10]
     return render(request, 'kasy/przeglad_ostatnie.html', {'przeglady': przeglady})
+
 
 def przeglad_faktura(request, pk):
     przeglad = get_object_or_404(Przeglad, pk=pk)
