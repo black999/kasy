@@ -3,14 +3,18 @@
 <head>
     <title>Raport do US</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+        BODY {size:landscape;}
+    </style>
 </head>
 <body>
 
 <div class="container">
 {% for urzad in urzedy %}
     <p>Nazwa firmy prowadzącej serwis urządzeń fiskalnych:</p>
-    <p>Engineer's Computer Studio "ECS" Ireneusz Stalicki, ul. Batorego 33, 48-300 Prudnik</p>
-    <p>NIP: 755-140-02-13</p>
+    <h5>Engineer's Computer Studio "ECS" Ireneusz Stalicki, ul. Batorego 33, 48-300 Prudnik</h5>
+    <h5>NIP: 755-140-02-13</h5>
     <br>
     <p>RAPORT PRZEGLĄDÓW URZĄDZEŃ FISKALNYCH ZA MIESIĄC <b> {{ mie }} - {{ rok }}</b></p>
     <p>Urzad :  <b>{{ urzad }}</b></p>
@@ -20,7 +24,7 @@
     <table class="table table-sm">
         <thead class="thead-dark">
             <tr>
-                <th>l.p.</th>
+                {# <th>l.p.</th> #}
                 <th>Podatnik</th>
                 <th>NIP</th>
                 <th>nr. unikatowy</th>
@@ -33,7 +37,7 @@
         {% for przeglad in przeglady %}
             {% if przeglad.kasa.podatnik.urzad_skarbowy == urzad %}
                    <tr>
-                        <td>{{ forloop.counter }}</td>                   
+                        {# <td>{{ forloop.counter }}</td>                    #}
                         <td>{{ przeglad.kasa.podatnik }}</td>
                         <td>{{ przeglad.kasa.podatnik.nip }}</td>
                         <td>{{ przeglad.kasa.nr_unikatowy }}</td>
@@ -45,7 +49,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <br><br><br>
+    <br style="page-break-before: always">
 {% endfor %}
 {% include 'kasy/snipets/back.html' %}
 </div>
