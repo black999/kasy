@@ -8,7 +8,7 @@
 			{% csrf_token %}
 			{{ form }}
 			<button type='submit' class="btn btn-outline-secondary btn-sm">pokaż</button>
-		</form></span>
+		</form></span> 
 		<table class="table table-sm">
 			<thead class="thead-dark">
 				<tr>
@@ -30,7 +30,7 @@
 					{% if przeglad.faktura %}
 						<span   class="fas fa-check align-items-center"></span>
 					{% else %}
-						<a href="{% url 'przeglad_faktura' pk=przeglad.pk %}" 
+						<a href="{% url 'przeglad_faktura' pk=przeglad.pk rok=form.data.rok mie=form.data.mie %}" 
 								class="btn btn-sm btn-outline-secondary" role="button">OK</a>
 					{% endif %}
 					</td>
@@ -38,6 +38,9 @@
 				{% endfor %}
 			</tbody>
 		</table>
+	</div>
+	<div class="col-4">
+		<a  href="{% url 'przeglad_raportUS' rok=form.data.rok mie=form.data.mie %}" class="btn btn-sm btn-outline-secondary" role="button">raport</a>
 	</div>
 </div>
 {% endblock %}
