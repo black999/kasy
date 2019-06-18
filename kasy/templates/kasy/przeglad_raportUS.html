@@ -10,48 +10,48 @@
 </head>
 <body>
 
-<div class="container">
 {% for urzad in urzedy %}
-    <p>Nazwa firmy prowadzącej serwis urządzeń fiskalnych:</p>
-    <h5>Engineer's Computer Studio "ECS" Ireneusz Stalicki, ul. Batorego 33, 48-300 Prudnik</h5>
-    <h5>NIP: 755-140-02-13</h5>
-    <br>
-    <p>RAPORT PRZEGLĄDÓW URZĄDZEŃ FISKALNYCH ZA MIESIĄC <b> {{ mie }} - {{ rok }}</b></p>
-    <p>Urzad :  <b>{{ urzad }}</b></p>
-    <p>ulica : <b>{{ urzad.ulica }} {{ urzad.nr_domu }}</b></p>
-    <p>Miejscowość: <b>{{ urzad.kod_pocztowy }} {{ urzad.miasto }}</b></p>
-    <p>kod urzędu : <b>{{ urzad.nr_urzedu }}</b></p>
-    <table class="table table-sm">
-        <thead class="thead-dark">
-            <tr>
-                {# <th>l.p.</th> #}
-                <th>Podatnik</th>
-                <th>NIP</th>
-                <th>nr. unikatowy</th>
-                <th>nr. seryjny</th>
-                <th>nr. ewidencyjny</th>
-                <th>data przeglądu</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for przeglad in przeglady %}
-            {% if przeglad.kasa.podatnik.urzad_skarbowy == urzad %}
-                   <tr>
-                        {# <td>{{ forloop.counter }}</td>                    #}
-                        <td>{{ przeglad.kasa.podatnik }}</td>
-                        <td>{{ przeglad.kasa.podatnik.nip }}</td>
-                        <td>{{ przeglad.kasa.nr_unikatowy }}</td>
-                        <td>{{ przeglad.kasa.nr_fabryczny }}</td>
-                        <td>{% if przeglad.kasa.nr_nadany %} {{ przeglad.kasa.nr_nadany }} {% endif %}</td>
-                        <td>{{ przeglad.data }}</td>
-                   </tr> 
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
-    <br style="page-break-before: always">
+    <div class="container" style="page-break-before: always; page-break-inside: avoid;">
+        <p>Nazwa firmy prowadzącej serwis urządzeń fiskalnych:</p>
+        <h5>Engineer's Computer Studio "ECS" Ireneusz Stalicki, ul. Batorego 33, 48-300 Prudnik</h5>
+        <h5>NIP: 755-140-02-13</h5>
+        <br>
+        <p>RAPORT PRZEGLĄDÓW URZĄDZEŃ FISKALNYCH ZA MIESIĄC <b> {{ mie }} - {{ rok }}</b></p>
+        <p>Urzad :  <b>{{ urzad }}</b></p>
+        <p>ulica : <b>{{ urzad.ulica }} {{ urzad.nr_domu }}</b></p>
+        <p>Miejscowość: <b>{{ urzad.kod_pocztowy }} {{ urzad.miasto }}</b></p>
+        <p>kod urzędu : <b>{{ urzad.nr_urzedu }}</b></p>
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    {# <th>l.p.</th> #}
+                    <th>Podatnik</th>
+                    <th>NIP</th>
+                    <th>nr. unikatowy</th>
+                    <th>nr. seryjny</th>
+                    <th>nr. ewidencyjny</th>
+                    <th>data przeglądu</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for przeglad in przeglady %}
+                {% if przeglad.kasa.podatnik.urzad_skarbowy == urzad %}
+                       <tr>
+                            {# <td>{{ forloop.counter }}</td>                    #}
+                            <td>{{ przeglad.kasa.podatnik }}</td>
+                            <td>{{ przeglad.kasa.podatnik.nip }}</td>
+                            <td>{{ przeglad.kasa.nr_unikatowy }}</td>
+                            <td>{{ przeglad.kasa.nr_fabryczny }}</td>
+                            <td>{% if przeglad.kasa.nr_nadany %} {{ przeglad.kasa.nr_nadany }} {% endif %}</td>
+                            <td>{{ przeglad.data }}</td>
+                       </tr> 
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+    </div>
 {% endfor %}
 {% include 'kasy/snipets/back.html' %}
-</div>
 </body>
 </html>
