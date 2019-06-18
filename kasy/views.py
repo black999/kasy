@@ -166,7 +166,7 @@ def przeglad_raportUS(request, rok, mie):
         podatnik__kasa__przeglad__data__month=mie).distinct()
     przeglady = Przeglad.objects.filter(
         data__year=rok, data__month=mie).order_by(
-        'kasa__podatnik__urzad_skarbowy')
+        'data')
     return render(request, 'kasy/przeglad_raportUS.html',
                   {'przeglady': przeglady,
                    'urzedy': urzedy, 'rok': rok, 'mie': mie})
