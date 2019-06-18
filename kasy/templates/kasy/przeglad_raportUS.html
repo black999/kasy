@@ -16,7 +16,7 @@
     <p>Urzad :  <b>{{ urzad }}</b></p>
     <p>ulica : <b>{{ urzad.ulica }} {{ urzad.nr_domu }}</b></p>
     <p>Miejscowość: <b>{{ urzad.kod_pocztowy }} {{ urzad.miasto }}</b></p>
-    <p>nr. urzędu : <b>{{ urzad.nr_urzedu }}</b></p>
+    <p>kod urzędu : <b>{{ urzad.nr_urzedu }}</b></p>
     <table class="table table-sm">
         <thead class="thead-dark">
             <tr>
@@ -37,8 +37,8 @@
                         <td>{{ przeglad.kasa.podatnik }}</td>
                         <td>{{ przeglad.kasa.podatnik.nip }}</td>
                         <td>{{ przeglad.kasa.nr_unikatowy }}</td>
-                        <td>{{ przeglad.kasa.nr_seryjny }}</td>
-                        <td>{{ przeglad.kasa.nr_nadany }}</td>
+                        <td>{{ przeglad.kasa.nr_fabryczny }}</td>
+                        <td>{% if przeglad.kasa.nr_nadany %} {{ przeglad.kasa.nr_nadany }} {% endif %}</td>
                         <td>{{ przeglad.data }}</td>
                    </tr> 
             {% endif %}
