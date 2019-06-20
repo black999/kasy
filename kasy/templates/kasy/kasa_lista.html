@@ -16,7 +16,7 @@
     {% if kasa.aktywna %}
         <tr>
     {% else %}
-        <tr style="color:grey"> 
+        <tr style="color:orangered"> 
     {% endif %}
             <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
             <td>{{ kasa.nr_unikatowy |upper}}</td>
