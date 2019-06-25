@@ -148,10 +148,11 @@ def przeglad_rok_miesiac(request, rok, mie):
         data = datetime.date.today()
         form = PrzegladRokMiesiac({'rok': rok, 'mie': mie})
         if mie == 0:
-            przeglady = Przeglad.objects.filter(data__year=rok)
+            przeglady = Przeglad.objects.filter(
+                data__year=rok).order_by('data')
         else:
             przeglady = Przeglad.objects.filter(
-                data__year=rok, data__month=mie)
+                data__year=rok, data__month=mie).order_by('data')
         return render(request,
                       'kasy/przeglad_ostatnie.html',
                       {'przeglady': przeglady, 'form': form, 'data': data})
