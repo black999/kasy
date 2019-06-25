@@ -1,12 +1,17 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table}}
-        </table>
-        <button class="btn btn-outline-dark" type="submit">Zapisz</button>
-    </form>
-    {% include 'kasy/snipets/back.html' %}
+<div class="row" >
+    <div class="col-5">
+        <h3>Nowy klient :</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <table class="table table-borderless table-sm">
+                {{ form.as_table}}
+            </table>
+            <button class="btn btn-outline-dark" type="submit">Zapisz</button>
+        </form>
+    </div>   
+</div>
+    {% include 'kasy/snipets/back.html' %}  
 {% endblock content %}

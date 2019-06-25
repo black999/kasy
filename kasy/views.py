@@ -147,7 +147,11 @@ def przeglad_rok_miesiac(request, rok, mie):
     else:
         data = datetime.date.today()
         form = PrzegladRokMiesiac({'rok': rok, 'mie': mie})
-        przeglady = Przeglad.objects.filter(data__year=rok, data__month=mie)
+        if mie == 0:
+            przeglady = Przeglad.objects.filter(data__year=rok)
+        else:
+            przeglady = Przeglad.objects.filter(
+                data__year=rok, data__month=mie)
         return render(request,
                       'kasy/przeglad_ostatnie.html',
                       {'przeglady': przeglady, 'form': form, 'data': data})
@@ -161,12 +165,18 @@ def przeglad_faktura(request, pk, rok, mie):
 
 
 def przeglad_raportUS(request, rok, mie):
-    urzedy = Urzad_skarbowy.objects.filter(
-        podatnik__kasa__przeglad__data__year=rok,
-        podatnik__kasa__przeglad__data__month=mie).distinct()
-    przeglady = Przeglad.objects.filter(
-        data__year=rok, data__month=mie).order_by(
-        'data')
+    if mie == 0:
+        urzedy = Urzad_skarbowy.objects.filter(
+            podatnik__kasa__przeglad__data__year=rok).distinct()
+        przeglady = Przeglad.objects.filter(
+            data__year=rok).order_by('data')
+    else:
+        urzedy = Urzad_skarbowy.objects.filter(
+            podatnik__kasa__przeglad__data__year=rok,
+            podatnik__kasa__przeglad__data__month=mie).distinct()
+        przeglady = Przeglad.objects.filter(
+            data__year=rok, data__month=mie).order_by(
+            'data')
     return render(request, 'kasy/przeglad_raportUS.html',
                   {'przeglady': przeglady,
                    'urzedy': urzedy, 'rok': rok, 'mie': mie})

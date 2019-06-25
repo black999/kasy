@@ -40,9 +40,12 @@ class PrzegladRokMiesiac(forms.Form):
     mie_biezacy = datetime.date.today().month
     lata = [('2018', '2018'), ('2019', '2019'),
             ('2020', '2020'), ('2021', '2021')]
-    miesiace = [('1', 'styczeń'), ('2', 'luty'), ('3', 'marzec'), ('4', 'kwiecień'),
-                ('5', 'maj'), ('6', 'czerwiec'), ('7', 'lipiec'), ('8', 'sierpien'),
-                ('9', 'wrzesień'), ('10', 'październik'), ('11', 'listopad'), ('12', 'grudzień')]
+    miesiace = [('0', 'cały rok'), ('1', 'styczeń'), ('2', 'luty'),
+                ('3', 'marzec'), ('4', 'kwiecień'),
+                ('5', 'maj'), ('6', 'czerwiec'),
+                ('7', 'lipiec'), ('8', 'sierpien'),
+                ('9', 'wrzesień'), ('10', 'październik'),
+                ('11', 'listopad'), ('12', 'grudzień')]
     rok = forms.ChoiceField(label='', choices=lata,
                             initial=rok_biezacy, widget=forms.Select())
     mie = forms.ChoiceField(label='', choices=miesiace,

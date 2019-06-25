@@ -4,14 +4,17 @@
 <div class="row">
 	<div class="col-8">
 		<h3 style="display: inline">Przeglądy : </h3>
-		<span style="float: right"><form method='POST' action="{% url 'przeglad_rok_miesiac' rok=data.year mie=data.month %}" class="form-inline">
-			{% csrf_token %}
-			{{ form }}
-			<button type='submit' class="btn btn-outline-secondary btn-sm">pokaż</button>
-		</form></span> 
+		<span style="float: right">
+			<form method='POST' action="{% url 'przeglad_rok_miesiac' rok=data.year mie=data.month %}" class="form form-inline">
+				{% csrf_token %}
+				{{ form }}
+				<button type='submit' class="btn btn-outline-secondary btn-sm">pokaż</button>
+			</form>
+		</span> 
 		<table class="table table-sm">
 			<thead class="thead-dark">
 				<tr>
+					<th>l.p.</th>
 					<th>Data</th>
 					<th>Kasa</th>
 					<th>Podatnik</th>
@@ -22,6 +25,7 @@
 			<tbody>
 				{% for przeglad in przeglady %}
 				<tr>
+					<td>{{ forloop.counter }}</td>
 					<td>{{ przeglad.data }}</td>
 					<td>{{ przeglad.kasa }}</td>
 					<td>{{ przeglad.kasa.podatnik.nazwa }}</td>
