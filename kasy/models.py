@@ -187,15 +187,16 @@ class Odczyt(models.Model):
     liczba_zerowan = models.PositiveSmallIntegerField(
         "Liczba zerowań", default=0)
     liczba_paragonow = models.PositiveSmallIntegerField("Liczba paragonów")
-    liczba_faktor = models.PositiveSmallIntegerField(
-        "Liczba faktór", default=0)
+    liczba_faktur = models.PositiveSmallIntegerField(
+        "Liczba faktur", default=0)
     liczba_paragonow_anulowanych = models.PositiveSmallIntegerField(
         "Liczba paragonów anulowanych", default=0)
-    wartosc_paragonow_anulownych = models.DecimalField(
+    wartosc_paragonow_anulowanych = models.DecimalField(
         "Wartość paragonów anulowanych",
         max_digits=7, decimal_places=2, default=0)
-    liczba_faktor_anulowanych = models.PositiveSmallIntegerField()
-    wartosc_faktor_anulowanych = models.DecimalField(
-        "Wartość faktór anulowanych",
+    liczba_faktur_anulowanych = models.PositiveSmallIntegerField(
+        "Liczba faktur anulowanych", default=0)
+    wartosc_faktur_anulowanych = models.DecimalField(
+        "Wartość faktur anulowanych",
         max_digits=7, decimal_places=2, default=0)
     daty_przegladow = models.CharField("Daty przeglądów", max_length=100)

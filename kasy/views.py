@@ -94,10 +94,11 @@ def kasa_przeglad(request, pk):
 
 
 def kasa_odczyt(request, pk):
+    stawki = ['a', 'b']
     kasa = get_object_or_404(Kasa, pk=pk)
     form = OdczytForm(instance=kasa)
     return render(request, 'kasy/kasa_odczyt.html',
-                  {'form': form, 'kasa': kasa})
+                  {'form': form, 'kasa': kasa, 'stawki': stawki})
 
 
 def podatnik_dodaj(request):
