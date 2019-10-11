@@ -1,0 +1,33 @@
+{% extends "kasy/base.html" %}
+
+{% block content %}
+<div class="row" style="background-color:lightgrey" >
+    <div class="col-12">
+        <table class="table table-borderless">
+            <tr>
+                <td>Model kasy:</td><td><b>{{ kasa.model_kasy }}</b></td>
+                <td>Numer unikatowy:</td><td><b>{{ kasa.nr_unikatowy }}</b></td>
+                <td>Numer fabryczny:</td><td><b>{{ kasa.nr_fabryczny }}</b></td>
+                <td>Numer nadany:</td><td><b>{{ kasa.nr_nadany }}</b></td>
+            </tr>
+            <tr>
+                <td>Data fisklizacji:</td><td><b>{{ kasa.data_fisk }}</b></td>
+                <td>Firma:</td><td colspan="5"><b>{{ kasa.podatnik.nazwa }} {{ kasa.podatnik.nazwa_cd }}</b></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <form method="POST">
+            {% csrf_token %}
+            <table class="table">
+                {{ form.as_table}}
+            </table>
+            <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
+       </form>
+    </div>
+</div>     
+
+{% endblock content %}

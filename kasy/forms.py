@@ -1,5 +1,5 @@
 from django import forms
-from .models import Kasa, Podatnik, Przeglad
+from .models import Kasa, Podatnik, Przeglad, Odczyt
 import datetime
 
 
@@ -50,3 +50,21 @@ class PrzegladRokMiesiac(forms.Form):
                             initial=rok_biezacy, widget=forms.Select())
     mie = forms.ChoiceField(label='', choices=miesiace,
                             initial=mie_biezacy, widget=forms.Select())
+
+
+class OdczytForm(forms.ModelForm):
+
+    class Meta:
+        model = Odczyt
+        #fields = '__all__'
+        exclude = ['kasa']
+        widgets = {
+            'data': forms.widgets.DateInput(
+                attrs={'type': 'date',
+                       'max': datetime.date.today()}),
+            'od_daty': forms.widgets.DateInput(
+                attrs={'type': 'date'}),
+            'do_daty': forms.widgets.DateInput(
+                attrs={'type': 'date',
+                       'max': datetime.date.today()}),
+        }

@@ -9,6 +9,7 @@ urlpatterns = [
     path('kasa/lista/<str:typ>', views.kasa_lista, name='kasa_lista'),
     path('kasa/<int:pk>/detale', views.kasa_detale, name='kasa_detale'),
     path('kasa/<int:pk>/przeglad', views.kasa_przeglad, name='kasa_przeglad'),
+    path('kasa/<int:pk>/odczyt', views.kasa_odczyt, name='kasa_odczyt'),
     path('kasa/przeglad/ostatnie', views.przeglad_ostatnie,
          name='przeglad_ostatnie'),
     path('kasa/przeglad/<int:rok>/<int:mie>',

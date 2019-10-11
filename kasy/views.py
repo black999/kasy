@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import KasaForm, PodatnikForm, PrzegladForm, PrzegladRokMiesiac
+#from .forms import KasaForm, PodatnikForm, PrzegladForm, PrzegladRokMiesiac, OdczytForm
+from .forms import *
 from .models import *
 # from django.views.generic.list import ListView
 import datetime
@@ -90,6 +91,13 @@ def kasa_przeglad(request, pk):
             przeglad.kasa = kasa
             przeglad.save()
             return redirect('kasa_detale', pk=pk)
+
+
+def kasa_odczyt(request, pk):
+    kasa = get_object_or_404(Kasa, pk=pk)
+    form = OdczytForm(instance=kasa)
+    return render(request, 'kasy/kasa_odczyt.html',
+                  {'form': form, 'kasa': kasa})
 
 
 def podatnik_dodaj(request):

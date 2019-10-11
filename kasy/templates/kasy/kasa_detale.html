@@ -49,11 +49,13 @@
                 <table>
                     {{ form.as_table}}         
                 </table>
-                <button class="btn btn-outline-dark" type="submit">zapisz</button>
+                <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
             </form>
         {% else %}
             <p style="color:red">Kasa nie aktywna - nie można dodawać przeglądów</p>
         {% endif %}
+        <hr>
+        <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
     </div> 
 </div>
 

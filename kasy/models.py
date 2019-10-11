@@ -67,7 +67,7 @@ class Podatnik(models.Model):
         if self.nazwa_cd:
             return self.nazwa + " " + self.nazwa_cd
         else:
-            return self.nazwa 
+            return self.nazwa
 
 
 class Serwisant(models.Model):
@@ -93,6 +93,7 @@ class Kasa(models.Model):
     nastepny_przeg = models.DateField(blank=True, null=True)
     cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD, default='1')
     aktywna = models.BooleanField(default=True)
+    odczytana = models.BooleanField(default=False)
 
     def __str__(self):
         return self.model_kasy.nazwa
@@ -102,6 +103,9 @@ class Kasa(models.Model):
             self.nastepny_przeg = data + datetime.timedelta(360)
         else:
             self.nastepny_przeg = data + datetime.timedelta(720)
+
+    def odczytaj(self):
+        self.odczytana = True
 
 
 class Przeglad(models.Model):
@@ -114,3 +118,84 @@ class Przeglad(models.Model):
 
     def wystaw_fakture(self):
         self.faktura = True
+
+
+class Odczyt(models.Model):
+    kasa = models.ForeignKey(Kasa, on_delete=models.CASCADE)
+    serwisant = models.ForeignKey(Serwisant, on_delete=models.CASCADE)
+    data = models.DateField("Data odczytu", default=0)
+    od_raportu = models.PositiveSmallIntegerField("Od raportu", default=1)
+    od_daty = models.DateField("Od daty")
+    do_raportu = models.PositiveSmallIntegerField("Do raportu")
+    do_daty = models.DateField("Do daty")
+    sp_ptu_a1 = models.DecimalField(
+        "Sprzedaż PTU A (23%)", max_digits=7, decimal_places=2)
+    sp_ptu_b1 = models.DecimalField(
+        "Sprzedaż PTU B (8%)", max_digits=7, decimal_places=2)
+    sp_ptu_c1 = models.DecimalField(
+        "Sprzedaż PTU C (0%)", max_digits=7, decimal_places=2)
+    sp_ptu_d1 = models.DecimalField(
+        "Sprzedaż PTU D (5%)", max_digits=7, decimal_places=2)
+    sp_ptu_e1 = models.DecimalField(
+        "Sprzedaż PTU E (..%)", max_digits=7, decimal_places=2)
+    sp_ptu_f1 = models.DecimalField(
+        "Sprzedaż PTU F (..%)", max_digits=7, decimal_places=2)
+    sp_ptu_g1 = models.DecimalField(
+        "Sprzedaż PTU G (zw)", max_digits=7, decimal_places=2)
+    ptu_a1 = models.DecimalField(
+        "Wartość PTU A", max_digits=7, decimal_places=2)
+    ptu_b1 = models.DecimalField(
+        "Wartość PTU B", max_digits=7, decimal_places=2)
+    ptu_c1 = models.DecimalField(
+        "Wartość PTU C", max_digits=7, decimal_places=2)
+    ptu_d1 = models.DecimalField(
+        "Wartość PTU D", max_digits=7, decimal_places=2)
+    ptu_e1 = models.DecimalField(
+        "Wartość PTU E", max_digits=7, decimal_places=2)
+    ptu_f1 = models.DecimalField(
+        "Wartość PTU F", max_digits=7, decimal_places=2)
+    ptu_g1 = models.DecimalField(
+        "Wartość PTU G", max_digits=7, decimal_places=2)
+    sp_ptu_a2 = models.DecimalField(
+        "Sprzedaż PTU A' (23%)", max_digits=7, decimal_places=2)
+    sp_ptu_b2 = models.DecimalField(
+        "Sprzedaż PTU B' (8%)", max_digits=7, decimal_places=2)
+    sp_ptu_c2 = models.DecimalField(
+        "Sprzedaż PTU C' (5%)", max_digits=7, decimal_places=2)
+    sp_ptu_d2 = models.DecimalField(
+        "Sprzedaż PTU D' (0%)", max_digits=7, decimal_places=2)
+    sp_ptu_e2 = models.DecimalField(
+        "Sprzedaż PTU E' (zw)", max_digits=7, decimal_places=2)
+    sp_ptu_f2 = models.DecimalField(
+        "Sprzedaż PTU F' (..%)", max_digits=7, decimal_places=2)
+    sp_ptu_g2 = models.DecimalField(
+        "Sprzedaż PTU G' (..%)", max_digits=7, decimal_places=2)
+    ptu_a2 = models.DecimalField(
+        "Wartość PTU A'", max_digits=7, decimal_places=2)
+    ptu_b2 = models.DecimalField(
+        "Wartość PTU B'", max_digits=7, decimal_places=2)
+    ptu_c2 = models.DecimalField(
+        "Wartość PTU C'", max_digits=7, decimal_places=2)
+    ptu_d2 = models.DecimalField(
+        "Wartość PTU D'", max_digits=7, decimal_places=2)
+    ptu_e2 = models.DecimalField(
+        "Wartość PTU E'", max_digits=7, decimal_places=2)
+    ptu_f2 = models.DecimalField(
+        "Wartość PTU F'", max_digits=7, decimal_places=2)
+    ptu_g2 = models.DecimalField(
+        "Wartość PTU G'", max_digits=7, decimal_places=2)
+    liczba_zerowan = models.PositiveSmallIntegerField(
+        "Liczba zerowań", default=0)
+    liczba_paragonow = models.PositiveSmallIntegerField("Liczba paragonów")
+    liczba_faktor = models.PositiveSmallIntegerField(
+        "Liczba faktór", default=0)
+    liczba_paragonow_anulowanych = models.PositiveSmallIntegerField(
+        "Liczba paragonów anulowanych", default=0)
+    wartosc_paragonow_anulownych = models.DecimalField(
+        "Wartość paragonów anulowanych",
+        max_digits=7, decimal_places=2, default=0)
+    liczba_faktor_anulowanych = models.PositiveSmallIntegerField()
+    wartosc_faktor_anulowanych = models.DecimalField(
+        "Wartość faktór anulowanych",
+        max_digits=7, decimal_places=2, default=0)
+    daty_przegladow = models.CharField("Daty przeglądów", max_length=100)
