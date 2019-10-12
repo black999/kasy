@@ -116,6 +116,22 @@ def odczyt_lista(request):
     return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})
 
 
+def odczyt_edycja(request, pk):
+    odczyt = get_object_or_404(Odczyt, pk=pk)
+    if request.method == 'POST':
+        form = OdczytForm(request.POST, instance=odczyt)
+        if form.is_valid:
+            form.save()
+            return redirect('odczyt_lista')
+    else:
+        odczyt.data = odczyt.data.strftime('%Y-%m-%d')
+        odczyt.od_daty = odczyt.od_daty.strftime('%Y-%m-%d')
+        odczyt.do_daty = odczyt.do_daty.strftime('%Y-%m-%d')
+        form = OdczytForm(instance=odczyt)
+    return render(request, 'kasy/kasa_odczyt.html',
+                  {'form': form, 'kasa': odczyt.kasa})
+
+
 def podatnik_dodaj(request):
     if request.method == 'POST':
         form = PodatnikForm(request.POST)

@@ -56,14 +56,14 @@ class OdczytForm(forms.ModelForm):
 
     class Meta:
         model = Odczyt
-        #fields = '__all__'
         exclude = ['kasa']
         widgets = {
             'data': forms.widgets.DateInput(
                 attrs={'type': 'date',
                        'max': datetime.date.today()}),
             'od_daty': forms.widgets.DateInput(
-                attrs={'type': 'date'}),
+                attrs={'type': 'date',
+                       'max': datetime.date.today()}),
             'do_daty': forms.widgets.DateInput(
                 attrs={'type': 'date',
                        'max': datetime.date.today()}),

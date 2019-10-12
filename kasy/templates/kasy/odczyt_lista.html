@@ -10,6 +10,7 @@
                     <th>Urządzenie</th>
                     <th>Nr. unikat</th>
                     <th>Firma</th>
+                    <th></th>
                 </tr>
             </thead>
             {% for odczyt in odczyty %}
@@ -18,6 +19,9 @@
                 <td>{{ odczyt.kasa.model_kasy.nazwa }}</td>
                 <td>{{ odczyt.kasa.nr_unikatowy }}</td>
                 <td>{{ odczyt.kasa.podatnik.nazwa }}</td>
+                <td>
+                    <a  href="{% url 'odczyt_edycja' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Edycja</a>
+                </td>
             </tr>         
             {% endfor %}
         </table>
