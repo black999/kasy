@@ -37,13 +37,13 @@ def kasa_szukaj(request):
 
 
 def kasa_dodaj(request, pk):
+    # pk - id podatnika
     if request.method == 'POST':
         form = KasaForm(request.POST)
         if form.is_valid():
             kasa = form.save(commit=False)
-            kasa.model_kasy = Model_kasy.objects.get(
-                pk=request.POST['model_kasy'])
-            kasa.podatnik = Podatnik.objects.get(pk=pk)
+            kasa.model_kasy_id = request.POST['model_kasy']
+            kasa.podatnik_id = pk
             kasa.nastepny_przeglad(kasa.data_fisk)
             kasa.save()
             return redirect('podatnik_detale', pk=pk)
@@ -100,8 +100,7 @@ def kasa_odczyt(request, pk):
         if form.is_valid:
             odczyt = form.save(commit=False)
             odczyt.kasa = kasa
-            serwisant = Serwisant.objects.get(pk=request.POST['serwisant'])
-            odczyt.serwisant = serwisant
+            odczyt.serwisant_id = request.POST['serwisant']
             odczyt.save()
             kasa.odczytaj()
             kasa.save()
