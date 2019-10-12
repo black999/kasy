@@ -5,7 +5,10 @@
 <div class="row">
     <div class="col-5">
         <h3 tyle="display: inline">{{ kasa.model_kasy }} 
-            <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a></h3>
+            {% if not kasa.odczytana %}
+                <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
+            {% endif %}
+        </h3>
         <p><strong>nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
         <p><strong>nr. fabryczny : </strong>{{ kasa.nr_fabryczny }}</p>
         <p><strong>nr. nadany : </strong>{% if kasa.nr_nadany %} {{ kasa.nr_nadany }} {% endif %}</p>
@@ -19,30 +22,30 @@
     <div class="col-7">
         <h3>Przeglądy :</h3>
         {% if przeglady %}
-        <table class="table table-sm">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Data</th>
-                    <th>Serwisant</th>
-                    <th>ilość rap.</th>
-                    <th>info</th>
-                </tr>
-            </thead>
-            {% for przeglad in przeglady %}
-            <tr>
-                <td>{{ przeglad.data }}</td>
-                <td>{{ przeglad.serwisant }}</td>
-                <td>{{ przeglad.ilosc_raportow }}</td>
-                <td>{% if przeglad.info %} {{ przeglad.info }} {% endif %}</td>
-            </tr>
-            {% endfor %}
-        </table>
+            <table class="table table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Data</th>
+                        <th>Serwisant</th>
+                        <th>ilość rap.</th>
+                        <th>info</th>
+                    </tr>
+                </thead>
+                {% for przeglad in przeglady %}
+                    <tr>
+                        <td>{{ przeglad.data }}</td>
+                        <td>{{ przeglad.serwisant }}</td>
+                        <td>{{ przeglad.ilosc_raportow }}</td>
+                        <td>{% if przeglad.info %} {{ przeglad.info }} {% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         {% else %}
-        <p>Brak przeglądów dla tego urządzenia</p>
+            <p>Brak przeglądów dla tego urządzenia</p>
         {% endif %}
         <br><br>
 
-        {% if kasa.aktywna %}
+        {% if kasa.aktywna and not kasa.odczytana %}
             <h3>Nowy przegląd</h3>
             <form method="POST" action="{% url 'kasa_przeglad' pk=kasa.pk %}">
                 {% csrf_token %}
@@ -52,10 +55,14 @@
                 <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
             </form>
         {% else %}
-            <p style="color:red">Kasa nie aktywna - nie można dodawać przeglądów</p>
+            {% if not kasa.aktywna %}
+                <p style="color:red">Kasa nie aktywna  - nie można dodawać przeglądów</p>
+            {% endif %}
         {% endif %}
         <hr>
-        <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
+        {% if not kasa.odczytana %}
+            <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
+        {% endif %}
     </div> 
 </div>
 

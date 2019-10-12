@@ -28,7 +28,8 @@
                     <td>{{ form.serwisant }}</td>
                     <td>{{ form.data.errors }} {{ form.data.label_tag }}</td>
                     <td>{{ form.data }}</td>
-                    <td></td><td></td><td></td><td></td>
+                    <td></td><td></td><td></td>
+                    <td><button class="btn btn-sm btn-dark btn-block" type="submit">Zapisz</button></td>
                 </tr>                
                 <tr>
                     <td>{{ form.od_raportu.errors }} {{ form.od_raportu.label_tag }}</td>
@@ -126,6 +127,12 @@
                     <td>{{ form.ptu_g2.errors }} {{ form.ptu_g2.label_tag }}</td>
                     <td>{{ form.ptu_g2}}</td>
                 </tr>
+                <tr style="background-color: SandyBrown">
+                    <td>{{ form.laczna_sprzedaz_PTU.errors }} {{ form.laczna_sprzedaz_PTU.label_tag }}</td>
+                    <td>{{ form.laczna_sprzedaz_PTU}}</td>
+                    <td>{{ form.laczna_wysokosc_PTU.errors }} {{ form.laczna_wysokosc_PTU.label_tag }}</td>
+                    <td>{{ form.laczna_wysokosc_PTU}}</td>
+                </tr>                
             </table>
             <table class="table">
                <tr>
@@ -150,8 +157,12 @@
                    <td>{{ form.wartosc_faktur_anulowanych.errors }} {{ form.wartosc_faktur_anulowanych.label_tag }}</td>
                    <td>{{ form.wartosc_faktur_anulowanych }}</td>
                 </tr> 
+                <tr>
+                    <td>{{ form.daty_przegladow_errors }} {{ form.daty_przegladow.label_tag }}</td>
+                    <td colspan="2">{{ form.daty_przegladow }}</td>
+                </tr>
             </table>
-            <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
+            
         </form>
 
     </div>

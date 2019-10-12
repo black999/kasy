@@ -8,7 +8,7 @@ class KasaForm(forms.ModelForm):
     class Meta:
         model = Kasa
         # fields = '__all__'
-        exclude = ['nastepny_przeg', 'podatnik']
+        exclude = ['nastepny_przeg', 'podatnik', 'odczytana']
         widgets = {
             'data_fisk': forms.widgets.DateInput(
                 attrs={'type': 'date',

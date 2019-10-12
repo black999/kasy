@@ -94,11 +94,27 @@ def kasa_przeglad(request, pk):
 
 
 def kasa_odczyt(request, pk):
-    stawki = ['a', 'b']
     kasa = get_object_or_404(Kasa, pk=pk)
-    form = OdczytForm(instance=kasa)
+    if request.method == 'POST':
+        form = OdczytForm(request.POST)
+        if form.is_valid:
+            odczyt = form.save(commit=False)
+            odczyt.kasa = kasa
+            serwisant = Serwisant.objects.get(pk=request.POST['serwisant'])
+            odczyt.serwisant = serwisant
+            odczyt.save()
+            kasa.odczytaj()
+            kasa.save()
+            return redirect('odczyt_lista')
+    else:
+        form = OdczytForm()
     return render(request, 'kasy/kasa_odczyt.html',
-                  {'form': form, 'kasa': kasa, 'stawki': stawki})
+                  {'form': form, 'kasa': kasa})
+
+
+def odczyt_lista(request):
+    odczyty = Odczyt.objects.all()
+    return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})
 
 
 def podatnik_dodaj(request):

@@ -184,19 +184,27 @@ class Odczyt(models.Model):
         "Wartość PTU F'", max_digits=7, decimal_places=2)
     ptu_g2 = models.DecimalField(
         "Wartość PTU G'", max_digits=7, decimal_places=2)
+    laczna_sprzedaz_PTU = models.DecimalField(
+        "Łączna sprzedaż PTU", max_digits=7, decimal_places=2)
+    laczna_wysokosc_PTU = models.DecimalField(
+        "Łączna wysokość VAT", max_digits=7, decimal_places=2)
     liczba_zerowan = models.PositiveSmallIntegerField(
         "Liczba zerowań", default=0)
     liczba_paragonow = models.PositiveSmallIntegerField("Liczba paragonów")
     liczba_faktur = models.PositiveSmallIntegerField(
         "Liczba faktur", default=0)
     liczba_paragonow_anulowanych = models.PositiveSmallIntegerField(
-        "Liczba paragonów anulowanych", default=0)
+        "Liczba paragonów anulowanych")
     wartosc_paragonow_anulowanych = models.DecimalField(
         "Wartość paragonów anulowanych",
-        max_digits=7, decimal_places=2, default=0)
+        max_digits=7, decimal_places=2)
     liczba_faktur_anulowanych = models.PositiveSmallIntegerField(
         "Liczba faktur anulowanych", default=0)
     wartosc_faktur_anulowanych = models.DecimalField(
         "Wartość faktur anulowanych",
         max_digits=7, decimal_places=2, default=0)
     daty_przegladow = models.CharField("Daty przeglądów", max_length=100)
+    zatwierdzony = models.BooleanField(default=False)
+
+    def zatwierdz(self):
+        self.zatwierdzony = True

@@ -19,6 +19,7 @@ urlpatterns = [
     path('kasa/przeglad/raportUS/<int:rok>/<int:mie>',
          views.przeglad_raportUS, name='przeglad_raportUS'),
     path('kasa/szukaj', views.kasa_szukaj, name='kasa_szukaj'),
+    path('kasa/odczyt', views.odczyt_lista, name='odczyt_lista'),
     path('podatnik/dodaj', views.podatnik_dodaj, name='podatnik_dodaj'),
     path('podatnik/lista', views.podatnik_lista, name='podatnik_lista'),
     path('podatnik/<int:pk>/detale', views.podatnik_detale,
