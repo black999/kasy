@@ -14,18 +14,20 @@
     </thead>
     <tbody>
     {% for kasa in kasy %}
-    {% if kasa.aktywna %}
-        <tr>
-    {% else %}
-        <tr style="color:orangered"> 
-    {% endif %}
-            <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
-            <td>{{ kasa.nr_unikatowy |upper}}</td>
-            <td>{{ kasa.nr_fabryczny }}</td>
-            <td>{{ kasa.data_fisk |date:"d.m.Y"}}</td>
-            <td>{{ kasa.nastepny_przeg |date:"d.m.Y" }}</td>
-            <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
-        </tr>
+        {% if kasa.aktywna %}
+            <tr>
+        {% elif kasa.odczytana %}
+            <tr style="color:DarkRed"> 
+        {% elif not kasa.aktywna %}
+            <tr style="color:LightSlateGray"> 
+        {% endif %}
+                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
+                <td>{{ kasa.nr_unikatowy |upper}}</td>
+                <td>{{ kasa.nr_fabryczny }}</td>
+                <td>{{ kasa.data_fisk |date:"d.m.Y"}}</td>
+                <td>{{ kasa.nastepny_przeg |date:"d.m.Y" }}</td>
+                <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
+            </tr>
     {% endfor %}
     </tbody>
 </table>

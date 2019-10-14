@@ -19,9 +19,13 @@ def home(request):
 
 def kasa_lista(request, typ):
     if typ == 'aktywne':
-        kasy = Kasa.objects.filter(aktywna=True).select_related('podatnik')
+        kasy = Kasa.objects.filter(aktywna=True).filter(
+            odczytana=False).select_related('podatnik')
     elif typ == 'nieaktywne':
-        kasy = Kasa.objects.filter(aktywna=False).select_related('podatnik')
+        kasy = Kasa.objects.filter(aktywna=False).filter(
+            odczytana=False).select_related('podatnik')
+    elif typ == 'odczytane':
+        kasy = Kasa.objects.filter(odczytana=True).select_related('podatnik')
     elif typ == 'all':
         kasy = Kasa.objects.all().select_related('podatnik')
     return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
@@ -103,6 +107,7 @@ def kasa_odczyt(request, pk):
             odczyt.serwisant_id = request.POST['serwisant']
             odczyt.save()
             kasa.odczytaj()
+            kasa.aktywna = False
             kasa.save()
             return redirect('odczyt_lista')
     else:
@@ -130,6 +135,30 @@ def odczyt_edycja(request, pk):
         form = OdczytForm(instance=odczyt)
     return render(request, 'kasy/kasa_odczyt.html',
                   {'form': form, 'kasa': odczyt.kasa})
+
+
+def odczyt_zatwierdz(request, pk):
+    odczyt = get_object_or_404(Odczyt, pk=pk)
+    odczyt.zatwierdz()
+    odczyt.save()
+    return redirect('odczyt_lista')
+
+
+def odczyt_usun(request, pk):
+    odczyt = get_object_or_404(Odczyt, pk=pk)
+    if not odczyt.zatwierdzony:
+        odczyt.kasa.odczytana = False
+        odczyt.kasa.save()
+        odczyt.delete()
+    return redirect('odczyt_lista')
+
+
+def odczyt_raportUS(request, pk):
+    odczyt = get_object_or_404(Odczyt, pk=pk)
+    kasa = odczyt.kasa
+    podatnik = kasa.podatnik
+    return render(request, 'kasy/odczyt_raportUS.html',
+                  {'odczyt': odczyt, 'kasa': kasa, 'podatnik': podatnik})
 
 
 def podatnik_dodaj(request):

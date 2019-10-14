@@ -37,15 +37,14 @@
             <tbody>
             {% for przeglad in przeglady %}
                 {% if przeglad.kasa.podatnik.urzad_skarbowy == urzad %}
-                       <tr>
-                            {# <td>{{ forloop.counter }}</td>                    #}
-                            <td>{{ przeglad.kasa.podatnik }}</td>
-                            <td>{{ przeglad.kasa.podatnik.nip }}</td>
-                            <td>{{ przeglad.kasa.nr_unikatowy }}</td>
-                            <td>{{ przeglad.kasa.nr_fabryczny }}</td>
-                            <td>{% if przeglad.kasa.nr_nadany %} {{ przeglad.kasa.nr_nadany }} {% endif %}</td>
-                            <td>{{ przeglad.data }}</td>
-                       </tr> 
+                   <tr>
+                        <td>{{ przeglad.kasa.podatnik }}</td>
+                        <td>{{ przeglad.kasa.podatnik.nip }}</td>
+                        <td>{{ przeglad.kasa.nr_unikatowy }}</td>
+                        <td>{{ przeglad.kasa.nr_fabryczny }}</td>
+                        <td>{% if przeglad.kasa.nr_nadany %} {{ przeglad.kasa.nr_nadany }} {% endif %}</td>
+                        <td>{{ przeglad.data }}</td>
+                   </tr> 
                 {% endif %}
             {% endfor %}
             </tbody>

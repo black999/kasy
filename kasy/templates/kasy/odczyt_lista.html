@@ -20,8 +20,14 @@
                 <td>{{ odczyt.kasa.nr_unikatowy }}</td>
                 <td>{{ odczyt.kasa.podatnik.nazwa }}</td>
                 <td>
+                {% if odczyt.zatwierdzony %}
+                    <a  href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Raport do US</a>
+                {% else %}
                     <a  href="{% url 'odczyt_edycja' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Edycja</a>
-                </td>
+                    <a  href="{% url 'odczyt_zatwierdz' pk=odczyt.pk %}" class="btn btn-sm btn-success" role="button">Zatwierdz</a>
+                    <a  href="{% url 'odczyt_usun' pk=odczyt.pk %}" class="btn btn-sm btn-danger" role="button">Usuń</a>
+                {% endif %}
+                </td>                
             </tr>         
             {% endfor %}
         </table>

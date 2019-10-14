@@ -74,6 +74,7 @@ class Serwisant(models.Model):
     nazwisko = models.CharField(max_length=15)
     imie = models.CharField(max_length=15)
     nr_plomby = models.IntegerField()
+    uprawnienia_od = models.DateField()
 
     def __str__(self):
         return self.nazwisko + ' ' + self.imie

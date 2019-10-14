@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raport do US</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css" media='print'>
+        @page {size:portrait;}
+        body, html {font-size : 13pt;}
+    </style>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            table-layout: auto;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="page-break-before: always; page-break-inside: avoid;">
+        <h4 style="text-align: center">PROTOKÓL</h4>
+        <h4 style="text-align: center">Z CZYNNOŚCI ODCZYTANIA ZAWARTOŚCI PAMIĘCI FISKALNEJ</h4>
+        <h4 style="text-align: center">KASY REJESTRUJĄCEJ</h4>
+        <table>
+            <tr>
+                <td colspan="3"><b>I. MIEJSCE SKŁADANIA PROTOKOŁU</b></td> 
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Naczelnik urzędu skarbowego, do którego jest składany protokuł:<br>
+                    &nbsp<b>
+                        {{ podatnik.urzad_skarbowy.nazwa }} 
+                        w {{ podatnik.urzad_skarbowy.miasto }} 
+                        ul. {{ podatnik.urzad_skarbowy.ulica }}
+                        {{ podatnik.urzad_skarbowy.nr_domu }}
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"><b>II. DANE PODATNIKA</b></td> 
+            </tr>
+            <tr>
+                <td colspan="3">Identyfikator podatkowy NIP podatnika: <b>{{ podatnik.nip }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Nazwa/Nazwisko i pierwsze imię: <b>{{ podatnik.nazwa }} {{ podatnik.nazwa_cd }}</b></td>
+            </tr>
+            <tr>
+                <td>Kraj: <b>POLSKA</b></td>
+                <td>Województwo: <b>{{ podatnik.wojewodzctwo }}</b> </td>
+                <td>Gmina/Dzielnica: <b>{{ podatnik.gmina }}</b></td>
+            </tr>
+            <tr>
+                <td>Ulica: <b>{{ podatnik.ulica }}</b></td>                
+                <td>Nr domu: <b>{{ podatnik.nr_domu }}</b></td>
+                <td>Nr lokalu: <b></b></td>                
+            </tr>
+            <tr>
+                <td>Miejscowość: <b>{{ podatnik.miasto }}</b></td> 
+                <td>Kod pocztowy: <b>{{ podatnik.kod_pocztowy }}</b></td>
+                <td>Poczta: <b>{{ podatnik.poczta }}</b></td>                
+            </tr>
+            <tr>
+                <td>Skrytka pocztowa: <b></b></td>               
+                <td>Telefon: <b></b></td>
+                <td>Adres e-mail: <b></b></td>                
+            </tr>
+            <tr>
+                <td colspan="3"><b>III. DANE PODMIOTU PROWADZĄCEGO SERWIS GŁÓWNY/SERWIS KAS I SERWISANTA</b></td> 
+            </tr>
+            <tr>
+                <td colspan="3"><b>A. Dane podmiotu prowadzącego serwis głowny/serwis kas</b></td> 
+            </tr>
+            <tr>
+                <td colspan="3">Nazwa/Nazwisko i pierwsze imię: <b>Engineer's Computer Studio Ireneusz Stalicki</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Numer NIP/Pesel: <b>755-140-02-13</b></td>
+            </tr>
+            <tr>
+                <td>Kraj: <b>POLSKA</b></td>
+                <td>Województwo: <b>Opolskie</b> </td>
+                <td>Gmina/Dzielnica: <b>Prudnik</b></td>
+            </tr>
+            <tr>
+                <td>Ulica: <b>Batorego</b></td>                
+                <td>Nr domu: <b>33</b></td>
+                <td>Nr lokalu: <b></b></td>                
+            </tr>
+            <tr>
+                <td>Miejscowość: <b>Prudnik</b></td> 
+                <td>Kod pocztowy: <b>48-200</b></td>
+                <td>Poczta: <b>Prudnik</b></td>                
+            </tr>
+            <tr>
+                <td>Skrytka pocztowa: <b></b></td>               
+                <td>Telefon: <b>77/436-88-48</b></td>
+                <td>Adres e-mail: <b></b></td>                
+            </tr>            
+            <tr>
+                <td colspan="3"><b>A. Dane serwisanta</b></td> 
+            </tr>            
+            <tr>
+                <td colspan="3">Imię i nazwisko serwisanta: <b>{{ odczyt.serwisant.imie }} {{ odczyt.serwisant.nazwisko }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Numer identyfikatora serwisanta: <b>{{ odczyt.serwisant.nr_plomby }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Data wystawienia identyfikatora serwisanta (dd-mm-rrrr): <b>{{ odczyt.serwisant.uprawnienia_od }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3"><b>IV. DANE KASY, DLA KTÓREJ JEST SPORZĄDZANY PROTOKÓŁ<b></td> 
+            </tr>             
+            <tr>
+                <td colspan="3">Miejsce instalacji kasy: <b>{{ kasa.miejsce_inst }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Nr unikatowy: <b>{{ kasa.nr_unikatowy }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Nr fabryczny kasy: <b>{{ kasa.nr_fabryczny }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Nr ewidencyjny: <b>{% if kasa.nr_nadany %}{{ kasa.nr_nadany }}{% endif %}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Data fiskalizacji <b>{{ kasa.data_fisk }}</b></td>
+            </tr>       
+            <tr>
+                <td colspan="3"><b>V. PRZYCZYNA DOKONANIA ODCZYTU<b></td> 
+            </tr>    
+            <tr>
+                <td colspan="3">
+                    Przyczyną dokonania odczytu jest: <br>
+                    &nbsp o Zakończenie działalności gospodarczej <br>
+                    &nbsp o Zakończenie pracy kasy <br>
+                    &nbsp o Wymiana pamięci fiskalnej <br>
+                    &nbsp o inna przyczyna <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">W razie wskazania "Inna przyczyna", wskazać przyczynę ...............................................................</td> 
+            </tr>
+            <tr>
+                <td colspan="3"><b>VI. RODZAJ WYSTAWIONEGO DOKUMENTU<b></td> 
+            </tr>              
+            <tr>
+                <td colspan="3">Po sprawdzeniu całości plomb kasy został wystawiony raport fiskalny: <br>
+                    &nbsp<b>raport rozliczeniowy</b></td> 
+            </tr>        
+            <tr>
+                <td colspan="3"><b>VII. DANE Z ODCZYTU<b></td> 
+            </tr>
+            <tr>
+                <td colspan="3"><b>A. Okres, za który został wystawiony raport fiskalny wskazany w części VI<b></td> 
+            </tr>              
+            <tr>
+                <td colspan="3">
+                    Okres: od raportu nr ...<b>{{ odczyt.od_raportu }}</b>... data <b>{{ odczyt.od_daty }} </b><br>
+                    &nbsp &nbsp &nbsp do raportu nr ...<b>{{ odczyt.do_raportu }}</b>... data <b>{{ odczyt.do_daty }}</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% include 'kasy/snipets/back.html' %}
+</body>
+</html>

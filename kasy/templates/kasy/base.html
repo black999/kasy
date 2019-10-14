@@ -43,9 +43,10 @@
                             Urządzenia
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='aktywne' %}">aktywne</a>
-                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='nieaktywne' %}">nieaktywne</a>
-                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='all' %}">wszystkie</a>
+                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='aktywne' %}">Aktywne</a>
+                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='nieaktywne' %}">Nieaktywne</a>
+                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='odczytane' %}">Odczytane</a>
+                            <a class="dropdown-item" href="{% url 'kasa_lista' typ='all' %}">Wszystkie</a>
                         </div>
                     </li>
                     <li class="nav-item">
