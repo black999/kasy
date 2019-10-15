@@ -12,7 +12,7 @@
         table {
             border-collapse: collapse;
             border: 1px solid black;
-            table-layout: auto;
+            table-layout: fixed;
             width: 100%;
         }
         th, td {
@@ -112,7 +112,7 @@
                 <td colspan="3">Numer identyfikatora serwisanta: <b>{{ odczyt.serwisant.nr_plomby }}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Data wystawienia identyfikatora serwisanta (dd-mm-rrrr): <b>{{ odczyt.serwisant.uprawnienia_od }}</b></td>
+                <td colspan="3">Data wystawienia identyfikatora serwisanta (dd-mm-rrrr): <b>{{ odczyt.serwisant.uprawnienia_od|date:"d.m.Y" }}</b></td>
             </tr>
             <tr>
                 <td colspan="3"><b>IV. DANE KASY, DLA KTÓREJ JEST SPORZĄDZANY PROTOKÓŁ<b></td> 
@@ -130,7 +130,7 @@
                 <td colspan="3">Nr ewidencyjny: <b>{% if kasa.nr_nadany %}{{ kasa.nr_nadany }}{% endif %}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Data fiskalizacji <b>{{ kasa.data_fisk }}</b></td>
+                <td colspan="3">Data fiskalizacji: <b>{{ kasa.data_fisk|date:"d.m.Y" }}</b></td>
             </tr>       
             <tr>
                 <td colspan="3"><b>V. PRZYCZYNA DOKONANIA ODCZYTU<b></td> 
@@ -162,12 +162,178 @@
             </tr>              
             <tr>
                 <td colspan="3">
-                    Okres: od raportu nr ...<b>{{ odczyt.od_raportu }}</b>... data <b>{{ odczyt.od_daty }} </b><br>
-                    &nbsp &nbsp &nbsp do raportu nr ...<b>{{ odczyt.do_raportu }}</b>... data <b>{{ odczyt.do_daty }}</b>
+                    Okres: od raportu nr ...<b>{{ odczyt.od_raportu }}</b>... data <b>{{ odczyt.od_daty|date:"d.m.Y" }} </b><br>
+                    &nbsp &nbsp &nbsp do raportu nr ...<b>{{ odczyt.do_raportu }}</b>... data <b>{{ odczyt.do_daty|date:"d.m.Y" }}</b>
                 </td>
             </tr>
         </table>
     </div>
-{% include 'kasy/snipets/back.html' %}
+    <div class="container" style="page-break-before: always; page-break-inside: avoid;">
+        <table>
+        <tr>
+            <td colspan="4"><b>B. Wartość sprzedaży i wysokość podatku</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU A (23%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_a1 }}</b></td>
+            <td>Sprzedaż PTU A (23%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_a2 }}</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU B (8%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_b1 }}</b></td>
+            <td>Sprzedaż PTU B (8%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_b2 }}</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU C (0%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_c1 }}</b></td>
+            <td>Sprzedaż PTU C (5%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_c2 }}</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU D (5%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_d1 }}</b></td>
+            <td>Sprzedaż PTU D (0%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_d2 }}</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU E (...%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_e1 }}</b></td>
+            <td>Sprzedaż PTU E (zw)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_e2 }}</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU F (...%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_f1 }}</b></td>
+            <td>Sprzedaż PTU F (...%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_f1 }}</b></td>
+        </tr>
+        <tr>
+            <td>Sprzedaż PTU G (zw)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_g1 }}</b></td>
+            <td>Sprzedaż PTU G (...%)</td>
+            <td style="border-left: hidden"><b>{{ odczyt.sp_ptu_g2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU A</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_a1 }}</b></td>
+            <td>PTU A</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_a2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU B</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_b1 }}</b></td>
+            <td>PTU B</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_b2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU C</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_c1 }}</b></td>
+            <td>PTU C</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_c2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU D</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_d1 }}</b></td>
+            <td>PTU D</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_d2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU E</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_e1 }}</b></td>
+            <td>PTU E</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_e2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU F</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_f1 }}</b></td>
+            <td>PTU F</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_f2 }}</b></td>
+        </tr>
+        <tr>
+            <td>PTU G</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_g1 }}</b></td>
+            <td>PTU G</td>
+            <td style="border-left: hidden"><b>{{ odczyt.ptu_g2 }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Łączna sprzedaż PTU : </td>
+            <td colspan="2" style="border-left:hidden"><b>{{ odczyt.laczna_sprzedaz_PTU }}</b></td>
+        </tr>
+        <tr>
+           <td colspan="2">Łączna wysokość PTU : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.laczna_wysokosc_PTU}}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Liczba zerowań RAM : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.liczba_zerowan }}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Liczba paragonów fisklanych : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.liczba_paragonow }}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Liczba faktur : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.liczba_faktur }}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Liczba paragonów fiskalnych anulowanych : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.liczba_paragonow_anulowanych }}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Wartość paragonów fiskalnych anulowanych : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.laczna_sprzedaz_PTU }}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Liczba faktur anulowanych : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.liczba_faktur_anulowanych }}</b></td>
+       </tr>
+       <tr>
+           <td colspan="2">Wartość faktur anulowanych : </td>
+           <td colspan="2" style="border-left:hidden"><b>{{ odczyt.wartosc_faktur_anulowanych }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="4"><b>C. Uwagi</b><br><br><br><br></td> 
+        </tr>
+        <tr>
+            <td colspan="4"><b>D. Daty przeglądów technicznych</b><br><br>{{ odczyt.daty_przegladow }}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><b>VIII. PRZYCZYNY NIEMOŻLIWOŚCI DOKONANIA ODCZYTU:</b><br><br><br><br></td> 
+        </tr>
+        <tr>
+            <td colspan="4"><b>IX  DATA I MIEJSCE SPRZĄDZENIA PROTOKUŁU ORAZ PODPIS SERWISANTA I PODATNIKA</b><br></td>
+        </tr>
+        <tr>
+            <td colspan="2">Data sporządzenia protokołu (dd-mm-rrrr) : </td>
+            <td colspan="2" style="border-left:hidden"><b>{{ odczyt.data|date:"d.m.Y" }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Miejsce sporządzenia protokołu : </td>
+            <td colspan="2" style="border-left:hidden"><b>serwis kasy</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Imię i nazwisko serwisanta : </td>
+            <td colspan="2" style="border-left:hidden"><b>{{ odczyt.serwisant.imie }} {{ odczyt.serwisant.nazwisko }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Podpis serwisanta : </td>
+            <td colspan="2" style="border-left:hidden"><br><br></td>
+        </tr>
+        <tr>
+            <td colspan="2">Data podpisu protokołu przez podatnika (dd-mm-rrrr) : </td>
+            <td colspan="2" style="border-left:hidden"><b>{{ odczyt.data|date:"d.m.Y" }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Imię i nazwisko podatnika : </td>
+            <td colspan="2" style="border-left:hidden"><br><br></td>
+        </tr>
+        <tr>
+            <td colspan="2">Podpis podatnika : </td>
+            <td colspan="2" style="border-left:hidden"><br><br></td>            
+        </tr>
+    </table>
+    </div>  
 </body>
 </html>
