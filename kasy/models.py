@@ -186,9 +186,9 @@ class Odczyt(models.Model):
     ptu_g2 = models.DecimalField(
         "Wartość PTU G'", max_digits=10, decimal_places=2)
     laczna_sprzedaz_PTU = models.DecimalField(
-        "Łączna sprzedaż PTU", max_digits=10, decimal_places=2)
+        "Łączna kwota PTU", max_digits=10, decimal_places=2)
     laczna_wysokosc_PTU = models.DecimalField(
-        "Łączna wysokość VAT", max_digits=10, decimal_places=2)
+        "Łączna należność", max_digits=10, decimal_places=2)
     liczba_zerowan = models.PositiveSmallIntegerField(
         "Liczba zerowań", default=0)
     liczba_paragonow = models.PositiveSmallIntegerField("Liczba paragonów")
