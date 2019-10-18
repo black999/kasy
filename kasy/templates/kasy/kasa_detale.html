@@ -62,6 +62,8 @@
         <hr>
         {% if not kasa.odczytana %}
             <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
+        {% else %}
+            <p><h3 style="color:DarkRed"> K A S A &nbsp&nbsp O D C Z Y T A N A</h3></p>
         {% endif %}
     </div> 
 </div>
