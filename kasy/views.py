@@ -143,6 +143,12 @@ def kasa_odczyt(request, pk):
                   {'form': form, 'kasa': kasa})
 
 
+def kasa_wyrejestrowanieUS(request, pk):
+    kasa = get_object_or_404(Kasa, pk=pk)
+    return render(request, 'kasy/kasa_wyrejestrowanieUS.html',
+                  {'kasa': kasa})
+
+
 def odczyt_lista(request):
     odczyty = Odczyt.objects.all()
     return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})
