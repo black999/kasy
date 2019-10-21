@@ -145,8 +145,10 @@ def kasa_odczyt(request, pk):
 
 def kasa_wyrejestrowanieUS(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
+    podatnik = kasa.podatnik
     return render(request, 'kasy/kasa_wyrejestrowanieUS.html',
-                  {'kasa': kasa})
+                  {'kasa': kasa,
+                   'podatnik': podatnik})
 
 
 def odczyt_lista(request):

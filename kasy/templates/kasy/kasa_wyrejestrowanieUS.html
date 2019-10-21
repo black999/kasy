@@ -7,7 +7,7 @@
     <style type="text/css" media='print'>
         @page {size:landscape;}
         body, html {font-size : 11pt;}
-        .legenda {font-size : 8pt;}
+        .legenda {font-size : 9pt;}
     </style>
     <style type="text/css">
         table {
@@ -30,31 +30,40 @@
                 <td colspan="3"><b>I. MIEJSCE SKŁADANIA WNIOSKU</b></td>
             </tr>
             <tr>
-                <td colspan="3">Naczelnik urzędu skarbowego, do którego jest składany wniosek:</td>
+                <td colspan="3">Naczelnik urzędu skarbowego, do którego jest składany wniosek: <br>
+                    &nbsp<b>
+                        {{ podatnik.urzad_skarbowy.nazwa }} 
+                        w {{ podatnik.urzad_skarbowy.miasto }} 
+                        ul. {{ podatnik.urzad_skarbowy.ulica }}
+                        {{ podatnik.urzad_skarbowy.nr_domu }}
+                    </b>
+                </td>
             </tr>
             <tr>
                 <td colspan="3"><b>II. DANE PODATNIKA </b>1)</td>
             </tr>
             <tr>
-                <td colspan="3">Identyfikator podatkowy NIP płatnika: </td>
+                <td colspan="3">Identyfikator podatkowy NIP płatnika: <b>{{ podatnik.nip }}</b></td>
             </tr>
                 <tr>
-                <td colspan="3">Nazwa 2) /Nazwisko i pierwsze imię 3): </td>
+                <td colspan="3">Nazwa 2) /Nazwisko i pierwsze imię 3): 
+                    <b>{{ podatnik.nazwa }}{% if podatnik.nazwa_cd %} {{ podatnik.nazwa_cd }}{% endif %}</b>
+                </td>
             </tr>
             <tr>
-                <td>Kraj: </td>
-                <td>Województwo: </td>
-                <td>Gmina/Dielnica</td>
+                <td>Kraj: <b>Polska</b></td>
+                <td>Województwo: <b>{{ podatnik.wojewodzctwo }}</b></td>
+                <td>Gmina/Dielnica: <b>{{ podatnik.gmina }}</b></td>
             </tr>
             <tr>
-                <td>Ulica: </td>
-                <td>Nr domu: </td>
+                <td>Ulica: <b>{{ podatnik.ulica }}</b></td>
+                <td>Nr domu: <b>{{ podatnik.nr_domu }}</b></td>
                 <td>Nr lokalu: </td>
             </tr>
             <tr>
-                <td>Miejscowość: </td>
-                <td>Kod pocztowy: </td>
-                <td>Poczta: </td>
+                <td>Miejscowość: <b>{{ podatnik.miasto }}</b></td>
+                <td>Kod pocztowy: <b>{{ podatnik.kod_pocztowy}}</b></td>
+                <td>Poczta: <b>{{ podatnik.poczta }}</b></td>
             </tr>
             <tr>
                 <td>Skrytka pocztowa: </td>
@@ -71,19 +80,19 @@
                 <td colspan="3"><b>IV. PARAMETRY KASY REJESTRUJĄCEJ, KTÓREJ DOTYCZY WNIOSEK</b></td>
             </tr>
             <tr>
-                <td colspan="3">Numer unikatywy: </td>
+                <td colspan="3">Numer unikatywy: <b>{{ kasa.nr_unikatowy }}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Numer fabryczny kasy: </td>
+                <td colspan="3">Numer fabryczny kasy: <b>{{ kasa.nr_fabryczny }}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Numer ewidencyjny: </td>
+                <td colspan="3">Numer ewidencyjny: <b>{% if kasa.nr_nadany %}{{ kasa.nr_nadany }}{% endif %}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Data fiskalizacji kasy: </td>
+                <td colspan="3">Data fiskalizacji kasy: <b>{{ kasa.data_fisk }}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Adres instalacji kasy 4): </td>
+                <td colspan="3">Adres instalacji kasy 4): <b>{{ kasa.miejsce_inst }}</b></td>
             </tr>
             <tr>
                 <td colspan="3"><b>V. RODZAJ KASY REJESTRUJĄCEJ, KTÓREJ DOTYCZY WNIOSEK </b>5)</td>
@@ -157,9 +166,9 @@
             <tr>
                 <td>Imię i nazwisko oraz stanowisko służbowe pracownika sporządzającego adnotację: </td>
             </tr>
-        </table>
+        </table><br><br>
         <div class="legenda" style="padding-left: 10em">
-            Objaśnienia <br>
+            <h5 style="text-align: center"><b>Objaśnienia</b> </h5><br>
             1) W danych adresowych należy wskazać:  <br>
             &nbsp a) adres siedziby - w przypadkuk podmiotu niebędocego osobą fizyczną, <br>
             &nbsp b) adres zamieszkania - w przypadkku podmiotu będącego osobą fizyczną <br>
