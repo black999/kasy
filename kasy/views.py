@@ -79,15 +79,18 @@ def kasa_edycja(request, pk):
 def kasa_detale(request, pk):
     form = PrzegladForm()
     kasa = get_object_or_404(Kasa, pk=pk)
-    odczyt = Odczyt.objects.filter(kasa=pk or none)
-    print(odczyt.pk)
+    odczyt = Odczyt.objects.filter(kasa__pk=pk)
+    if len(odczyt) > 0:
+        odczyt = odczyt[0]
+    else:
+        odczyt = False
     przeglady = Przeglad.objects.filter(kasa=pk).order_by('-data')
     return render(request, 'kasy/kasa_detale.html',
                   {
-                  'kasa': kasa, 
-                  'form': form, 
-                  'przeglady': przeglady,
-                  'odczyt': odczyt
+                      'kasa': kasa,
+                      'form': form,
+                      'przeglady': przeglady,
+                      'odczyt': odczyt
                   })
 
 
