@@ -96,6 +96,7 @@ class Kasa(models.Model):
     aktywna = models.BooleanField(default=True)
     odczytana = models.BooleanField(default=False)
     sms = models.BooleanField(default=False)
+    data_sms = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.model_kasy.nazwa
@@ -105,6 +106,9 @@ class Kasa(models.Model):
             self.nastepny_przeg = data + datetime.timedelta(360)
         else:
             self.nastepny_przeg = data + datetime.timedelta(720)
+
+    def przesun_przeglad(self):
+        self.nastepny_przeg += datetime.timedelta(31)
 
     def odczytaj(self):
         self.odczytana = True

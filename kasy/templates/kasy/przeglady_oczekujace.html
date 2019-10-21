@@ -17,10 +17,11 @@
             <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
             <td>{{ kasa.nastepny_przeg }}</td>
             <td>
+                <a href="{% url 'kasa_przesun_przeglad' pk=kasa.pk %}" class="btn btn-secondary" role="button">Przesun o 1M</a>
                 {% if kasa.sms %}
-                    powiadomiony 
+                    sms - {{ kasa.data_sms|date:"d.m.Y" }}
                 {% else %}
-                    <a  href="{% url 'kasa_sms' pk=kasa.pk %}" class="btn btn-sm" role="button">Przypomnij SMS</a>
+                    <a  href="{% url 'kasa_sms' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">Przypomnij SMS</a>
                 {% endif %}
             </td>
 

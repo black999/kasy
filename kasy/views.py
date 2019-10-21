@@ -91,6 +91,7 @@ def kasa_przeglad(request, pk):
             przeglad = form.save(commit=False)
             kasa = Kasa.objects.get(pk=pk)
             kasa.nastepny_przeglad(przeglad.data)
+            kasa.sms = False
             kasa.save()
             przeglad.kasa = kasa
             przeglad.save()
@@ -99,6 +100,16 @@ def kasa_przeglad(request, pk):
 def kasa_sms(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     kasa.sms = True
+    kasa.data_sms = datetime.datetime.now()
+    kasa.save()
+    return redirect('home')
+
+
+def kasa_przesun_przeglad(request, pk):
+    kasa = get_object_or_404(Kasa, pk=pk)
+    kasa.przesun_przeglad()
+    kasa.sms = False
+    kasa.save()
     return redirect('home')
 
 
