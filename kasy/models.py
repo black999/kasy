@@ -214,3 +214,9 @@ class Odczyt(models.Model):
 
     def zatwierdz(self):
         self.zatwierdzony = True
+
+
+class config(models.Model):
+    sms_access_token = models.CharField("Token SMS", max_length=100)
+
+        

@@ -17,7 +17,7 @@
             <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
             <td>{{ kasa.nastepny_przeg }}</td>
             <td>
-                <a href="{% url 'kasa_przesun_przeglad' pk=kasa.pk %}" class="btn btn-secondary" role="button">Przesun o 1M</a>
+                <a href="{% url 'kasa_przesun_przeglad' pk=kasa.pk %}" class="btn btn-secondary btn-sm" role="button">Przesuń</a>
                 {% if kasa.sms %}
                     sms - {{ kasa.data_sms|date:"d.m.Y" }}
                 {% else %}

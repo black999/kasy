@@ -79,9 +79,16 @@ def kasa_edycja(request, pk):
 def kasa_detale(request, pk):
     form = PrzegladForm()
     kasa = get_object_or_404(Kasa, pk=pk)
+    odczyt = Odczyt.objects.filter(kasa=pk or none)
+    print(odczyt.pk)
     przeglady = Przeglad.objects.filter(kasa=pk).order_by('-data')
     return render(request, 'kasy/kasa_detale.html',
-                  {'kasa': kasa, 'form': form, 'przeglady': przeglady})
+                  {
+                  'kasa': kasa, 
+                  'form': form, 
+                  'przeglady': przeglady,
+                  'odczyt': odczyt
+                  })
 
 
 def kasa_przeglad(request, pk):
@@ -96,6 +103,7 @@ def kasa_przeglad(request, pk):
             przeglad.kasa = kasa
             przeglad.save()
             return redirect('kasa_detale', pk=pk)
+
 
 def kasa_sms(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
