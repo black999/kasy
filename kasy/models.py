@@ -95,6 +95,7 @@ class Kasa(models.Model):
     cykl_przeg = models.CharField(max_length=10, choices=PRZEGLAD, default='1')
     aktywna = models.BooleanField(default=True)
     odczytana = models.BooleanField(default=False)
+    sms = models.BooleanField(default=False)
 
     def __str__(self):
         return self.model_kasy.nazwa

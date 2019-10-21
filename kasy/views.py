@@ -96,6 +96,11 @@ def kasa_przeglad(request, pk):
             przeglad.save()
             return redirect('kasa_detale', pk=pk)
 
+def kasa_sms(request, pk):
+    kasa = get_object_or_404(Kasa, pk=pk)
+    kasa.sms = True
+    return redirect('home')
+
 
 def kasa_odczyt(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)

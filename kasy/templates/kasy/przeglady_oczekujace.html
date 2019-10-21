@@ -4,9 +4,10 @@
 <table class="table table-sm">
     <thead class="thead-dark">
         <tr>
-            <th>model</th>
-            <th>podatnik</th>
-            <th>data nast. przegladu</th>
+            <th>Model</th>
+            <th>Podatnik</th>
+            <th>Data nast. przegladu</th>
+            <th>Opcje</th>
         </tr>
     </thead> 
     <tbody>
@@ -15,6 +16,14 @@
             <td><a href="{% url 'kasa_detale' pk=kasa.pk %}"> {{ kasa.model_kasy }}</a></td>
             <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
             <td>{{ kasa.nastepny_przeg }}</td>
+            <td>
+                {% if kasa.sms %}
+                    powiadomiony 
+                {% else %}
+                    <a  href="{% url 'kasa_sms' pk=kasa.pk %}" class="btn btn-sm" role="button">Przypomnij SMS</a>
+                {% endif %}
+            </td>
+
         </tr>
         {% endfor %}
     </tbody>
