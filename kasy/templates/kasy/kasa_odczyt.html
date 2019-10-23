@@ -8,11 +8,13 @@
                 <td>Model kasy:</td><td><b>{{ kasa.model_kasy }}</b></td>
                 <td>Numer unikatowy:</td><td><b>{{ kasa.nr_unikatowy }}</b></td>
                 <td>Numer fabryczny:</td><td><b>{{ kasa.nr_fabryczny }}</b></td>
-                <td>Numer nadany:</td><td><b>{{ kasa.nr_nadany }}</b></td>
+                <td>Numer nadany:</td><td><b>{% if kasa.nr_nadany %}{{ kasa.nr_nadany }}{% endif %} </b></td>
             </tr>
             <tr>
                 <td>Data fisklizacji:</td><td><b>{{ kasa.data_fisk }}</b></td>
-                <td>Firma:</td><td colspan="5"><b>{{ kasa.podatnik.nazwa }} {{ kasa.podatnik.nazwa_cd }}</b></td>
+                <td>Firma:</td><td colspan="5"><b>{{ kasa.podatnik.nazwa }} 
+                    {% if kasa.podatnik.nazwa_cd %}{{ kasa.podatnik.nazwa_cd }}{% endif %}</b>
+                </td>
             </tr>
         </table>
     </div>
