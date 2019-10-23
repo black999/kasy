@@ -182,17 +182,19 @@
             <tr>
                 <td rowspan="2">1. </td>
                 <td>
+                <b>
                     {{ podatnik.nazwa }}{%if podatnik.nazwa_cd %} {{ podatnik.nazwa_cd }}{% endif %} <br>
                     ul. {{ podatnik.ulica }} {{ podatnik.nr_domu }} {{ podatnik.kod_pocztowy }} {{ podatnik.miasto }} <br>
                     NIP: {{ podatnik.nip }}
+                </b>
                 </td>
-                <td rowspan="2">{{ kasa.model_kasy.producent }} {{ kasa.model_kasy }}</td>
-                <td rowspan="2">{{ kasa.nr_unikatowy }}</td>
-                <td rowspan="2">{{ kasa.nr_fabryczny }}</td>
-                <td rowspan="2">{{ kasa.data_fisk|date:"d-m-Y" }}</td>
+                <td rowspan="2"><b>{{ kasa.model_kasy.producent }} {{ kasa.model_kasy }}<b></td>
+                <td rowspan="2"><b>{{ kasa.nr_unikatowy }}<b></td>
+                <td rowspan="2"><b>{{ kasa.nr_fabryczny }}<b></td>
+                <td rowspan="2"><b>{{ kasa.data_fisk|date:"d-m-y" }}<b></td>
             </tr>
             <tr>
-                <td> {{ kasa.miejsce_inst }}</td>
+                <td><b>{{ kasa.miejsce_inst }}</b></td>
             </tr>
         </table>
         <br>
@@ -202,6 +204,7 @@
             &nbsp adres zamieszkania – w przypadku podmiotu będącego osobą fizyczną.
         </div>
         <br><br> 
+        <h5 style="text-align: center">WYKAZ KAS REJESTRUJĄCYCH, DLA KTÓRYCH PODATNIK DOKONAŁ ZMIAN W KSIĄŻCE KASY</h5>
         <table>
             <tr>
                 <td style="width: 6%">L.p.</td>
