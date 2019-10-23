@@ -151,6 +151,15 @@ def kasa_wyrejestrowanieUS(request, pk):
                    'podatnik': podatnik})
 
 
+def zgloszenieUS_podatnik(request, pk):
+    dane = {}
+    return render(request, 'kasy/zgloszenieUS_podatnik.html', dane)
+
+def zgloszenieUS_serwis(request, pk):
+    dane = {}
+    return render(request, 'kasy/zgloszenieUS_serwis.html', dane)
+
+
 def odczyt_lista(request):
     odczyty = Odczyt.objects.all()
     return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})

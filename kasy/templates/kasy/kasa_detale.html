@@ -18,6 +18,11 @@
         <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
         <p><strong>cykl przegądów : </strong>{% if kasa.cykl_przeg == '1' %} Roczny {% else %} Dwuletni {% endif %}</p>
         <p><strong>nastepny przegląd : </strong>{{ kasa.nastepny_przeg }}</p>
+        <hr>
+        {% if not kasa.odczytana %}
+            <a href="" class="btn btn-success btn-sm"type="button">zgłoszenie podatnika</a>
+            <a href="" class="btn btn-success btn-sm"type="button">zgłoszenie serwisu</a>
+        {% endif %}
     </div>
     <div class="col-7">
         <h3>Przeglądy :</h3>
