@@ -48,7 +48,9 @@
                 <td colspan="3">Identyfikator podatkowy NIP podatnika: <b>{{ podatnik.nip }}</b></td>
             </tr>
             <tr>
-                <td colspan="3">Nazwa/Nazwisko i pierwsze imię: <b>{{ podatnik.nazwa }} {{ podatnik.nazwa_cd }}</b></td>
+                <td colspan="3">
+                    Nazwa/Nazwisko i pierwsze imię: <b>{{ podatnik.nazwa }} 
+                    {% if podatnik.nazwa_cd  %}{{ podatnik.nazwa_cd }}{% endif %}</b></td>
             </tr>
             <tr>
                 <td>Kraj: <b>POLSKA</b></td>
