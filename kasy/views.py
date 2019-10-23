@@ -158,7 +158,10 @@ def zgloszenieUS_podatnik(request, pk):
 def zgloszenieUS_serwis(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     podatnik = kasa.podatnik
-    dane = {'podatnik': podatnik}
+    dane = {
+        'podatnik': podatnik,
+        'kasa': kasa
+        }
     return render(request, 'kasy/zgloszenieUS_serwis.html', dane)
 
 
