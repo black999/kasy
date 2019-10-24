@@ -53,7 +53,7 @@
             </tr>
             <tr>
                 <td colspan="3">Nazwa 3)/Nazwisko i pierwsze imię 4): 
-                    <b>{{ podatnik.nazwa }}{% if podatnik.nazwa_cw %}{{ podatnik.nazwa_cd }}{% endif %}<b>
+                    <b>{{ podatnik.nazwa }}{% if podatnik.nazwa_cd %}{{ podatnik.nazwa_cd }}{% endif %}<b>
                 </td>
             </tr>
             <tr>
@@ -191,7 +191,7 @@
                 <td rowspan="2"><b>{{ kasa.model_kasy.producent }} {{ kasa.model_kasy }}<b></td>
                 <td rowspan="2"><b>{{ kasa.nr_unikatowy }}<b></td>
                 <td rowspan="2"><b>{{ kasa.nr_fabryczny }}<b></td>
-                <td rowspan="2"><b>{{ kasa.data_fisk|date:"d-m-y" }}<b></td>
+                <td rowspan="2"><b>{{ kasa.data_fisk|date:"d-m-Y" }}<b></td>
             </tr>
             <tr>
                 <td><b>{{ kasa.miejsce_inst }}</b></td>
@@ -207,14 +207,14 @@
         <h5 style="text-align: center">WYKAZ KAS REJESTRUJĄCYCH, DLA KTÓRYCH PODATNIK DOKONAŁ ZMIAN W KSIĄŻCE KASY</h5>
         <table>
             <tr>
-                <td style="width: 6%">L.p.</td>
-                <td style="width: 30%">Adres miejsca instalacji kasy oraz nazwa placówki 1)</td>
-                <td>Typ/model kasy</td>
-                <td>Numer unikatowy</td>
-                <td>Numer fabryczny</td>
-                <td>Data fiskalizacji</td>
-                <td>Data obowizku</td>
-                <td>Numer ewidencyjny kasy</td>
+                <td style="width: 4%" class="cien">L.p.</td>
+                <td style="width: 30%" class="cien">Adres miejsca instalacji kasy oraz nazwa placówki 1)</td>
+                <td class="cien">Typ/model kasy</td>
+                <td class="cien">Numer unikatowy</td>
+                <td class="cien">Numer fabryczny</td>
+                <td class="cien">Data fiskalizacji</td>
+                <td class="cien">Data obowizku</td>
+                <td class="cien">Numer ewidencyjny kasy</td>
             </tr>
             <tr>
                 <td style="height: 3em"></td>
