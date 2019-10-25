@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+import xlwt
+from django.http import HttpResponse
 #from .forms import KasaForm, PodatnikForm, PrzegladForm, PrzegladRokMiesiac, OdczytForm
 from .forms import *
 from .models import *
@@ -299,3 +301,56 @@ def przeglad_raportUS(request, rok, mie):
     return render(request, 'kasy/przeglad_raportUS.html',
                   {'przeglady': przeglady,
                    'urzedy': urzedy, 'rok': rok, 'mie': mie})
+
+
+def przeglad_raport_posnet(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="fiskalizacje.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Users Data') # this will make a sheet named Users Data
+
+    # font_style = xlwt.XFStyle()
+    # font_style.font.bold = True
+
+    # columns = ['Username', 'First Name', 'Last Name', 'Email Address', ]
+
+    # for col_num in range(len(columns)):
+    #     ws.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column 
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+    row_num = 0
+    col_num = 0
+
+    kasy = Kasa.objects.all().order_by('data_fisk')
+    for kasa in kasy:
+        ws.write(row_num, 0, str(kasa.nr_fabryczny), font_style)
+        ws.write(row_num, 1, str(kasa.nr_unikatowy), font_style)
+        ws.write(row_num, 2, str(kasa.data_fisk), font_style)
+        ws.write(row_num, 3, str(kasa.podatnik.nip), font_style)
+        ws.write(row_num, 4, str(kasa.podatnik), font_style)
+        ws.write(row_num, 5, str(kasa.podatnik.kod_pocztowy), font_style)
+        ws.write(row_num, 6, str(kasa.podatnik.poczta), font_style)
+        ws.write(row_num, 7, str(kasa.podatnik.miasto), font_style)
+        ws.write(row_num, 8, str(kasa.podatnik.ulica), font_style)
+        ws.write(row_num, 9, str(kasa.podatnik.nr_domu), font_style)
+        ws.write(row_num, 10, "", font_style)
+        ws.write(row_num, 11, str(kasa.podatnik.telefon), font_style)
+        ws.write(row_num, 12, str(kasa.podatnik.email), font_style)
+        ws.write(row_num, 13, str(kasa.podatnik.email), font_style)
+        ws.write(row_num, 14, "0", font_style)
+        ws.write(row_num, 15, "", font_style)
+        ws.write(row_num, 16, "", font_style)
+        ws.write(row_num, 17, "", font_style)
+        ws.write(row_num, 18, "", font_style)
+        ws.write(row_num, 19, "", font_style)
+        ws.write(row_num, 20, "", font_style)
+        ws.write(row_num, 21, "", font_style)
+        ws.write(row_num, 22, str(kasa.podatnik.urzad_skarbowy.nr_urzedu), font_style)
+        ws.write(row_num, 23, str(kasa.nr_nadany), font_style)
+        row_num += 1
+
+    wb.save(response)
+
+    return response

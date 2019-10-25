@@ -24,6 +24,8 @@ urlpatterns = [
          views.przeglad_faktura, name='przeglad_faktura'),
     path('kasa/przeglad/raportUS/<int:rok>/<int:mie>',
          views.przeglad_raportUS, name='przeglad_raportUS'),
+    path('kasa/przeglad/raportPosnet', views.przeglad_raport_posnet, 
+         name='przeglad_raport_posnet'),
     path('kasa/szukaj', views.kasa_szukaj, name='kasa_szukaj'),
     path('kasa/<int:pk>/odczyt', views.kasa_odczyt, name='kasa_odczyt'),
     path('kasa/<int:pk>/wyrejUS',
