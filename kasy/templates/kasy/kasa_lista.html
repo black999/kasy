@@ -16,10 +16,10 @@
     {% for kasa in kasy %}
         {% if kasa.aktywna %}
             <tr>
+        {% elif not kasa.aktywna and not kasa.odczytana %}
+            <tr style="color:LightSlateGray"> 
         {% elif kasa.odczytana %}
             <tr style="color:DarkRed"> 
-        {% elif not kasa.aktywna %}
-            <tr style="color:LightSlateGray"> 
         {% endif %}
                 <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
                 <td>{{ kasa.nr_unikatowy |upper}}</td>

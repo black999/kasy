@@ -50,7 +50,7 @@
         {% endif %}
         <br><br>
 
-        {% if kasa.aktywna and not kasa.odczytana %}
+        {% if kasa.aktywna %}
             <h3>Nowy przegląd</h3>
             <form method="POST" action="{% url 'kasa_przeglad' pk=kasa.pk %}">
                 {% csrf_token %}
@@ -60,7 +60,7 @@
                 <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
             </form>
         {% else %}
-            {% if not kasa.aktywna %}
+            {% if not kasa.aktywna and not kasa.odczytana %}
                 <p style="color:red">Kasa nie aktywna  - nie można dodawać przeglądów</p>
             {% endif %}
         {% endif %}
@@ -69,8 +69,12 @@
             <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
         {% else %}
             <p><h3 style="color:DarkRed"> K A S A &nbsp&nbsp O D C Z Y T A N A</h3></p>
-            <a href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Pokaz odczyt</a>
-            <a href="{% url 'kasa_wyrejUS' pk=kasa.pk %}" class="btn btn-sm btn-secondary" role="button">Wniosek o wyrejestrowanie</a>
+            {% if odczyt.zatwierdzony %}
+                <a href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Pokaz odczyt</a>
+                <a href="{% url 'kasa_wyrejUS' pk=kasa.pk %}" class="btn btn-sm btn-secondary" role="button">Wniosek o wyrejestrowanie</a>
+            {% else %}
+            <p>Odczyt nie zatwierdzony </p>
+            {% endif %}
         {% endif %}
     </div> 
 </div>

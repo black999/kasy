@@ -28,15 +28,17 @@
             </thead>
             {% for kasa in kasy %}
             {% if kasa.aktywna %}
-            <tr>
-            {% else %}
-            <tr style="color:orangered">
+                <tr>
+            {% elif not kasa.aktywna and not kasa.odczytana %}
+                <tr style="color:LightSlateGray"> 
+            {% elif kasa.odczytana %}
+                <tr style="color:DarkRed">                     
             {% endif %}
-                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
-                <td>{{ kasa.nr_unikatowy }}</td>
-                <td>{{ kasa.nr_fabryczny }}</td>
-                <td>{{ kasa.nastepny_przeg }}</td>
-            </tr>
+                    <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
+                    <td>{{ kasa.nr_unikatowy }}</td>
+                    <td>{{ kasa.nr_fabryczny }}</td>
+                    <td>{{ kasa.nastepny_przeg }}</td>
+                </tr>
             {% endfor %} 
         </table>
         {% else %}

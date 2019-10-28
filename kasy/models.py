@@ -112,6 +112,7 @@ class Kasa(models.Model):
 
     def odczytaj(self):
         self.odczytana = True
+        self.aktywna = False
 
 
 class Przeglad(models.Model):
