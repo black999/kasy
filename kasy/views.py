@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+ffrom django.shortcuts import render, redirect, get_object_or_404
 import xlwt
 from django.http import HttpResponse
 #from .forms import KasaForm, PodatnikForm, PrzegladForm, PrzegladRokMiesiac, OdczytForm
@@ -310,15 +310,6 @@ def przeglad_raport_posnet(request):
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Users Data') # this will make a sheet named Users Data
 
-    # font_style = xlwt.XFStyle()
-    # font_style.font.bold = True
-
-    # columns = ['Username', 'First Name', 'Last Name', 'Email Address', ]
-
-    # for col_num in range(len(columns)):
-    #     ws.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column 
-
-    # Sheet body, remaining rows
     font_style = xlwt.XFStyle()
     row_num = 0
     col_num = 0
