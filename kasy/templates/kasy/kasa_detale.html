@@ -20,8 +20,8 @@
         <p><strong>nastepny przegląd : </strong>{{ kasa.nastepny_przeg }}</p>
         <hr>
         {% if not kasa.odczytana %}
-            <a href="" class="btn btn-success btn-sm"type="button">zgłoszenie podatnika</a>
-            <a href="{% url 'zgloszenieUS_serwis' pk=kasa.pk %}" class="btn btn-success btn-sm"type="button">zgłoszenie serwisu</a>
+            <a href="{% url 'zgloszenieUS_podatnik' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie podatnika</a>
+            <a href="{% url 'zgloszenieUS_serwis' pk=kasa.pk %}" class="btn btn-success btn-sm" type="button">zgłoszenie serwisu</a>
         {% endif %}
     </div>
     <div class="col-7">

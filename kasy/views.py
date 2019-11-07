@@ -1,7 +1,6 @@
-ffrom django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 import xlwt
 from django.http import HttpResponse
-#from .forms import KasaForm, PodatnikForm, PrzegladForm, PrzegladRokMiesiac, OdczytForm
 from .forms import *
 from .models import *
 # from django.views.generic.list import ListView
@@ -154,8 +153,14 @@ def kasa_wyrejestrowanieUS(request, pk):
 
 
 def zgloszenieUS_podatnik(request, pk):
-    dane = {}
+    kasa = get_object_or_404(Kasa, pk=pk)
+    podatnik = kasa.podatnik
+    dane = {
+        'podatnik': podatnik,
+        'kasa': kasa
+    }
     return render(request, 'kasy/zgloszenieUS_podatnik.html', dane)
+
 
 def zgloszenieUS_serwis(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
@@ -163,7 +168,7 @@ def zgloszenieUS_serwis(request, pk):
     dane = {
         'podatnik': podatnik,
         'kasa': kasa
-        }
+    }
     return render(request, 'kasy/zgloszenieUS_serwis.html', dane)
 
 
@@ -308,7 +313,7 @@ def przeglad_raport_posnet(request):
     response['Content-Disposition'] = 'attachment; filename="fiskalizacje.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Users Data') # this will make a sheet named Users Data
+    ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
 
     font_style = xlwt.XFStyle()
     row_num = 0
@@ -338,7 +343,8 @@ def przeglad_raport_posnet(request):
         ws.write(row_num, 19, "", font_style)
         ws.write(row_num, 20, "", font_style)
         ws.write(row_num, 21, "", font_style)
-        ws.write(row_num, 22, str(kasa.podatnik.urzad_skarbowy.nr_urzedu), font_style)
+        ws.write(row_num, 22, str(
+            kasa.podatnik.urzad_skarbowy.nr_urzedu), font_style)
         ws.write(row_num, 23, str(kasa.nr_nadany), font_style)
         row_num += 1
 

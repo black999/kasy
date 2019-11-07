@@ -27,7 +27,9 @@
 				<tr>
 					<td>{{ forloop.counter }}</td>
 					<td>{{ przeglad.data }}</td>
-					<td>{{ przeglad.kasa }}</td>
+					<td>
+						<a href="{% url 'kasa_detale' pk=przeglad.kasa.pk %}">{{ przeglad.kasa }}</a>
+					</td>
 					<td>{{ przeglad.kasa.podatnik.nazwa }}</td>
 					<td>{{ przeglad.kasa.podatnik.nip }}</td>
 					<td align="center">

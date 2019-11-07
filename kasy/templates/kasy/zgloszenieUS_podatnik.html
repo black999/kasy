@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raport do US</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css" media='print'>
+        @page {size:landscape;}
+        body, html {font-size : 11pt;}
+        .legenda {font-size : 9pt;}
+        .cien {
+            background: gray;
+        }
+    </style>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            table-layout: fixed;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding-left: 10px;
+        }
+        .legenda {font-size : 9pt;}
+        .cien {
+            background: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="page-break-before: always; page-break-inside: avoid;">
+        <h5 style="text-align: center">ZGŁOSZENIE/AKTUALIZACJA ZGŁOSZENIA DANYCH DOTYCZĄCYCH KASY PRZEZ PODATNIKA</h5>
+        <table>
+            <tr>
+                <td colspan="3" class="cien"><b>I. CEL ZŁOŻENIA</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                     &nbsp   o ZGŁOSZENIE <br>
+                     &nbsp   o AKTUALIZACJA ZGŁOSZENIA
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="cien"><b>II. MIEJSCE SKŁADANIA ZGŁOSZENIA</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Naczelnik urzędu skarbowego, do którego jest składane zgłoszenie: </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="cien"><b>III. DANE PODATNIKA </b></td>
+            </tr>
+            <tr>
+                <td colspan="3">Identyfikator podatkowy NIP podatnika : <b>{{ podatnik.nip }}</b> </td> </tr>
+            <tr>
+                <td colspan="3">Nazwa 3)/Nazwisko i pierwsze imię 4): 
+                    <b>{{ podatnik.nazwa }}{% if podatnik.nazwa_cd %} {{ podatnik.nazwa_cd }}{% endif %}<b>
+                </td>
+            </tr>
+            <tr>
+                <td>Kraj: <b>Polska</b></td>
+                <td>Województwo: <b>{{ podatnik.wojewodzctwo }}</b></td>
+                <td>Gmina/Dielnica: <b>{{ podatnik.gmina }}</b></td>
+            </tr>
+            <tr>
+                <td>Ulica: <b>{{ podatnik.ulica }}</b></td>
+                <td>Nr domu: <b>{{ podatnik.nr_domu }}</b></td>
+                <td>Nr lokalu: </td>
+            </tr>
+            <tr>
+                <td>Miejscowość: <b>{{ podatnik.miasto }}</b></td>
+                <td>Kod pocztowy: <b>{{ podatnik.kod_pocztowy}}</b></td>
+                <td>Poczta: <b>{{ podatnik.poczta }}</b></td>
+            </tr>
+            <tr>
+                <td>Skrytka pocztowa: </td>
+                <td>Telefon: </td>
+                <td>Adres e-mail: </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="cien"><b>IV. TREŚĆ ZGŁOSZENIA </b></td>
+            </tr>
+            <tr>
+                <td colspan="3"> Zgłaszam dane dotyczące kasy/kas rejestrujących, wykazane w załączniku do zgłoszenia. </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="cien"><b>V. POWÓD INSTALACJI KASY</b></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                     &nbsp   o Ze wsględu na rodzaj prowadzonej działalności, dla której sprzedaż jest objęta obowiązkiem prowadznia ewidencji przy użyciu ksay rejestrującej. <br>
+                     &nbsp   o Ze względu na przekroczenie limitu uprawniającego do zwolnienia z obowiązku prowadzenia ewidencji przy użyciu kasy rejestrującej. <br>
+                     &nbsp   o Dobrowolna instalacja
+                </td>
+            <tr>
+                <td colspan="3" class="cien"><b>VI. KASA REJESTRUJĄCA NABYWANA PRZEZ PODATNIKA WSKAZANEGO W CZĘŚCI III JEST KASĄ REZERWOWĄ <b></td> 
+            </tr> 
+            <tr>
+                <td colspan="3">
+                     &nbsp   o TAK <br>
+                     &nbsp   o NIE
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="container" style="page-break-before: always; page-break-inside: avoid;">
+        <table>
+            <tr>
+                
+                <td class="cien"><b>VII. DATA I MIEJSCE SPORZĄDZENIA ZGŁOSZENIA ORAZ PODPIS SKŁADAJĄCEGO ZGŁOSZENIE</b></td> 
+            </tr>
+            <tr>
+                <td>Data (dd-mm-rrrr): <b>{{ kasa.data_fisk|date:"d-m-Y" }}</b></td>
+            </tr>
+            <tr>
+                <td>Miejsce: <b>{{ podatnik.miasto }}</b></td>
+            </tr>
+            <tr>
+                <td>Imię i nazwisko: </td>
+            </tr>
+            <tr>
+                <td>Podpis:<br><br></td>
+            </tr>
+            <tr>
+                <td class="cien"><b>VII. ADNOTACJE URZĘDU</b></td>
+            </tr>
+            <tr>
+                <td>Nr dokumentu:</td>
+            </tr>
+            <tr>
+                <td>Data przyjęcia dokumentu (dd-mm-rrrr):</td>
+            </tr>
+            <tr>
+                <td>Imię i nazwisko oraz stanowisko służbowe pracownika sporządzającego adnotację: </td>
+            </tr>
+        </table>
+    </div>
+    <br><br><br>
+    <div class="container" >
+        <h6 style="text-align: right">Załącznik do zgłoszenia</h6>
+        <h5 style="text-align: center">DANE DOTYCZĄCE KAS REJESTRUJĄCYCH, KTÓRYCH DOTYCZY SKŁADANE ZGŁOSZENIE </h5>
+        <table class="legenda">
+            <tr class="cien legenda">
+                <td style="width: 4%">L.p.</td>
+                <td style="width: 25%">Adres miejsca instalacji kasy oraz nazwa placówki</td>
+                <td>Data dokonania zmiany miejsca instalcji</td>
+                <td>Typ/model kasy</td>
+                <td>Numer unikatowy</td>
+                <td>Numer fabryczny</td>
+                <td>Data fiskalizacji</td>
+                <td>Data obowiązku stosowania kasy</td> 
+                <td>Numer ewidencyjny</td>
+            </tr>
+            <tr>
+                <td>1.</td>
+                <td>{{ kasa.miejsce_inst }}</td>
+                <td></td>
+                <td>{{ kasa.model_kasy }}</td>
+                <td>{{ kasa.nr_unikatowy }}</td>
+                <td>{{ kasa.nr_fabryczny }}</td>
+                <td>{{ kasa.data_fisk |date:"Y-m-d"}}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</body>
