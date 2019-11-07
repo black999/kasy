@@ -21,7 +21,7 @@
         <hr>
         {% if not kasa.odczytana %}
             <a href="{% url 'zgloszenieUS_podatnik' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie podatnika</a>
-            <a href="{% url 'zgloszenieUS_serwis' pk=kasa.pk %}" class="btn btn-success btn-sm" type="button">zgłoszenie serwisu</a>
+            <a href="{% url 'zgloszenieUS_serwis' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie serwisu</a>
         {% endif %}
     </div>
     <div class="col-7">
