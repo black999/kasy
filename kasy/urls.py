@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    # path('kasa/dodaj', views.kasa_dodaj, name='kasa_dodaj'),
+    path('zgloszenie_posnet', views.zgloszenie_posnet,
+         name='zglosznie_posnet'),
     path('kasa/<int:pk>/edycja', views.kasa_edycja, name='kasa_edycja'),
     path('kasa/lista/<str:typ>', views.kasa_lista, name='kasa_lista'),
     path('kasa/<int:pk>/detale', views.kasa_detale, name='kasa_detale'),
@@ -22,10 +23,6 @@ urlpatterns = [
          views.przeglad_rok_miesiac, name='przeglad_rok_miesiac'),
     path('kasa/przeglad/<int:pk>/faktura/<int:rok>/<int:mie>',
          views.przeglad_faktura, name='przeglad_faktura'),
-    path('kasa/przeglad/raportUS/<int:rok>/<int:mie>',
-         views.przeglad_raportUS, name='przeglad_raportUS'),
-    path('kasa/przeglad/raportPosnet', views.przeglad_raport_posnet,
-         name='przeglad_raport_posnet'),
     path('kasa/szukaj', views.kasa_szukaj, name='kasa_szukaj'),
     path('kasa/<int:pk>/odczyt', views.kasa_odczyt, name='kasa_odczyt'),
     path('kasa/<int:pk>/wyrejUS',

@@ -308,18 +308,22 @@ def przeglad_raportUS(request, rok, mie):
                    'urzedy': urzedy, 'rok': rok, 'mie': mie})
 
 
-def przeglad_raport_posnet(request):
+def zgloszenie_posnet(request):
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="fiskalizacje.xls"'
+    attachment = "attachment; filename=fiskalizacje" \
+        + str(datetime.date.today()) + ".xls"
+    # response['Content-Disposition'] = 'attachment; filename=filename'
+    response['Content-Disposition'] = attachment
+    kasy = Kasa.objects.filter(
+        zgloszona_do_producenta=False).order_by('data_fisk')
 
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Users Data')  # this will make a sheet named Users Data
 
     font_style = xlwt.XFStyle()
     row_num = 0
-    col_num = 0
+    # col_num = 0
 
-    kasy = Kasa.objects.all().order_by('data_fisk')
     for kasa in kasy:
         ws.write(row_num, 0, str(kasa.nr_fabryczny), font_style)
         ws.write(row_num, 1, str(kasa.nr_unikatowy), font_style)
@@ -347,6 +351,8 @@ def przeglad_raport_posnet(request):
             kasa.podatnik.urzad_skarbowy.nr_urzedu), font_style)
         ws.write(row_num, 23, str(kasa.nr_nadany), font_style)
         row_num += 1
+        kasa.zglos_do_posnet()
+        kasa.save()
 
     wb.save(response)
 

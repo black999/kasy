@@ -13,7 +13,8 @@ class KasaForm(forms.ModelForm):
             'podatnik',
             'odczytana',
             'sms',
-            'data_sms'
+            'data_sms',
+            'zgloszona_do_producenta'
         ]
         widgets = {
             'data_fisk': forms.widgets.DateInput(

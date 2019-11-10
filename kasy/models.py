@@ -97,6 +97,7 @@ class Kasa(models.Model):
     odczytana = models.BooleanField(default=False)
     sms = models.BooleanField(default=False)
     data_sms = models.DateField(blank=True, null=True)
+    zgloszona_do_producenta = models.BooleanField(default=False)
 
     def __str__(self):
         return self.model_kasy.nazwa
@@ -113,6 +114,9 @@ class Kasa(models.Model):
     def odczytaj(self):
         self.odczytana = True
         self.aktywna = False
+
+    def zglos_do_posnet(self):
+        self.zgloszona_do_producenta = True
 
 
 class Przeglad(models.Model):
