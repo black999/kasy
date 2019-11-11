@@ -9,7 +9,12 @@ import datetime
 
 def home(request):
     kasy = Kasa.objects.filter(aktywna=True).order_by('nastepny_przeg')[:20]
-    return render(request, 'kasy/przeglady_oczekujace.html', {'kasy': kasy})
+    niezgloszone = len(Kasa.objects.filter(zgloszona_do_producenta=False))
+    context = {
+        'kasy': kasy,
+        'niezgloszone': niezgloszone
+    }
+    return render(request, 'kasy/przeglady_oczekujace.html', context)
 
 
 # class ListaKas(ListView, pk):

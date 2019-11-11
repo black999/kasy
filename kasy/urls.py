@@ -16,6 +16,8 @@ urlpatterns = [
     path('kasa/<int:pk>/przeglad', views.kasa_przeglad, name='kasa_przeglad'),
     path('kasa/przeglad/ostatnie', views.przeglad_ostatnie,
          name='przeglad_ostatnie'),
+    path('kasa/przeglad/raportUS/<int:rok>/<int:mie>',
+         views.przeglad_raportUS, name='przeglad_raportUS'),
     path('kasa/<int:pk>/sms', views.kasa_sms, name='kasa_sms'),
     path('kasa/<int:pk>/przesun_przeglad',
          views.kasa_przesun_przeglad, name='kasa_przesun_przeglad'),
