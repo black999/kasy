@@ -201,7 +201,7 @@ class Odczyt(models.Model):
         "Łączna należność", max_digits=10, decimal_places=2)
     liczba_zerowan = models.PositiveSmallIntegerField(
         "Liczba zerowań", default=0)
-    liczba_paragonow = models.PositiveSmallIntegerField("Liczba paragonów")
+    liczba_paragonow = models.PositiveIntegerField("Liczba paragonów")
     liczba_faktur = models.PositiveSmallIntegerField(
         "Liczba faktur", default=0)
     liczba_paragonow_anulowanych = models.PositiveSmallIntegerField(
