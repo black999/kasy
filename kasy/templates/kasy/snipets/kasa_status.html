@@ -1,0 +1,7 @@
+{% if kasa.odczytana %} 
+    odczytana 
+{% elif not kasa.aktywna %} 
+    nieaktywna 
+{% else %}
+    {{ kasa.nastepny_przeg |date:"d.m.Y" }}
+{% endif %}

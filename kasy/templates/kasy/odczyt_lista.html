@@ -15,7 +15,7 @@
             </thead>
             {% for odczyt in odczyty %}
             <tr>
-                <td>{{ odczyt.data }}</td>
+                <td>{{ odczyt.data |date:"d.m.Y"}}</td>
                 <td>{{ odczyt.kasa.model_kasy.nazwa }}</td>
                 <td>{{ odczyt.kasa.nr_unikatowy }}</td>
                 <td>{{ odczyt.kasa.podatnik.nazwa }}</td>

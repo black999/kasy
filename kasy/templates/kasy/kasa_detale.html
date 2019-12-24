@@ -17,7 +17,7 @@
         <p><strong>miejsce inst. : </strong>{{ kasa.miejsce_inst }}</p>
         <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
         <p><strong>cykl przegądów : </strong>{% if kasa.cykl_przeg == '1' %} Roczny {% else %} Dwuletni {% endif %}</p>
-        <p><strong>nastepny przegląd : </strong>{{ kasa.nastepny_przeg }}</p>
+        <p><strong>nastepny przegląd : </strong>{% include 'kasy/snipets/kasa_status.html' %}</p>
         <hr>
         {% if not kasa.odczytana %}
             <a href="{% url 'zgloszenieUS_podatnik' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie podatnika</a>
