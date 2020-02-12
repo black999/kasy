@@ -202,7 +202,16 @@ def odczyt_zatwierdz(request, pk):
     odczyt = get_object_or_404(Odczyt, pk=pk)
     odczyt.zatwierdz()
     odczyt.save()
-    return redirect('odczyt_lista')
+    form = PrzegladForm()
+    kasa = Kasa.objects.get(id=odczyt.kasa.id)
+    przeglady = Przeglad.objects.filter(kasa=kasa.pk).order_by('-data')
+    return render(request, 'kasy/kasa_detale.html',
+                  {
+                      'kasa': kasa,
+                      'form': form,
+                      'przeglady': przeglady,
+                      'odczyt': odczyt
+                  })
 
 
 def odczyt_usun(request, pk):
