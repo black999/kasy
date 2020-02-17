@@ -104,9 +104,9 @@ class Kasa(models.Model):
 
     def nastepny_przeglad(self, data):
         if self.cykl_przeg == '1':
-            self.nastepny_przeg = data + datetime.timedelta(360)
+            self.nastepny_przeg = data + datetime.timedelta(365)
         else:
-            self.nastepny_przeg = data + datetime.timedelta(720)
+            self.nastepny_przeg = data + datetime.timedelta(730)
 
     def przesun_przeglad(self):
         self.nastepny_przeg += datetime.timedelta(31)
