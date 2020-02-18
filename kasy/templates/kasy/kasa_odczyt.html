@@ -163,9 +163,7 @@
                     <td colspan="2">{{ form.daty_przegladow }}</td>
                 </tr>
             </table>
-            
         </form>
-
     </div>
 </div>
 <script type="text/javascript">
@@ -187,6 +185,13 @@
             });
             $("input[name='laczna_sprzedaz_PTU']").val($sumaPTU);
             $("input[name='laczna_wysokosc_PTU']").val($lacznaNaleznosc + $sumaPTU);
+        });
+        $("input[name='liczba_paragonow']").change(function(){
+            $("input[name*='ptu_']").each(function(){
+                if ($(this).val() == ""){
+                    $(this).val('0');
+                };
+            });
         });
     });
 </script>
