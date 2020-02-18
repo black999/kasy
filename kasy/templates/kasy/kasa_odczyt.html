@@ -171,16 +171,20 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("input[name*='ptu_']").change(function(){
-            var $sumaPTU = 0
+            var $sumaPTU = 0;
             $("input[name^='ptu_']").each(function() {
-                $wartosc = $(this).val();
-                $sumaPTU += $wartosc * 1;
-            })
-            var $lacznaNaleznosc = 0
+                $wartosc = parseFloat($(this).val());
+                if (!isNaN($wartosc)) {
+                    $sumaPTU += $wartosc;
+                };
+            });
+            var $lacznaNaleznosc = 0;
             $("input[name^='sp_ptu_']").each(function(){
-                $wartosc = $(this).val();
-                $lacznaNaleznosc += $wartosc *1;
-            })
+                $wartosc = parseFloat($(this).val());
+                if (!isNaN($wartosc)) {
+                    $lacznaNaleznosc += $wartosc;
+                };
+            });
             $("input[name='laczna_sprzedaz_PTU']").val($sumaPTU);
             $("input[name='laczna_wysokosc_PTU']").val($lacznaNaleznosc + $sumaPTU);
         });
