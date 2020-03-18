@@ -12,7 +12,8 @@ def home(request):
     niezgloszone = len(Kasa.objects.filter(zgloszona_do_producenta=False))
     context = {
         'kasy': kasy,
-        'niezgloszone': niezgloszone
+        'niezgloszone': niezgloszone,
+        'header': 'Przeglądy'
     }
     return render(request, 'kasy/przeglady_oczekujace.html', context)
 
@@ -27,14 +28,24 @@ def kasa_lista(request, typ):
     if typ == 'aktywne':
         kasy = Kasa.objects.filter(aktywna=True).filter(
             odczytana=False).select_related('podatnik')
+        title = 'Aktywne'
     elif typ == 'nieaktywne':
         kasy = Kasa.objects.filter(aktywna=False).filter(
             odczytana=False).select_related('podatnik')
+        title = 'Nieaktywne'
     elif typ == 'odczytane':
         kasy = Kasa.objects.filter(odczytana=True).select_related('podatnik')
+        title = 'Odczytane'
     elif typ == 'all':
         kasy = Kasa.objects.all().select_related('podatnik')
-    return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
+        title = 'Wszystkie'
+    header = 'Urządzenia'
+    return render(request, 'kasy/kasa_lista.html', 
+                    {
+                        'kasy': kasy, 
+                        'title': title, 
+                        'header': header
+                    })
 
 
 def kasa_szukaj(request):

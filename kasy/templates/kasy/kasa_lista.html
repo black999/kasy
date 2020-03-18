@@ -1,36 +1,65 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-<table id="tab1" class="table table-sm">
-    <thead class="thead-dark">
-        <tr>
-            <th>model kasy</th>
-            <th>nr. unikatowy</th>
-            <th>nr. fabryczny</th>
-            <th>data fisk.</th>
-            <th>nast. przegląd</th>
-            <th>właścicel</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for kasa in kasy %}
-        {% if kasa.aktywna %}
-            <tr>
-        {% elif not kasa.aktywna and not kasa.odczytana %}
-            <tr style="color:LightSlateGray"> 
-        {% elif kasa.odczytana %}
-            <tr style="color:DarkRed"> 
-        {% endif %}
-                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
-                <td>{{ kasa.nr_unikatowy |upper}}</td>
-                <td>{{ kasa.nr_fabryczny }}</td>
-                <td>{{ kasa.data_fisk |date:"d.m.Y"}}</td>
-                <td>{% include 'kasy/snipets/kasa_status.html' %}</td>
-                <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
-            </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% include 'kasy/snipets/back.html' %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ title }}</h3>
+                    <div class="card-tools">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="badge badge-primary">Label</span>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tab1" class="table table-sm">
+                        <thead class="thead">
+                            <tr>
+                                <th>model kasy</th>
+                                <th>nr. unikatowy</th>
+                                <th>nr. fabryczny</th>
+                                <th>data fisk.</th>
+                                <th>nast. przegląd</th>
+                                <th>właścicel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for kasa in kasy %}
+                                {% if kasa.aktywna %}
+                                    <tr>
+                                {% elif not kasa.aktywna and not kasa.odczytana %}
+                                    <tr style="color:LightSlateGray"> 
+                                {% elif kasa.odczytana %}
+                                    <tr style="color:DarkRed"> 
+                                {% endif %}
+                                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td> 
+                                <td>{{ kasa.nr_unikatowy |upper}}</td>
+                                <td>{{ kasa.nr_fabryczny }}</td>
+                                <td>{{ kasa.data_fisk |date:"d.m.Y"}}</td>
+                                <td>{% include 'kasy/snipets/kasa_status.html' %}</td>
+                                <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    {% include 'kasy/snipets/back.html' %}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card --> 
+        </div>
+        <!-- /.com-sm-12 -->
+    </div>
+    <!-- /.row -->
+</section> 
 
 {% endblock content %}
