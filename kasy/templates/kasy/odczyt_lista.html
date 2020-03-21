@@ -1,38 +1,63 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <table id="tab1" class="table table-sm">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Data</th>
-                    <th>Urządzenie</th>
-                    <th>Nr. unikat</th>
-                    <th>Firma</th>
-                    <th></th>
-                </tr>
-            </thead>
-            {% for odczyt in odczyty %}
-            <tr>
-                <td>{{ odczyt.data |date:"d.m.Y"}}</td>
-                <td>{{ odczyt.kasa.model_kasy.nazwa }}</td>
-                <td>{{ odczyt.kasa.nr_unikatowy }}</td>
-                <td>{{ odczyt.kasa.podatnik.nazwa }}</td>
-                <td>
-                {% if odczyt.zatwierdzony %}
-                    <a  href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Raport do US</a>
-                    <a  href="{% url 'kasa_wyrejUS' pk=odczyt.kasa.pk %}" class="btn btn-sm btn-secondary" role="button">Wniosek do US</a>
-                {% else %}
-                    <a  href="{% url 'odczyt_edycja' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Edycja</a>
-                    <a  href="{% url 'odczyt_zatwierdz' pk=odczyt.pk %}" class="btn btn-sm btn-success" role="button">Zatwierdz</a>
-                    <a  href="{% url 'odczyt_usun' pk=odczyt.pk %}" class="btn btn-sm btn-danger" role="button">Usuń</a>
-                {% endif %}
-                </td>                
-            </tr>         
-            {% endfor %}
-        </table>
-        {% include 'kasy/snipets/back.html' %}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Odczytane urządzenia</h3>
+                    <div class="card-tools">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="badge badge-primary">Label</span>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tab1" class="table table-sm">
+                        <thead class="thead">
+                            <tr>
+                                <th>Data</th>
+                                <th>Urządzenie</th>
+                                <th>Nr. unikat</th>
+                                <th>Firma</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        {% for odczyt in odczyty %}
+                        <tr>
+                            <td>{{ odczyt.data |date:"d.m.Y"}}</td>
+                            <td>{{ odczyt.kasa.model_kasy.nazwa }}</td>
+                            <td>{{ odczyt.kasa.nr_unikatowy }}</td>
+                            <td>{{ odczyt.kasa.podatnik.nazwa }}</td>
+                            <td>
+                            {% if odczyt.zatwierdzony %}
+                                <a  href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Raport do US</a>
+                                <a  href="{% url 'kasa_wyrejUS' pk=odczyt.kasa.pk %}" class="btn btn-sm btn-secondary" role="button">Wniosek do US</a>
+                            {% else %}
+                                <a  href="{% url 'odczyt_edycja' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Edycja</a>
+                                <a  href="{% url 'odczyt_zatwierdz' pk=odczyt.pk %}" class="btn btn-sm btn-success" role="button">Zatwierdz</a>
+                                <a  href="{% url 'odczyt_usun' pk=odczyt.pk %}" class="btn btn-sm btn-danger" role="button">Usuń</a>
+                            {% endif %}
+                            </td>                
+                        </tr>         
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    {% include 'kasy/snipets/back.html' %}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card --> 
+        </div>
+        <!-- /.com-sm-12 -->
     </div>
-</div>
+    <!-- /.row -->
+</section> 
+
 {% endblock content %}

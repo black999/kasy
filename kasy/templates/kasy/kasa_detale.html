@@ -2,83 +2,115 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-5">
-        <h3 tyle="display: inline">{{ kasa.model_kasy }} 
-            {% if not kasa.odczytana %}
-                <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
-            {% endif %}
-        </h3>
-        <p><strong>nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
-        <p><strong>nr. fabryczny : </strong>{{ kasa.nr_fabryczny }}</p>
-        <p><strong>nr. nadany : </strong>{% if kasa.nr_nadany %} {{ kasa.nr_nadany }} {% endif %}</p>
-        <p><strong>podatnik : </strong>
-            <a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></p>
-        <p><strong>miejsce inst. : </strong>{{ kasa.miejsce_inst }}</p>
-        <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
-        <p><strong>cykl przegądów : </strong>{% if kasa.cykl_przeg == '1' %} Roczny {% else %} Dwuletni {% endif %}</p>
-        <p><strong>nastepny przegląd : </strong>{% include 'kasy/snipets/kasa_status.html' %}</p>
-        <hr>
-        {% if not kasa.odczytana %}
-            <a href="{% url 'zgloszenieUS_podatnik' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie podatnika</a>
-            <a href="{% url 'zgloszenieUS_serwis' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie serwisu</a>
-        {% endif %}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                       {{ kasa.model_kasy }} 
+                                {% if not kasa.odczytana %}
+                                    <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
+                                {% endif %} 
+                    </h3>
+                    <div class="card-tools">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="badge badge-primary">Label</span>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <!-- <h3 tyle="display: inline">{{ kasa.model_kasy }} 
+                                {% if not kasa.odczytana %}
+                                    <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
+                                {% endif %}
+                            </h3> -->
+                            nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
+                            <p><strong>nr. fabryczny : </strong>{{ kasa.nr_fabryczny }}</p>
+                            <p><strong>nr. nadany : </strong>{% if kasa.nr_nadany %} {{ kasa.nr_nadany }} {% endif %}</p>
+                            <p><strong>podatnik : </strong>
+                                <a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></p>
+                            <p><strong>miejsce inst. : </strong>{{ kasa.miejsce_inst }}</p>
+                            <p><strong>data fiskalizacji : </strong>{{ kasa.data_fisk }}</p>
+                            <p><strong>cykl przegądów : </strong>{% if kasa.cykl_przeg == '1' %} Roczny {% else %} Dwuletni {% endif %}</p>
+                            <p><strong>nastepny przegląd : </strong>{% include 'kasy/snipets/kasa_status.html' %}</p>
+                            <hr>
+                            {% if not kasa.odczytana %}
+                                <a href="{% url 'zgloszenieUS_podatnik' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie podatnika</a>
+                                <a href="{% url 'zgloszenieUS_serwis' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">zgłoszenie serwisu</a>
+                            {% endif %}
+                        </div>
+                        <div class="col-7">
+                            <h3>Przeglądy :</h3>
+                            {% if przeglady %}
+                                <table class="table table-sm">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Data</th>
+                                            <th>Serwisant</th>
+                                            <th>ilość rap.</th>
+                                            <th>info</th>
+                                        </tr>
+                                    </thead>
+                                    {% for przeglad in przeglady %}
+                                        <tr>
+                                            <td>{{ przeglad.data }}</td>
+                                            <td>{{ przeglad.serwisant }}</td>
+                                            <td>{{ przeglad.ilosc_raportow }}</td>
+                                            <td>{% if przeglad.info %} {{ przeglad.info }} {% endif %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% else %}
+                                <p>Brak przeglądów dla tego urządzenia</p>
+                            {% endif %}
+                            <br><br>
+
+                            {% if kasa.aktywna %}
+                                <h3>Nowy przegląd</h3>
+                                <form method="POST" action="{% url 'kasa_przeglad' pk=kasa.pk %}">
+                                    {% csrf_token %}
+                                    <table>
+                                        {{ form.as_table}}         
+                                    </table>
+                                    <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
+                                </form>
+                            {% else %}
+                                {% if not kasa.aktywna and not kasa.odczytana %}
+                                    <p style="color:red">Kasa nie aktywna  - nie można dodawać przeglądów</p>
+                                {% endif %}
+                            {% endif %}
+                            <hr>
+                            {% if not kasa.odczytana %}
+                                <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
+                            {% else %}
+                                <p><h3 style="color:DarkRed"> K A S A &nbsp&nbsp O D C Z Y T A N A</h3></p>
+                                {% if odczyt.zatwierdzony %}
+                                    <a href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Pokaz odczyt</a>
+                                    <a href="{% url 'kasa_wyrejUS' pk=kasa.pk %}" class="btn btn-sm btn-secondary" role="button">Wniosek o wyrejestrowanie</a>
+                                {% else %}
+                                <p>Odczyt nie zatwierdzony </p>
+                                {% endif %}
+                            {% endif %}
+                        </div> 
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    {% include 'kasy/snipets/back.html' %}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card --> 
+        </div>
+        <!-- /.com-sm-12 -->
     </div>
-    <div class="col-7">
-        <h3>Przeglądy :</h3>
-        {% if przeglady %}
-            <table class="table table-sm">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Data</th>
-                        <th>Serwisant</th>
-                        <th>ilość rap.</th>
-                        <th>info</th>
-                    </tr>
-                </thead>
-                {% for przeglad in przeglady %}
-                    <tr>
-                        <td>{{ przeglad.data }}</td>
-                        <td>{{ przeglad.serwisant }}</td>
-                        <td>{{ przeglad.ilosc_raportow }}</td>
-                        <td>{% if przeglad.info %} {{ przeglad.info }} {% endif %}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% else %}
-            <p>Brak przeglądów dla tego urządzenia</p>
-        {% endif %}
-        <br><br>
-
-        {% if kasa.aktywna %}
-            <h3>Nowy przegląd</h3>
-            <form method="POST" action="{% url 'kasa_przeglad' pk=kasa.pk %}">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table}}         
-                </table>
-                <button class="btn btn-sm btn-outline-dark" type="submit">zapisz</button>
-            </form>
-        {% else %}
-            {% if not kasa.aktywna and not kasa.odczytana %}
-                <p style="color:red">Kasa nie aktywna  - nie można dodawać przeglądów</p>
-            {% endif %}
-        {% endif %}
-        <hr>
-        {% if not kasa.odczytana %}
-            <a  href="{% url 'kasa_odczyt' pk=kasa.pk %}" class="btn btn-sm btn-outline-danger" role="button">Odczyt</a>
-        {% else %}
-            <p><h3 style="color:DarkRed"> K A S A &nbsp&nbsp O D C Z Y T A N A</h3></p>
-            {% if odczyt.zatwierdzony %}
-                <a href="{% url 'odczyt_raportUS' pk=odczyt.pk %}" class="btn btn-sm btn-secondary" role="button">Pokaz odczyt</a>
-                <a href="{% url 'kasa_wyrejUS' pk=kasa.pk %}" class="btn btn-sm btn-secondary" role="button">Wniosek o wyrejestrowanie</a>
-            {% else %}
-            <p>Odczyt nie zatwierdzony </p>
-            {% endif %}
-        {% endif %}
-    </div> 
-</div>
-
-{% include 'kasy/snipets/back.html' %}
+    <!-- /.row -->
+</section> 
     
 {% endblock content %}

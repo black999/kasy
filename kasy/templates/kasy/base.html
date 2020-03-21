@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Datatables bootstrap4 -->
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
   <!-- Daterange picker -->
   {# <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}"> #}
   <!-- summernote -->
@@ -177,6 +179,22 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="{% url 'odczyt_lista' %}" class="nav-link">
+              <i class="fas fa-caret-right nav-icon"></i>
+              <p>
+                Odczyty
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'przeglad_ostatnie' %}" class="nav-link">
+              <i class="fas fa-caret-right nav-icon"></i>
+              <p>
+                Przeglądy
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -263,5 +281,14 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'dist/js/adminlte.js' %}"></script>
+<!-- Datatables -->
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    // $.fn.dataTable.moment( 'DD.MM.YYYY' );
+    $('#tab1').DataTable();
+});
+</script>
 </body>
 </html>

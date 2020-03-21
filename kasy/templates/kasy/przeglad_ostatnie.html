@@ -1,52 +1,82 @@
 {% extends 'kasy/base.html' %}
 
 {% block content %}
-<div class="row">
-	<div class="col-8">
-		<h3 style="display: inline">Przeglądy : </h3>
-		<span style="float: right">
-			<form method='POST' action="{% url 'przeglad_rok_miesiac' rok=data.year mie=data.month %}" class="form form-inline">
-				{% csrf_token %}
-				{{ form }}
-				<button type='submit' class="btn btn-outline-secondary btn-sm">pokaż</button>
-			</form>
-		</span> 
-		<table class="table table-sm">
-			<thead class="thead-dark">
-				<tr>
-					<th>l.p.</th>
-					<th>Data</th>
-					<th>Kasa</th>
-					<th>Podatnik</th>
-					<th>nip</th>
-					<th>faktura</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for przeglad in przeglady %}
-				<tr>
-					<td>{{ forloop.counter }}</td>
-					<td>{{ przeglad.data }}</td>
-					<td>
-						<a href="{% url 'kasa_detale' pk=przeglad.kasa.pk %}">{{ przeglad.kasa }}</a>
-					</td>
-					<td>{{ przeglad.kasa.podatnik.nazwa }}</td>
-					<td>{{ przeglad.kasa.podatnik.nip }}</td>
-					<td align="center">
-					{% if przeglad.faktura %}
-						<span   class="fas fa-check align-items-center"></span>
-					{% else %}
-						<a href="{% url 'przeglad_faktura' pk=przeglad.pk rok=form.data.rok mie=form.data.mie %}" 
-								class="btn btn-sm btn-outline-secondary" role="button">OK</a>
-					{% endif %}
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	<div class="col-4">
-		<a  href="{% url 'przeglad_raportUS' rok=form.data.rok mie=form.data.mie %}" class="btn btn-sm btn-outline-secondary" role="button">raport</a>
-	</div>
-</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Przeglądy</h3>
+                    <div class="card-tools">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="badge badge-primary">Label</span>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+					<div class="row">
+						<div class="col-8">
+							<span style="float: right">
+								<form method='POST' action="{% url 'przeglad_rok_miesiac' rok=data.year mie=data.month %}" class="form form-inline">
+									{% csrf_token %}
+									{{ form }}
+									<button type='submit' class="btn btn-outline-secondary btn-sm">pokaż</button>
+								</form>
+							</span> 
+							<table class="table table-sm">
+								<thead class="thead">
+									<tr>
+										<th>l.p.</th>
+										<th>Data</th>
+										<th>Kasa</th>
+										<th>Podatnik</th>
+										<th>nip</th>
+										<th>faktura</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for przeglad in przeglady %}
+									<tr>
+										<td>{{ forloop.counter }}</td>
+										<td>{{ przeglad.data }}</td>
+										<td>
+											<a href="{% url 'kasa_detale' pk=przeglad.kasa.pk %}">{{ przeglad.kasa }}</a>
+										</td>
+										<td>{{ przeglad.kasa.podatnik.nazwa }}</td>
+										<td>{{ przeglad.kasa.podatnik.nip }}</td>
+										<td align="center">
+										{% if przeglad.faktura %}
+											<span   class="fas fa-check align-items-center"></span>
+										{% else %}
+											<a href="{% url 'przeglad_faktura' pk=przeglad.pk rok=form.data.rok mie=form.data.mie %}" 
+													class="btn btn-sm btn-outline-secondary" role="button">OK</a>
+										{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						<div class="col-4">
+							<a  href="{% url 'przeglad_raportUS' rok=form.data.rok mie=form.data.mie %}" class="btn btn-sm btn-outline-secondary" role="button">raport</a>
+						</div>
+					</div>
+				</div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    {% include 'kasy/snipets/back.html' %}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card --> 
+        </div>
+        <!-- /.com-sm-12 -->
+    </div>
+    <!-- /.row -->
+</section> 
+
 {% endblock %}

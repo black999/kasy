@@ -39,13 +39,12 @@ def kasa_lista(request, typ):
     elif typ == 'all':
         kasy = Kasa.objects.all().select_related('podatnik')
         title = 'Wszystkie'
-    header = 'Urządzenia'
-    return render(request, 'kasy/kasa_lista.html', 
-                    {
-                        'kasy': kasy, 
-                        'title': title, 
-                        'header': header
-                    })
+    context = {
+        'kasy': kasy,
+        'title': title,
+        'header': 'Urządzenia fiskalne'
+    }
+    return render(request, 'kasy/kasa_lista.html', context)
 
 
 def kasa_szukaj(request):
@@ -102,13 +101,15 @@ def kasa_detale(request, pk):
     else:
         odczyt = False
     przeglady = Przeglad.objects.filter(kasa=pk).order_by('-data')
-    return render(request, 'kasy/kasa_detale.html',
-                  {
-                      'kasa': kasa,
-                      'form': form,
-                      'przeglady': przeglady,
-                      'odczyt': odczyt
-                  })
+    context = { 
+      'kasa': kasa,
+      'form': form,
+      'przeglady': przeglady,
+      'odczyt': odczyt,
+      'header': 'Szczegóły urządzenia'
+    }
+    return render(request, 'kasy/kasa_detale.html', context)
+
 
 
 def kasa_przeglad(request, pk):
@@ -171,26 +172,30 @@ def kasa_wyrejestrowanieUS(request, pk):
 def zgloszenieUS_podatnik(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     podatnik = kasa.podatnik
-    dane = {
+    context = {
         'podatnik': podatnik,
         'kasa': kasa
     }
-    return render(request, 'kasy/zgloszenieUS_podatnik.html', dane)
+    return render(request, 'kasy/zgloszenieUS_podatnik.html', context)
 
 
 def zgloszenieUS_serwis(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     podatnik = kasa.podatnik
-    dane = {
+    context = {
         'podatnik': podatnik,
         'kasa': kasa
     }
-    return render(request, 'kasy/zgloszenieUS_serwis.html', dane)
+    return render(request, 'kasy/zgloszenieUS_serwis.html', context)
 
 
 def odczyt_lista(request):
     odczyty = Odczyt.objects.all()
-    return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})
+    context = {
+        'odczyty': odczyty,
+        'header': 'Odczyty'
+    }
+    return render(request, 'kasy/odczyt_lista.html', context)
 
 
 def odczyt_edycja(request, pk):
@@ -216,13 +221,13 @@ def odczyt_zatwierdz(request, pk):
     form = PrzegladForm()
     kasa = Kasa.objects.get(id=odczyt.kasa.id)
     przeglady = Przeglad.objects.filter(kasa=kasa.pk).order_by('-data')
-    return render(request, 'kasy/kasa_detale.html',
-                  {
-                      'kasa': kasa,
-                      'form': form,
-                      'przeglady': przeglady,
-                      'odczyt': odczyt
-                  })
+    context =  {
+      'kasa': kasa,
+      'form': form,
+      'przeglady': przeglady,
+      'odczyt': odczyt
+    }
+    return render(request, 'kasy/kasa_detale.html', context)
 
 
 def odczyt_usun(request, pk):
