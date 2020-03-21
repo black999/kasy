@@ -268,8 +268,12 @@ def podatnik_lista(request):
 def podatnik_detale(request, pk):
     kasy = Kasa.objects.filter(podatnik=pk)
     podatnik = get_object_or_404(Podatnik, pk=pk)
-    return render(request, 'kasy/podatnik_detale.html',
-                  {'podatnik': podatnik, 'kasy': kasy})
+    context = {
+        'podatnik': podatnik,
+        'kasy': kasy,
+        'header': 'Firma szczegóły'
+    }
+    return render(request, 'kasy/podatnik_detale.html', context)
 
 
 def podatnik_edycja(request, pk):
@@ -290,9 +294,13 @@ def przeglad_ostatnie(request):
     print(form.data['rok'])
     przeglady = Przeglad.objects.filter(
         data__year=data.year, data__month=data.month)
-    return render(request,
-                  'kasy/przeglad_ostatnie.html',
-                  {'przeglady': przeglady, 'form': form, 'data': data})
+    context = {
+        'przeglady': przeglady,
+        'form': form,
+        'data': data,
+        'header': 'Przeglądy'
+    }
+    return render(request,'kasy/przeglad_ostatnie.html', context)
 
 
 def przeglad_rok_miesiac(request, rok, mie):
