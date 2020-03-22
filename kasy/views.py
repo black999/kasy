@@ -261,8 +261,11 @@ def podatnik_dodaj(request):
 
 def podatnik_lista(request):
     podatnicy = Podatnik.objects.all()
-    return render(request, 'kasy/podatnik_lista.html',
-                  {'podatnicy': podatnicy})
+    context = {
+        'podatnicy': podatnicy,
+        'header': 'Firmy'
+    }
+    return render(request, 'kasy/podatnik_lista.html', context)
 
 
 def podatnik_detale(request, pk):

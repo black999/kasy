@@ -9,10 +9,10 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                       {{ kasa.model_kasy }} 
-                                {% if not kasa.odczytana %}
-                                    <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
-                                {% endif %} 
+                        {{ kasa.model_kasy }} 
+                        {% if not kasa.odczytana %}
+                            <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
+                        {% endif %} 
                     </h3>
                     <div class="card-tools">
                         <!-- Buttons, labels, and many other things can be placed here! -->
@@ -30,7 +30,7 @@
                                     <a href="{% url 'kasa_edycja' pk=kasa.pk %}"><span class="fas fa-edit"></span></a>
                                 {% endif %}
                             </h3> -->
-                            nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
+                            <p><strong>nr. unikatowy : </strong>{{ kasa.nr_unikatowy }}</p>
                             <p><strong>nr. fabryczny : </strong>{{ kasa.nr_fabryczny }}</p>
                             <p><strong>nr. nadany : </strong>{% if kasa.nr_nadany %} {{ kasa.nr_nadany }} {% endif %}</p>
                             <p><strong>podatnik : </strong>

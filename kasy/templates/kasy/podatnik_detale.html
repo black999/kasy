@@ -21,17 +21,15 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <h3 style="display: inline"></h3>
-                    <p></p>
                     <p><strong>ulica : </strong>{{ podatnik.ulica }} {{ podatnik.nr_domu }}</p>
                     <p><strong>miasto : </strong>{{ podatnik.kod_pocztowy }} {{ podatnik.miasto }}</p>
                     <p><strong>NIP : </strong> {{ podatnik.nip }}</p>
                     <p><strong>tel. : </strong>{{ podatnik.telefon }}</p>
                     <p><strong>e-mail : </strong>{{ podatnik.email }}</p>
                     <br>
-
-                    <h3 style="display: inline">Lista urządzeń fiskalnych : 
-                        <a href="{% url 'kasa_dodaj' pk=podatnik.pk %}"><span class="fas fa-plus-square"></span></a></h3>
+                    <p class="nag1">Lista urządzeń fiskalnych : 
+                        <a href="{% url 'kasa_dodaj' pk=podatnik.pk %}"><i class="fas fa-plus-square"></i></a>
+                    </p>
                     {% if kasy %}
                     <table class="table table-sm">
                         <thead class="thead">
@@ -43,22 +41,22 @@
                             </tr>
                         </thead>
                         {% for kasa in kasy %}
-                        {% if kasa.aktywna %}
-                            <tr>
-                        {% elif not kasa.aktywna and not kasa.odczytana %}
-                            <tr style="color:LightSlateGray"> 
-                        {% elif kasa.odczytana %}
-                            <tr style="color:DarkRed">                     
-                        {% endif %}
-                                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
-                                <td>{{ kasa.nr_unikatowy }}</td>
-                                <td>{{ kasa.nr_fabryczny }}</td>
-                                <td>{% include 'kasy/snipets/kasa_status.html' %}</td>
-                            </tr>
+                            {% if kasa.aktywna %}
+                                <tr>
+                            {% elif not kasa.aktywna and not kasa.odczytana %}
+                                <tr style="color:LightSlateGray"> 
+                            {% elif kasa.odczytana %}
+                                <tr style="color:DarkRed">                     
+                            {% endif %}
+                                    <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
+                                    <td>{{ kasa.nr_unikatowy }}</td>
+                                    <td>{{ kasa.nr_fabryczny }}</td>
+                                    <td>{% include 'kasy/snipets/kasa_status.html' %}</td>
+                                </tr>
                         {% endfor %} 
                     </table>
                     {% else %}
-                    <p>Podatnik jeszcze nie posiada urządzeń fiskalnych</p>
+                        <p>Podatnik jeszcze nie posiada urządzeń fiskalnych</p>
                     {% endif %}
                 </div>
                 <!-- /.card-body -->
