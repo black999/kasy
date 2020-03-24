@@ -69,7 +69,14 @@ def kasa_dodaj(request, pk):
             return redirect('podatnik_detale', pk=pk)
     else:
         form = KasaForm()
-    return render(request, 'kasy/kasa_edycja.html', {'form': form})
+    podatnik = get_object_or_404(Podatnik, pk=pk)
+    context = {
+        'form': form,
+        'podatnik': podatnik,
+        'header': 'Urządzenia',
+        'title': 'Nowa kasa/drukarka fiskalna'
+    }
+    return render(request, 'kasy/kasa_edycja.html', context)
 
 
 def kasa_edycja(request, pk):
@@ -89,7 +96,14 @@ def kasa_edycja(request, pk):
     else:
         kasa.data_fisk = kasa.data_fisk.strftime('%Y-%m-%d')
         form = KasaForm(instance=kasa)
-    return render(request, 'kasy/kasa_edycja.html', {'form': form})
+    podatnik = get_object_or_404(Podatnik, pk=kasa.podatnik.pk)
+    context = {
+        'podatnik': podatnik,
+        'form': form,
+        'header': 'Urządzenia',
+        'title': 'Edycja kasy/drukarki fiskalnej'
+    }
+    return render(request, 'kasy/kasa_edycja.html', context)
 
 
 def kasa_detale(request, pk):

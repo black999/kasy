@@ -254,13 +254,6 @@
 <script>
 $.widget.bridge('uibutton', $.ui.button)
 </script>
-<script>
-  var url = window.location;
-  var element = $('ul.nav-sidebar a').filter(function(){
-    return url.href.indexOf($(this).attr('href')) > 0;
-  }).addClass('active');
-  element.parent().parent().parent().addClass('menu-open');
-</script>
 <!-- Bootstrap 4 -->
 <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- ChartJS -->
@@ -286,11 +279,26 @@ $.widget.bridge('uibutton', $.ui.button)
 <!-- Datatables -->
 <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<!-- Moment -->
+<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+<!-- datetime-moment -->
+<script src="{% static 'plugins/sorting/datetime-moment.js' %}"></script>
 <script type="text/javascript">
+
+var url = window.location;
+var element = $('ul.nav-sidebar a').filter(function(){
+  return url.href.indexOf($(this).attr('href')) > 0;
+}).addClass('active');
+element.parent().parent().parent().addClass('menu-open');
+
 $(document).ready(function(){
-    // $.fn.dataTable.moment( 'DD.MM.YYYY' );
+    $.fn.dataTable.moment( 'DD.MM.YYYY' );
     $('#tab1').DataTable();
 });
 </script>
+
+{% block script %}
+  dodatkowe skrypty java itp.
+{% endblock script%}
 </body>
 </html>

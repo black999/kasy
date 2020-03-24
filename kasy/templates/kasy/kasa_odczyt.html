@@ -166,6 +166,10 @@
         </form>
     </div>
 </div>
+
+{% endblock content %}
+
+{% block script %}
 <script type="text/javascript">
     $(document).ready(function() {
         $("input[name*='ptu_']").change(function(){
@@ -195,4 +199,4 @@
         });
     });
 </script>
-{% endblock content %}
+{% endblock script %}
