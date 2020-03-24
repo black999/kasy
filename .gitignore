@@ -4,4 +4,3 @@ __pycache__
 .idea/
 migrations/
 settings.py
-static/
