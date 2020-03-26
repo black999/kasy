@@ -12,7 +12,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Ionicons -->
-  <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
   <!-- iCheck -->
@@ -25,14 +25,12 @@
   <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
   <!-- Datatables bootstrap4 -->
   <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
-  <!-- Daterange picker -->
-  {# <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}"> #}
   <!-- Google Font: Source Sans Pro -->
-  <link href="{% static 'dist/font/fontgoogle' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Moje style css -->
   <link href="{% static 'serwis/serwis.css' %}" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed">
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -119,143 +117,136 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-           with font-awesome or any other icon font library -->
-           <li class="nav-item has-treeview ">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-address-book"></i>
-              <p>
-                Podatnicy
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'podatnik_lista' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Lista</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'podatnik_dodaj' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Nowy</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cash-register"></i>
-              <p>
-                Urządzenia
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'kasa_lista' typ='aktywne' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Aktywne</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'kasa_lista' typ='nieaktywne' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Nieaktywne</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'kasa_lista' typ='odczytane' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Odczytane</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'kasa_lista' typ='all' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Wszystkie</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'odczyt_lista' %}" class="nav-link">
-              <i class="fas fa-caret-right nav-icon"></i>
-              <p>
-                Odczyty
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'przeglad_ostatnie' %}" class="nav-link">
-              <i class="fas fa-caret-right nav-icon"></i>
-              <p>
-                Przeglądy
-              </p>
-            </a>
-          </li>
-          <li class="nav-header">INNE SERWISY</li>
-          <li class="nav-item">
-            <a href="http://192.168.0.11/baza" class="nav-link" target="_blank">
-              <i class="fas fa-caret-right nav-icon"></i>
-              <p>Baza stikerów</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="http://192.168.0.11/serwis" class="nav-link" target="_blank">
-              <i class="fas fa-caret-right nav-icon"></i>
-              <p>Obsługa serwisu</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+            <!-- Add icons to the links using the .nav-icon class
+            with font-awesome or any other icon font library -->
+            <li class="nav-item has-treeview ">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-address-book"></i>
+                <p>
+                  Podatnicy
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'podatnik_lista' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lista</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'podatnik_dodaj' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nowy</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-cash-register"></i>
+                <p>
+                  Urządzenia
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'kasa_lista' typ='aktywne' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Aktywne</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'kasa_lista' typ='nieaktywne' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nieaktywne</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'kasa_lista' typ='odczytane' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Odczytane</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'kasa_lista' typ='all' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Wszystkie</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'odczyt_lista' %}" class="nav-link">
+                <i class="fas fa-caret-right nav-icon"></i>
+                <p>
+                  Odczyty
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'przeglad_ostatnie' %}" class="nav-link">
+                <i class="fas fa-caret-right nav-icon"></i>
+                <p>
+                  Przeglądy
+                </p>
+              </a>
+            </li>
+            <li class="nav-header">INNE SERWISY</li>
+            <li class="nav-item">
+              <a href="http://192.168.0.11/baza" class="nav-link" target="_blank">
+                <i class="fas fa-caret-right nav-icon"></i>
+                <p>Baza stikerów</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="http://192.168.0.11/serwis" class="nav-link" target="_blank">
+                <i class="fas fa-caret-right nav-icon"></i>
+                <p>Obsługa serwisu</p>
+              </a>
+            </li>
+          </ul>
+        </nav><!-- /.sidebar-menu -->
+      </div><!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">{{ header|default:'brak nagłówka' }}</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">{{ header|default:'brak nagłówka'}}</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div><!-- /.content-header -->
+      
+      <!-- Main content -->
+      {% block content %}
+        <!-- Glowna zawartosć okna -->
+      {% endblock content %}
     </div>
-    <!-- /.sidebar -->
-  </aside>
+    <!-- /.content-wrapper -->
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">{{ header|default:'brak nagłówka' }}</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">{{ header|default:'brak nagłówka'}}</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-    <!-- Main content -->
-    {% block content %}
-      <!-- Glowna zawartosć okna -->
-    {% endblock content %}
+    <footer class="main-footer">
+      <strong>Copyright &copy; 2019-2020 <a href="http://www.sklepecs.pl">ECS</a>.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0 
+      </div>
+    </footer>
+
   </div>
-  <!-- /.content-wrapper -->
-
-<footer class="main-footer">
-  <strong>Copyright &copy; 2019-2020 <a href="http://www.sklepecs.pl">ECS</a>.</strong>
-  All rights reserved.
-  <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 1.0.0 
-  </div>
-</footer>
-
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-  <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
+  <!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
@@ -297,7 +288,7 @@ $(document).ready(function(){
 </script>
 
 {% block script %}
-  dodatkowe skrypty java itp.
+
 {% endblock script%}
 </body>
 </html>

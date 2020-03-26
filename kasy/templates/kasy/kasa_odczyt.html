@@ -1,173 +1,195 @@
 {% extends "kasy/base.html" %}
 
 {% block content %}
-<div class="row" style="background-color:lightgrey" >
-    <div class="col-12">
-        <table class="table table-borderless">
-            <tr>
-                <td>Model kasy:</td><td><b>{{ kasa.model_kasy }}</b></td>
-                <td>Numer unikatowy:</td><td><b>{{ kasa.nr_unikatowy }}</b></td>
-                <td>Numer fabryczny:</td><td><b>{{ kasa.nr_fabryczny }}</b></td>
-                <td>Numer nadany:</td><td><b>{% if kasa.nr_nadany %}{{ kasa.nr_nadany }}{% endif %}</b></td>
-            </tr>
-            <tr>
-                <td>Data fisklizacji:</td><td><b>{{ kasa.data_fisk }}</b></td>
-                <td>Firma:</td><td colspan="5"><b>{{ kasa.podatnik.nazwa }} 
-                {% if kasa.podatnik.nazwa_cd %}{{ kasa.podatnik.nazwa_cd }}{% endif %}</b></td>
-            </tr>
-        </table>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <form method="POST">
-            {% csrf_token %}
-            <table class="table">
-                <tr>
-                    <td>{{ form.serwisant.errors }} {{ form.serwisant.label_tag }}</td>
-                    <td>{{ form.serwisant }}</td>
-                    <td>{{ form.data.errors }} {{ form.data.label_tag }}</td>
-                    <td>{{ form.data }}</td>
-                    <td></td><td></td><td></td>
-                    <td><button class="btn btn-sm btn-dark btn-block" type="submit">Zapisz</button></td>
-                </tr>                
-                <tr>
-                    <td>{{ form.od_raportu.errors }} {{ form.od_raportu.label_tag }}</td>
-                    <td>{{ form.od_raportu }}</td>
-                    <td>{{ form.do_raportu.errors }} {{ form.do_raportu.label_tag }}</td>
-                    <td>{{ form.do_raportu }}</td>
-                    <td>{{ form.od_daty.errors }} {{ form.od_daty.label_tag }}</td>
-                    <td>{{ form.od_daty }}</td>
-                    <td>{{ form.do_daty.errors }} {{ form.do_daty.label_tag }}</td>
-                    <td>{{ form.do_daty }}</td>
-                </tr>
-            </table>
-            <table class="table">
-                <tr>
-                    <td>{{ form.sp_ptu_a1.errors }} {{ form.sp_ptu_a1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_a1}}</td>
-                    <td>{{ form.sp_ptu_a2.errors }} {{ form.sp_ptu_a2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_a2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.sp_ptu_b1.errors }} {{ form.sp_ptu_b1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_b1}}</td>
-                    <td>{{ form.sp_ptu_b2.errors }} {{ form.sp_ptu_b2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_b2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.sp_ptu_c1.errors }} {{ form.sp_ptu_c1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_c1}}</td>
-                    <td>{{ form.sp_ptu_c2.errors }} {{ form.sp_ptu_c2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_c2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.sp_ptu_d1.errors }} {{ form.sp_ptu_d1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_d1}}</td>
-                    <td>{{ form.sp_ptu_d2.errors }} {{ form.sp_ptu_d2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_d2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.sp_ptu_e1.errors }} {{ form.sp_ptu_e1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_e1}}</td>
-                    <td>{{ form.sp_ptu_e2.errors }} {{ form.sp_ptu_e2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_e2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.sp_ptu_f1.errors }} {{ form.sp_ptu_f1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_f1}}</td>
-                    <td>{{ form.sp_ptu_f2.errors }} {{ form.sp_ptu_f2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_f2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.sp_ptu_g1.errors }} {{ form.sp_ptu_g1.label_tag }}</td>
-                    <td>{{ form.sp_ptu_g1}}</td>
-                    <td>{{ form.sp_ptu_g2.errors }} {{ form.sp_ptu_g2.label_tag }}</td>
-                    <td>{{ form.sp_ptu_g2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_a1.errors }} {{ form.ptu_a1.label_tag }}</td>
-                    <td>{{ form.ptu_a1}}</td>
-                    <td>{{ form.ptu_a2.errors }} {{ form.ptu_a2.label_tag }}</td>
-                    <td>{{ form.ptu_a2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_b1_erors }} {{ form.ptu_b1.label_tag }}</td>
-                    <td>{{ form.ptu_b1}}</td>
-                    <td>{{ form.ptu_b2.errors }} {{ form.ptu_b2.label_tag }}</td>
-                    <td>{{ form.ptu_b2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_c1.errors }} {{ form.ptu_c1.label_tag }}</td>
-                    <td>{{ form.ptu_c1}}</td>
-                    <td>{{ form.ptu_c2.errors }} {{ form.ptu_c2.label_tag }}</td>
-                    <td>{{ form.ptu_c2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_d1.errors }} {{ form.ptu_d1.label_tag }}</td>
-                    <td>{{ form.ptu_d1}}</td>
-                    <td>{{ form.ptu_d2.errors }} {{ form.ptu_d2.label_tag }}</td>
-                    <td>{{ form.ptu_d2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_e1.errors }} {{ form.ptu_e1.label_tag }}</td>
-                    <td>{{ form.ptu_e1}}</td>
-                    <td>{{ form.ptu_e2.errors }} {{ form.ptu_e2.label_tag }}</td>
-                    <td>{{ form.ptu_e2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_f1.errors }} {{ form.ptu_f1.label_tag }}</td>
-                    <td>{{ form.ptu_f1}}</td>
-                    <td>{{ form.ptu_f2.errors }} {{ form.ptu_f2.label_tag }}</td>
-                    <td>{{ form.ptu_f2}}</td>
-                </tr>
-                <tr>
-                    <td>{{ form.ptu_g1.errors }} {{ form.ptu_g1.label_tag }}</td>
-                    <td>{{ form.ptu_g1}}</td>
-                    <td>{{ form.ptu_g2.errors }} {{ form.ptu_g2.label_tag }}</td>
-                    <td>{{ form.ptu_g2}}</td>
-                </tr>
-                <tr style="background-color: SandyBrown">
-                    <td>{{ form.laczna_sprzedaz_PTU.errors }} {{ form.laczna_sprzedaz_PTU.label_tag }}</td>
-                    <td>{{ form.laczna_sprzedaz_PTU}}</td>
-                    <td>{{ form.laczna_wysokosc_PTU.errors }} {{ form.laczna_wysokosc_PTU.label_tag }}</td>
-                    <td>{{ form.laczna_wysokosc_PTU}}</td>
-                </tr>                
-            </table>
-            <table class="table">
-               <tr>
-                   <td>{{ form.liczba_zerowan.errors }} {{ form.liczba_zerowan.label_tag }}</td>
-                   <td>{{ form.liczba_zerowan }}</td>
-                   <td>{{ form.liczba_paragonow.errors }} {{ form.liczba_paragonow.label_tag }}</td>
-                   <td>{{ form.liczba_paragonow }}</td>
-                   <td>{{ form.liczba_faktur.errors }} {{ form.liczba_faktur.label_tag }}</td>
-                   <td>{{ form.liczba_faktur }}</td>
-               </tr> 
-            </table>
-            <table class="table">
-                <tr>
-                   <td>{{ form.liczba_paragonow_anulowanych.errors }} {{ form.liczba_paragonow_anulowanych.label_tag }}</td>
-                   <td>{{ form.liczba_paragonow_anulowanych }}</td>
-                   <td>{{ form.wartosc_paragonow_anulowanych.errors }} {{ form.wartosc_paragonow_anulowanych.label_tag }}</td>
-                   <td>{{ form.wartosc_paragonow_anulowanych }}</td>
-                </tr> 
-                <tr>
-                   <td>{{ form.liczba_faktur_anulowanych.errors }} {{ form.liczba_faktur_anulowanych.label_tag }}</td>
-                   <td>{{ form.liczba_faktur_anulowanych }}</td>
-                   <td>{{ form.wartosc_faktur_anulowanych.errors }} {{ form.wartosc_faktur_anulowanych.label_tag }}</td>
-                   <td>{{ form.wartosc_faktur_anulowanych }}</td>
-                </tr> 
-                <tr>
-                    <td>{{ form.daty_przegladow_errors }} {{ form.daty_przegladow.label_tag }}</td>
-                    <td colspan="2">{{ form.daty_przegladow }}</td>
-                </tr>
-            </table>
-        </form>
-    </div>
-</div>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header ">
+                    <h3 class="card-title">Edycja odczytu</h3>
+                    <div class="card-tools">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="badge badge-primary">Label</span>
+                    </div><!-- /.card-tools -->
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                    <div class="row" style="background-color:lightgrey" >
+                        <div class="col-12">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td>Model kasy:</td><td><b>{{ kasa.model_kasy }}</b></td>
+                                    <td>Numer unikatowy:</td><td><b>{{ kasa.nr_unikatowy }}</b></td>
+                                    <td>Numer fabryczny:</td><td><b>{{ kasa.nr_fabryczny }}</b></td>
+                                    <td>Numer nadany:</td><td><b>{% if kasa.nr_nadany %}{{ kasa.nr_nadany }}{% endif %}</b></td>
+                                </tr>
+                                <tr>
+                                    <td>Data fisklizacji:</td><td><b>{{ kasa.data_fisk }}</b></td>
+                                    <td>Firma:</td><td colspan="5"><b>{{ kasa.podatnik.nazwa }} 
+                                    {% if kasa.podatnik.nazwa_cd %}{{ kasa.podatnik.nazwa_cd }}{% endif %}</b></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <table class="table">
+                                    <tr>
+                                        <td>{{ form.serwisant.errors }} {{ form.serwisant.label_tag }}</td>
+                                        <td>{{ form.serwisant }}</td>
+                                        <td>{{ form.data.errors }} {{ form.data.label_tag }}</td>
+                                        <td>{{ form.data }}</td>
+                                        <td></td><td></td><td></td>
+                                        <td><button class="btn btn-sm btn-dark btn-block" type="submit">Zapisz</button></td>
+                                    </tr>                
+                                    <tr>
+                                        <td>{{ form.od_raportu.errors }} {{ form.od_raportu.label_tag }}</td>
+                                        <td>{{ form.od_raportu }}</td>
+                                        <td>{{ form.do_raportu.errors }} {{ form.do_raportu.label_tag }}</td>
+                                        <td>{{ form.do_raportu }}</td>
+                                        <td>{{ form.od_daty.errors }} {{ form.od_daty.label_tag }}</td>
+                                        <td>{{ form.od_daty }}</td>
+                                        <td>{{ form.do_daty.errors }} {{ form.do_daty.label_tag }}</td>
+                                        <td>{{ form.do_daty }}</td>
+                                    </tr>
+                                </table>
+                                <table class="table">
+                                    <tr>
+                                        <td>{{ form.sp_ptu_a1.errors }} {{ form.sp_ptu_a1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_a1}}</td>
+                                        <td>{{ form.sp_ptu_a2.errors }} {{ form.sp_ptu_a2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_a2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.sp_ptu_b1.errors }} {{ form.sp_ptu_b1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_b1}}</td>
+                                        <td>{{ form.sp_ptu_b2.errors }} {{ form.sp_ptu_b2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_b2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.sp_ptu_c1.errors }} {{ form.sp_ptu_c1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_c1}}</td>
+                                        <td>{{ form.sp_ptu_c2.errors }} {{ form.sp_ptu_c2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_c2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.sp_ptu_d1.errors }} {{ form.sp_ptu_d1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_d1}}</td>
+                                        <td>{{ form.sp_ptu_d2.errors }} {{ form.sp_ptu_d2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_d2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.sp_ptu_e1.errors }} {{ form.sp_ptu_e1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_e1}}</td>
+                                        <td>{{ form.sp_ptu_e2.errors }} {{ form.sp_ptu_e2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_e2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.sp_ptu_f1.errors }} {{ form.sp_ptu_f1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_f1}}</td>
+                                        <td>{{ form.sp_ptu_f2.errors }} {{ form.sp_ptu_f2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_f2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.sp_ptu_g1.errors }} {{ form.sp_ptu_g1.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_g1}}</td>
+                                        <td>{{ form.sp_ptu_g2.errors }} {{ form.sp_ptu_g2.label_tag }}</td>
+                                        <td>{{ form.sp_ptu_g2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_a1.errors }} {{ form.ptu_a1.label_tag }}</td>
+                                        <td>{{ form.ptu_a1}}</td>
+                                        <td>{{ form.ptu_a2.errors }} {{ form.ptu_a2.label_tag }}</td>
+                                        <td>{{ form.ptu_a2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_b1_erors }} {{ form.ptu_b1.label_tag }}</td>
+                                        <td>{{ form.ptu_b1}}</td>
+                                        <td>{{ form.ptu_b2.errors }} {{ form.ptu_b2.label_tag }}</td>
+                                        <td>{{ form.ptu_b2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_c1.errors }} {{ form.ptu_c1.label_tag }}</td>
+                                        <td>{{ form.ptu_c1}}</td>
+                                        <td>{{ form.ptu_c2.errors }} {{ form.ptu_c2.label_tag }}</td>
+                                        <td>{{ form.ptu_c2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_d1.errors }} {{ form.ptu_d1.label_tag }}</td>
+                                        <td>{{ form.ptu_d1}}</td>
+                                        <td>{{ form.ptu_d2.errors }} {{ form.ptu_d2.label_tag }}</td>
+                                        <td>{{ form.ptu_d2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_e1.errors }} {{ form.ptu_e1.label_tag }}</td>
+                                        <td>{{ form.ptu_e1}}</td>
+                                        <td>{{ form.ptu_e2.errors }} {{ form.ptu_e2.label_tag }}</td>
+                                        <td>{{ form.ptu_e2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_f1.errors }} {{ form.ptu_f1.label_tag }}</td>
+                                        <td>{{ form.ptu_f1}}</td>
+                                        <td>{{ form.ptu_f2.errors }} {{ form.ptu_f2.label_tag }}</td>
+                                        <td>{{ form.ptu_f2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.ptu_g1.errors }} {{ form.ptu_g1.label_tag }}</td>
+                                        <td>{{ form.ptu_g1}}</td>
+                                        <td>{{ form.ptu_g2.errors }} {{ form.ptu_g2.label_tag }}</td>
+                                        <td>{{ form.ptu_g2}}</td>
+                                    </tr>
+                                    <tr style="background-color: SandyBrown">
+                                        <td>{{ form.laczna_sprzedaz_PTU.errors }} {{ form.laczna_sprzedaz_PTU.label_tag }}</td>
+                                        <td>{{ form.laczna_sprzedaz_PTU}}</td>
+                                        <td>{{ form.laczna_wysokosc_PTU.errors }} {{ form.laczna_wysokosc_PTU.label_tag }}</td>
+                                        <td>{{ form.laczna_wysokosc_PTU}}</td>
+                                    </tr>                
+                                </table>
+                                <table class="table">
+                                   <tr>
+                                       <td>{{ form.liczba_zerowan.errors }} {{ form.liczba_zerowan.label_tag }}</td>
+                                       <td>{{ form.liczba_zerowan }}</td>
+                                       <td>{{ form.liczba_paragonow.errors }} {{ form.liczba_paragonow.label_tag }}</td>
+                                       <td>{{ form.liczba_paragonow }}</td>
+                                       <td>{{ form.liczba_faktur.errors }} {{ form.liczba_faktur.label_tag }}</td>
+                                       <td>{{ form.liczba_faktur }}</td>
+                                   </tr> 
+                                </table>
+                                <table class="table">
+                                    <tr>
+                                       <td>{{ form.liczba_paragonow_anulowanych.errors }} {{ form.liczba_paragonow_anulowanych.label_tag }}</td>
+                                       <td>{{ form.liczba_paragonow_anulowanych }}</td>
+                                       <td>{{ form.wartosc_paragonow_anulowanych.errors }} {{ form.wartosc_paragonow_anulowanych.label_tag }}</td>
+                                       <td>{{ form.wartosc_paragonow_anulowanych }}</td>
+                                    </tr> 
+                                    <tr>
+                                       <td>{{ form.liczba_faktur_anulowanych.errors }} {{ form.liczba_faktur_anulowanych.label_tag }}</td>
+                                       <td>{{ form.liczba_faktur_anulowanych }}</td>
+                                       <td>{{ form.wartosc_faktur_anulowanych.errors }} {{ form.wartosc_faktur_anulowanych.label_tag }}</td>
+                                       <td>{{ form.wartosc_faktur_anulowanych }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <td>{{ form.daty_przegladow_errors }} {{ form.daty_przegladow.label_tag }}</td>
+                                        <td colspan="2">{{ form.daty_przegladow }}</td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div><!-- /.card-body -->
+                <div class="card-footer">
+                    {% include 'kasy/snipets/back.html' %}
+                </div><!-- /.card-footer -->
+            </div><!-- /.card --> 
+        </div> <!-- /.com-sm-12 -->
+    </div><!-- /.row -->
+</section> 
 
 {% endblock content %}
+
 
 {% block script %}
 <script type="text/javascript">

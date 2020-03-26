@@ -171,8 +171,12 @@ def kasa_odczyt(request, pk):
             return redirect('odczyt_lista')
     else:
         form = OdczytForm()
-    return render(request, 'kasy/kasa_odczyt.html',
-                  {'form': form, 'kasa': kasa})
+    context = {
+        'form': form,
+        'kasa': kasa,
+        'header': 'Odczyty'
+    }
+    return render(request, 'kasy/kasa_odczyt.html', context)
 
 
 def kasa_wyrejestrowanieUS(request, pk):
