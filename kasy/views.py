@@ -5,6 +5,8 @@ from .forms import *
 from .models import *
 # from django.views.generic.list import ListView
 import datetime
+# from .tools import Render
+from django_xhtml2pdf.utils import generate_pdf
 
 
 def home(request):
@@ -256,13 +258,17 @@ def odczyt_usun(request, pk):
         odczyt.delete()
     return redirect('odczyt_lista')
 
-
 def odczyt_raportUS(request, pk):
     odczyt = get_object_or_404(Odczyt, pk=pk)
     kasa = odczyt.kasa
     podatnik = kasa.podatnik
-    return render(request, 'kasy/odczyt_raportUS.html',
-                  {'odczyt': odczyt, 'kasa': kasa, 'podatnik': podatnik})
+    context = {'odczyt': odczyt, 'kasa': kasa, 'podatnik': podatnik}
+    #return render(request, 'kasy/odczyt_raportUS.html', context)
+    #return Render.render('kasy/odczyt_raportUS.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment; filename="dokument.pdf"'
+    result = generate_pdf('kasy/odczyt_raportUS.html', file_object=response, context=context)
+    return result
 
 
 def podatnik_dodaj(request):
