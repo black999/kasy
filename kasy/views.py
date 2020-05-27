@@ -189,6 +189,16 @@ def kasa_wyrejestrowanieUS(request, pk):
                    'podatnik': podatnik})
 
 
+def kasa_do_wymiany(request):
+    kasy = Kasa.objects.filter(przeglad__ilosc_raportow__gt=1400).filter(aktywna=
+        True).distinct()
+    context = {
+        'kasy' : kasy,
+        'header': 'Kasy do wymiany'
+    }
+    return render(request, 'kasy/kasa_do_wymiany.html', context)
+
+
 def zgloszenieUS_podatnik(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     podatnik = kasa.podatnik

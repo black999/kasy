@@ -29,6 +29,7 @@ urlpatterns = [
     path('kasa/<int:pk>/odczyt', views.kasa_odczyt, name='kasa_odczyt'),
     path('kasa/<int:pk>/wyrejUS',
          views.kasa_wyrejestrowanieUS, name='kasa_wyrejUS'),
+    path('kasa/do_wymiany', views.kasa_do_wymiany, name='kasa_do_wymiany'),
     path('odczyt/lista', views.odczyt_lista, name='odczyt_lista'),
     path('odczyt/<int:pk>/edycja',
          views.odczyt_edycja, name='odczyt_edycja'),

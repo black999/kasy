@@ -1,0 +1,52 @@
+{% extends "kasy/base.html" %}
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Kasy z raportami powyżej 1400 raportów</h3>
+                    <div class="card-tools">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="badge badge-primary">Label</span>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="tab1" class="table table-sm">
+                        <thead class="thead">
+                            <tr>
+                                <th>Model kasy</th>
+                                <th>Data fiskalizacji</th>
+                                <th>Właściciel</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        {% for kasa in kasy %}
+                            <tr>
+                                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
+                                <td>{{ kasa.data_fisk }}</td>
+                                <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
+                            </tr>
+                        {% endfor%}
+                    </tbody>     
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    {% include 'kasy/snipets/back.html' %}
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card --> 
+        </div>
+        <!-- /.com-sm-12 -->
+    </div>
+    <!-- /.row -->
+</section> 
+
+{% endblock content %}
