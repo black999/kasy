@@ -40,7 +40,11 @@
 								</thead>
 								<tbody>
 									{% for przeglad in przeglady %}
+									{% if przeglad.kasa.cykl_przeg == '2' %}
+									<tr style="color:DarkRed"> 
+									{% else %}
 									<tr>
+									{% endif %}
 										<td>{{ forloop.counter }}</td>
 										<td>{{ przeglad.data }}</td>
 										<td>
