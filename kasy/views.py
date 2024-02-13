@@ -178,7 +178,7 @@ def zgloszenieUS_serwis(request, pk):
 
 
 def odczyt_lista(request):
-    odczyty = Odczyt.objects.all().order_by(data)
+    odczyty = Odczyt.objects.all()
     return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})
 
 
