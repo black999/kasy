@@ -361,10 +361,13 @@ def zgloszenie_posnet(request):
         ws.write(row_num, 19, "", font_style)
         ws.write(row_num, 20, "", font_style)
         ws.write(row_num, 21, "", font_style)
-        ws.write(row_num, 22, str(
-            kasa.podatnik.urzad_skarbowy.nr_urzedu), font_style)
+        ws.write(row_num, 22, str(kasa.podatnik.urzad_skarbowy.nr_urzedu), font_style)
         ws.write(row_num, 23, str(kasa.nr_nadany), font_style)
+
+        # Increment the row number for the next entry
         row_num += 1
+
+        # Mark the kasa as reported to Posnet and save the changes
         kasa.zglos_do_posnet()
         kasa.save()
 
