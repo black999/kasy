@@ -36,13 +36,20 @@ class KasaSmsViewTests(TestCase):
     @patch('kasy.views.send_sms')
     @override_settings(SMSAPI_MESSAGE_TEMPLATE='Przeglad: {date}')
     def test_sms_is_marked_only_after_successful_send(self, send_sms_mock):
-        response = self.client.post(reverse('kasa_sms', args=[self.kasa.pk]))
+        send_sms_mock.return_value = {
+            'count': 1,
+            'list': [{'id': 'test-id', 'status': 'QUEUE'}],
+        }
+        response = self.client.post(
+            reverse('kasa_sms', args=[self.kasa.pk]), follow=True,
+        )
 
         self.assertRedirects(response, reverse('home'))
         self.kasa.refresh_from_db()
         self.assertTrue(self.kasa.sms)
         self.assertEqual(self.kasa.data_sms, datetime.date.today())
         send_sms_mock.assert_called_once_with('500600700', 'Przeglad: 01.09.2026')
+        self.assertContains(response, 'SMSAPI: QUEUE (ID: test-id)')
 
     @patch('kasy.views.send_sms', side_effect=SmsApiError('awaria'))
     def test_sms_is_not_marked_when_api_fails(self, send_sms_mock):
