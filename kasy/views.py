@@ -5,6 +5,8 @@ from .forms import *
 from .models import *
 # from django.views.generic.list import ListView
 import datetime
+# from .tools import Render
+from django_xhtml2pdf.utils import generate_pdf
 
 
 def home(request):
@@ -12,7 +14,8 @@ def home(request):
     niezgloszone = len(Kasa.objects.filter(zgloszona_do_producenta=False))
     context = {
         'kasy': kasy,
-        'niezgloszone': niezgloszone
+        'niezgloszone': niezgloszone,
+        'header': 'Przeglądy'
     }
     return render(request, 'kasy/przeglady_oczekujace.html', context)
 
@@ -27,14 +30,23 @@ def kasa_lista(request, typ):
     if typ == 'aktywne':
         kasy = Kasa.objects.filter(aktywna=True).filter(
             odczytana=False).select_related('podatnik')
+        title = 'Aktywne'
     elif typ == 'nieaktywne':
         kasy = Kasa.objects.filter(aktywna=False).filter(
             odczytana=False).select_related('podatnik')
+        title = 'Nieaktywne'
     elif typ == 'odczytane':
         kasy = Kasa.objects.filter(odczytana=True).select_related('podatnik')
+        title = 'Odczytane'
     elif typ == 'all':
         kasy = Kasa.objects.all().select_related('podatnik')
-    return render(request, 'kasy/kasa_lista.html', {'kasy': kasy})
+        title = 'Wszystkie'
+    context = {
+        'kasy': kasy,
+        'title': title,
+        'header': 'Urządzenia fiskalne'
+    }
+    return render(request, 'kasy/kasa_lista.html', context)
 
 
 def kasa_szukaj(request):
@@ -59,7 +71,14 @@ def kasa_dodaj(request, pk):
             return redirect('podatnik_detale', pk=pk)
     else:
         form = KasaForm()
-    return render(request, 'kasy/kasa_edycja.html', {'form': form})
+    podatnik = get_object_or_404(Podatnik, pk=pk)
+    context = {
+        'form': form,
+        'podatnik': podatnik,
+        'header': 'Urządzenia',
+        'title': 'Nowa kasa/drukarka fiskalna'
+    }
+    return render(request, 'kasy/kasa_edycja.html', context)
 
 
 def kasa_edycja(request, pk):
@@ -79,7 +98,14 @@ def kasa_edycja(request, pk):
     else:
         kasa.data_fisk = kasa.data_fisk.strftime('%Y-%m-%d')
         form = KasaForm(instance=kasa)
-    return render(request, 'kasy/kasa_edycja.html', {'form': form})
+    podatnik = get_object_or_404(Podatnik, pk=kasa.podatnik.pk)
+    context = {
+        'podatnik': podatnik,
+        'form': form,
+        'header': 'Urządzenia',
+        'title': 'Edycja kasy/drukarki fiskalnej'
+    }
+    return render(request, 'kasy/kasa_edycja.html', context)
 
 
 def kasa_detale(request, pk):
@@ -91,13 +117,15 @@ def kasa_detale(request, pk):
     else:
         odczyt = False
     przeglady = Przeglad.objects.filter(kasa=pk).order_by('-data')
-    return render(request, 'kasy/kasa_detale.html',
-                  {
-                      'kasa': kasa,
-                      'form': form,
-                      'przeglady': przeglady,
-                      'odczyt': odczyt
-                  })
+    context = { 
+      'kasa': kasa,
+      'form': form,
+      'przeglady': przeglady,
+      'odczyt': odczyt,
+      'header': 'Szczegóły urządzenia'
+    }
+    return render(request, 'kasy/kasa_detale.html', context)
+
 
 
 def kasa_przeglad(request, pk):
@@ -145,8 +173,12 @@ def kasa_odczyt(request, pk):
             return redirect('odczyt_lista')
     else:
         form = OdczytForm()
-    return render(request, 'kasy/kasa_odczyt.html',
-                  {'form': form, 'kasa': kasa})
+    context = {
+        'form': form,
+        'kasa': kasa,
+        'header': 'Odczyty'
+    }
+    return render(request, 'kasy/kasa_odczyt.html', context)
 
 
 def kasa_wyrejestrowanieUS(request, pk):
@@ -157,29 +189,43 @@ def kasa_wyrejestrowanieUS(request, pk):
                    'podatnik': podatnik})
 
 
+def kasa_do_wymiany(request):
+    kasy = Kasa.objects.filter(przeglad__ilosc_raportow__gt=1400).filter(aktywna=
+        True).distinct()
+    context = {
+        'kasy' : kasy,
+        'header': 'Kasy do wymiany'
+    }
+    return render(request, 'kasy/kasa_do_wymiany.html', context)
+
+
 def zgloszenieUS_podatnik(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     podatnik = kasa.podatnik
-    dane = {
+    context = {
         'podatnik': podatnik,
         'kasa': kasa
     }
-    return render(request, 'kasy/zgloszenieUS_podatnik.html', dane)
+    return render(request, 'kasy/zgloszenieUS_podatnik.html', context)
 
 
 def zgloszenieUS_serwis(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     podatnik = kasa.podatnik
-    dane = {
+    context = {
         'podatnik': podatnik,
         'kasa': kasa
     }
-    return render(request, 'kasy/zgloszenieUS_serwis.html', dane)
+    return render(request, 'kasy/zgloszenieUS_serwis.html', context)
 
 
 def odczyt_lista(request):
     odczyty = Odczyt.objects.all()
-    return render(request, 'kasy/odczyt_lista.html', {'odczyty': odczyty})
+    context = {
+        'odczyty': odczyty,
+        'header': 'Odczyty'
+    }
+    return render(request, 'kasy/odczyt_lista.html', context)
 
 
 def odczyt_edycja(request, pk):
@@ -205,13 +251,13 @@ def odczyt_zatwierdz(request, pk):
     form = PrzegladForm()
     kasa = Kasa.objects.get(id=odczyt.kasa.id)
     przeglady = Przeglad.objects.filter(kasa=kasa.pk).order_by('-data')
-    return render(request, 'kasy/kasa_detale.html',
-                  {
-                      'kasa': kasa,
-                      'form': form,
-                      'przeglady': przeglady,
-                      'odczyt': odczyt
-                  })
+    context =  {
+      'kasa': kasa,
+      'form': form,
+      'przeglady': przeglady,
+      'odczyt': odczyt
+    }
+    return render(request, 'kasy/kasa_detale.html', context)
 
 
 def odczyt_usun(request, pk):
@@ -222,13 +268,17 @@ def odczyt_usun(request, pk):
         odczyt.delete()
     return redirect('odczyt_lista')
 
-
 def odczyt_raportUS(request, pk):
     odczyt = get_object_or_404(Odczyt, pk=pk)
     kasa = odczyt.kasa
     podatnik = kasa.podatnik
-    return render(request, 'kasy/odczyt_raportUS.html',
-                  {'odczyt': odczyt, 'kasa': kasa, 'podatnik': podatnik})
+    context = {'odczyt': odczyt, 'kasa': kasa, 'podatnik': podatnik}
+    #return render(request, 'kasy/odczyt_raportUS.html', context)
+    #return Render.render('kasy/odczyt_raportUS.html', context)
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment; filename="dokument.pdf"'
+    result = generate_pdf('kasy/odczyt_raportUS.html', file_object=response, context=context)
+    return result
 
 
 def podatnik_dodaj(request):
@@ -245,15 +295,22 @@ def podatnik_dodaj(request):
 
 def podatnik_lista(request):
     podatnicy = Podatnik.objects.all()
-    return render(request, 'kasy/podatnik_lista.html',
-                  {'podatnicy': podatnicy})
+    context = {
+        'podatnicy': podatnicy,
+        'header': 'Firmy'
+    }
+    return render(request, 'kasy/podatnik_lista.html', context)
 
 
 def podatnik_detale(request, pk):
     kasy = Kasa.objects.filter(podatnik=pk)
     podatnik = get_object_or_404(Podatnik, pk=pk)
-    return render(request, 'kasy/podatnik_detale.html',
-                  {'podatnik': podatnik, 'kasy': kasy})
+    context = {
+        'podatnik': podatnik,
+        'kasy': kasy,
+        'header': 'Firma szczegóły'
+    }
+    return render(request, 'kasy/podatnik_detale.html', context)
 
 
 def podatnik_edycja(request, pk):
@@ -274,9 +331,13 @@ def przeglad_ostatnie(request):
     print(form.data['rok'])
     przeglady = Przeglad.objects.filter(
         data__year=data.year, data__month=data.month)
-    return render(request,
-                  'kasy/przeglad_ostatnie.html',
-                  {'przeglady': przeglady, 'form': form, 'data': data})
+    context = {
+        'przeglady': przeglady,
+        'form': form,
+        'data': data,
+        'header': 'Przeglądy'
+    }
+    return render(request,'kasy/przeglad_ostatnie.html', context)
 
 
 def przeglad_rok_miesiac(request, rok, mie):
