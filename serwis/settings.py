@@ -130,3 +130,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# SMSAPI (https://www.smsapi.pl/docs)
+SMSAPI_ACCESS_TOKEN = os.environ.get('SMSAPI_ACCESS_TOKEN', '')
+SMSAPI_SENDER = os.environ.get('SMSAPI_SENDER', '')
+SMSAPI_MESSAGE_TEMPLATE = os.environ.get(
+    'SMSAPI_MESSAGE_TEMPLATE',
+    'Przypominamy o przeglądzie kasy fiskalnej w dniu {date}.',
+)
