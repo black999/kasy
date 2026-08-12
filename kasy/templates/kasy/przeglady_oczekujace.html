@@ -2,42 +2,40 @@
 {% block content %}
 <!-- Main content -->
 <section class="content">
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Zamknij">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Najbliższe przeglądy</h3>
                     <div class="card-tools">
-                        <!-- Buttons, labels, and many other things can be placed here! -->
-                        <!-- Here is a label for example -->
                         {% if niezgloszone > 0 %}
                             <h3 class="card-title" style="color: darkred">Masz niezgłoszone kasy do Posnetu - {{ niezgloszone }} szt.</h3>
                         {% endif %}
-                        <!-- <span class="badge badge-primary">Label</span> -->
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-6" style="text-align: right">
-
-                        </div>
-                    </div>
                     <table class="table table-sm">
                         <thead class="thead">
                             <tr>
                                 <th>Model</th>
                                 <th>Podatnik</th>
                                 <th>Telefon</th>
-                                <th>Data nast. przegladu</th>
+                                <th>Data nast. przeglądu</th>
                                 <th>Opcje</th>
                             </tr>
-                        </thead> 
+                        </thead>
                         <tbody>
                             {% for kasa in kasy %}
                             <tr>
-                                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}"> {{ kasa.model_kasy }}</a></td>
+                                <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
                                 <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
                                 <td>{% if kasa.podatnik.telefon %}{{ kasa.podatnik.telefon }}{% endif %}</td>
                                 <td>{{ kasa.nastepny_przeg }}</td>
@@ -46,26 +44,22 @@
                                     {% if kasa.sms %}
                                         sms - {{ kasa.data_sms|date:"d.m.Y" }}
                                     {% else %}
-                                        <a  href="{% url 'kasa_sms' pk=kasa.pk %}" class="btn btn-success btn-sm" role="button">Przypomnij SMS</a>
+                                        <form action="{% url 'kasa_sms' pk=kasa.pk %}" method="post" style="display: inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success btn-sm">Przypomnij SMS</button>
+                                        </form>
                                     {% endif %}
                                 </td>
-
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <!-- /.card-body -->
                 <div class="card-footer">
                     {% include 'kasy/snipets/back.html' %}
                 </div>
-                <!-- /.card-footer -->
             </div>
-            <!-- /.card --> 
         </div>
-        <!-- /.com-sm-12 -->
     </div>
-    <!-- /.row -->
-</section> 
-
+</section>
 {% endblock content %}

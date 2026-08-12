@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import xlwt
 from django.http import HttpResponse
+from django.conf import settings
+from django.contrib import messages
+from django.utils import timezone
+from django.views.decorators.http import require_POST
 from .forms import *
 from .models import *
+from .utils import SmsApiError, send_sms
 # from django.views.generic.list import ListView
 import datetime
 # from .tools import Render
@@ -142,11 +147,30 @@ def kasa_przeglad(request, pk):
             return redirect('kasa_detale', pk=pk)
 
 
+@require_POST
 def kasa_sms(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
-    kasa.sms = True
-    kasa.data_sms = datetime.datetime.now()
-    kasa.save()
+    if not kasa.nastepny_przeg:
+        messages.error(request, 'Nie wysłano SMS-a: brak daty następnego przeglądu.')
+        return redirect('home')
+    try:
+        message = settings.SMSAPI_MESSAGE_TEMPLATE.format(
+            date=kasa.nastepny_przeg.strftime('%d.%m.%Y')
+        )
+        result = send_sms(kasa.podatnik.telefon, message)
+    except SmsApiError as exc:
+        messages.error(request, 'Nie wysłano SMS-a: {}'.format(exc))
+    else:
+        kasa.sms = True
+        kasa.data_sms = timezone.localdate()
+        kasa.save(update_fields=['sms', 'data_sms'])
+        sms_details = (result.get('list') or [{}])[0]
+        sms_status = sms_details.get('status', 'przyjęty do wysyłki')
+        sms_id = sms_details.get('id')
+        status_message = 'SMSAPI: {}'.format(sms_status)
+        if sms_id:
+            status_message += ' (ID: {})'.format(sms_id)
+        messages.success(request, status_message)
     return redirect('home')
 
 
