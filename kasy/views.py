@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import xlwt
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from django.contrib import messages
 from django.utils import timezone
@@ -151,7 +151,11 @@ def kasa_przeglad(request, pk):
 def kasa_sms(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
     if not kasa.nastepny_przeg:
-        messages.error(request, 'Nie wysłano SMS-a: brak daty następnego przeglądu.')
+        error_message = 'Nie wysłano SMS-a: brak daty następnego przeglądu.'
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            return JsonResponse({'level': 'danger', 'message': error_message},
+                                status=400)
+        messages.error(request, error_message)
         return redirect('home')
     try:
         message = settings.SMSAPI_MESSAGE_TEMPLATE.format(
@@ -159,7 +163,8 @@ def kasa_sms(request, pk):
         )
         result = send_sms(kasa.podatnik.telefon, message)
     except SmsApiError as exc:
-        messages.error(request, 'Nie wysłano SMS-a: {}'.format(exc))
+        response_message = 'Nie wysłano SMS-a: {}'.format(exc)
+        response_level = 'danger'
     else:
         kasa.sms = True
         kasa.data_sms = timezone.localdate()
@@ -170,7 +175,19 @@ def kasa_sms(request, pk):
         status_message = 'SMSAPI: {}'.format(sms_status)
         if sms_id:
             status_message += ' (ID: {})'.format(sms_id)
-        messages.success(request, status_message)
+        response_message = status_message
+        response_level = 'success'
+
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        status_code = 200 if response_level == 'success' else 400
+        response_data = {'level': response_level, 'message': response_message}
+        if response_level == 'success':
+            response_data['sent_date'] = kasa.data_sms.strftime('%d.%m.%Y')
+        return JsonResponse(response_data, status=status_code)
+    if response_level == 'success':
+        messages.success(request, response_message)
+    else:
+        messages.error(request, response_message)
     return redirect('home')
 
 

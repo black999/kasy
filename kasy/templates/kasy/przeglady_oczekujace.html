@@ -42,7 +42,7 @@
                                     {% if kasa.sms %}
                                         sms - {{ kasa.data_sms|date:"d.m.Y" }}
                                     {% else %}
-                                        <form action="{% url 'kasa_sms' pk=kasa.pk %}" method="post" style="display: inline">
+                                        <form action="{% url 'kasa_sms' pk=kasa.pk %}" method="post" class="sms-reminder-form" style="display: inline">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-success btn-sm">Przypomnij SMS</button>
                                         </form>
@@ -62,63 +62,57 @@
 </section>
 <script>
 (function () {
-    var storageKey = 'kasy.sms.notifications';
     var container = document.getElementById('sms-notifications');
     var source = document.getElementById('sms-server-messages');
     var allowedLevels = ['success', 'danger', 'warning', 'info'];
 
-    function loadNotifications() {
-        try {
-            return JSON.parse(sessionStorage.getItem(storageKey)) || [];
-        } catch (error) {
-            return [];
-        }
+    function addNotification(level, text) {
+        var alert = document.createElement('div');
+        level = allowedLevels.indexOf(level) !== -1 ? level : 'info';
+        alert.className = 'alert alert-' + level + ' alert-dismissible fade show shadow';
+        alert.setAttribute('role', 'alert');
+        alert.appendChild(document.createTextNode(text));
+
+        var closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'close';
+        closeButton.setAttribute('data-dismiss', 'alert');
+        closeButton.setAttribute('aria-label', 'Zamknij');
+        closeButton.innerHTML = '<span aria-hidden="true">&times;</span>';
+        alert.appendChild(closeButton);
+        container.insertBefore(alert, container.firstChild);
     }
 
-    function saveNotifications(notifications) {
-        sessionStorage.setItem(storageKey, JSON.stringify(notifications));
-    }
-
-    function render(notifications) {
-        container.innerHTML = '';
-        notifications.forEach(function (notification) {
-            var alert = document.createElement('div');
-            var level = allowedLevels.indexOf(notification.level) !== -1
-                ? notification.level : 'info';
-            alert.className = 'alert alert-' + level + ' alert-dismissible fade show shadow';
-            alert.setAttribute('role', 'alert');
-            alert.setAttribute('data-notification-id', notification.id);
-            alert.appendChild(document.createTextNode(notification.text));
-
-            var closeButton = document.createElement('button');
-            closeButton.type = 'button';
-            closeButton.className = 'close';
-            closeButton.setAttribute('data-dismiss', 'alert');
-            closeButton.setAttribute('aria-label', 'Zamknij');
-            closeButton.innerHTML = '<span aria-hidden="true">&times;</span>';
-            alert.appendChild(closeButton);
-            container.appendChild(alert);
-        });
-    }
-
-    var notifications = loadNotifications();
     Array.prototype.forEach.call(source.querySelectorAll('[data-level]'), function (message) {
-        notifications.unshift({
-            id: String(Date.now()) + '-' + Math.random().toString(16).slice(2),
-            level: message.getAttribute('data-level'),
-            text: message.textContent.trim()
-        });
+        addNotification(message.getAttribute('data-level'), message.textContent.trim());
     });
-    saveNotifications(notifications);
-    render(notifications);
 
-    $(container).on('click', '[data-dismiss="alert"]', function () {
-        var alert = this.closest('.alert');
-        var closedId = alert && alert.getAttribute('data-notification-id');
-        notifications = notifications.filter(function (notification) {
-            return notification.id !== closedId;
+    $('.sms-reminder-form').on('submit', function (event) {
+        event.preventDefault();
+        var form = this;
+        var button = form.querySelector('button[type="submit"]');
+        button.disabled = true;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            credentials: 'same-origin'
+        }).then(function (response) {
+            return response.json().then(function (data) {
+                return {ok: response.ok, data: data};
+            });
+        }).then(function (result) {
+            addNotification(result.data.level, result.data.message);
+            if (result.ok) {
+                form.outerHTML = 'sms - ' + result.data.sent_date;
+            } else {
+                button.disabled = false;
+            }
+        }).catch(function () {
+            addNotification('danger', 'Nie udało się połączyć z serwerem.');
+            button.disabled = false;
         });
-        saveNotifications(notifications);
     });
 }());
 </script>
