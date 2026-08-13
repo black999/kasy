@@ -112,8 +112,9 @@
     saveNotifications(notifications);
     render(notifications);
 
-    $(container).on('closed.bs.alert', '.alert', function () {
-        var closedId = this.getAttribute('data-notification-id');
+    $(container).on('click', '[data-dismiss="alert"]', function () {
+        var alert = this.closest('.alert');
+        var closedId = alert && alert.getAttribute('data-notification-id');
         notifications = notifications.filter(function (notification) {
             return notification.id !== closedId;
         });
