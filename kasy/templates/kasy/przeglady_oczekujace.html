@@ -2,7 +2,7 @@
 {% block content %}
 <!-- Main content -->
 <section class="content">
-    <div id="sms-notifications" style="position: fixed; top: 1rem; right: 1rem; width: min(28rem, calc(100% - 2rem)); z-index: 1050;"></div>
+    <div id="sms-notifications" style="position: fixed; top: 1rem; right: 1rem; width: min(28rem, calc(100% - 2rem)); z-index: 1050; display: flex; flex-direction: column; align-items: stretch;"></div>
     <div id="sms-server-messages" hidden>
         {% for message in messages %}
             <span data-level="{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">{{ message }}</span>
@@ -42,7 +42,7 @@
                                     {% if kasa.sms %}
                                         sms - {{ kasa.data_sms|date:"d.m.Y" }}
                                     {% else %}
-                                        <form action="{% url 'kasa_sms' pk=kasa.pk %}" method="post" class="sms-reminder-form" style="display: inline">
+                                        <form action="{% url 'kasa_sms' pk=kasa.pk %}" method="post" class="sms-reminder-form" data-client="{{ kasa.podatnik }}" style="display: inline">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-success btn-sm">Przypomnij SMS</button>
                                         </form>
@@ -60,6 +60,8 @@
         </div>
     </div>
 </section>
+{% endblock content %}
+{% block script %}
 <script>
 (function () {
     var container = document.getElementById('sms-notifications');
@@ -71,6 +73,7 @@
         level = allowedLevels.indexOf(level) !== -1 ? level : 'info';
         alert.className = 'alert alert-' + level + ' alert-dismissible fade show shadow';
         alert.setAttribute('role', 'alert');
+        alert.style.marginBottom = '0.75rem';
         alert.appendChild(document.createTextNode(text));
 
         var closeButton = document.createElement('button');
@@ -110,10 +113,13 @@
                 button.disabled = false;
             }
         }).catch(function () {
-            addNotification('danger', 'Nie udało się połączyć z serwerem.');
+            addNotification(
+                'danger',
+                form.getAttribute('data-client') + ' — nie udało się połączyć z serwerem.'
+            );
             button.disabled = false;
         });
     });
 }());
 </script>
-{% endblock content %}
+{% endblock script %}

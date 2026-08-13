@@ -150,8 +150,11 @@ def kasa_przeglad(request, pk):
 @require_POST
 def kasa_sms(request, pk):
     kasa = get_object_or_404(Kasa, pk=pk)
+    client_name = str(kasa.podatnik)
     if not kasa.nastepny_przeg:
-        error_message = 'Nie wysłano SMS-a: brak daty następnego przeglądu.'
+        error_message = '{} — nie wysłano SMS-a: brak daty następnego przeglądu.'.format(
+            client_name
+        )
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             return JsonResponse({'level': 'danger', 'message': error_message},
                                 status=400)
@@ -163,7 +166,9 @@ def kasa_sms(request, pk):
         )
         result = send_sms(kasa.podatnik.telefon, message)
     except SmsApiError as exc:
-        response_message = 'Nie wysłano SMS-a: {}'.format(exc)
+        response_message = '{} — nie wysłano SMS-a: {}'.format(
+            client_name, exc
+        )
         response_level = 'danger'
     else:
         kasa.sms = True
@@ -172,7 +177,7 @@ def kasa_sms(request, pk):
         sms_details = (result.get('list') or [{}])[0]
         sms_status = sms_details.get('status', 'przyjęty do wysyłki')
         sms_id = sms_details.get('id')
-        status_message = 'SMSAPI: {}'.format(sms_status)
+        status_message = '{} — SMSAPI: {}'.format(client_name, sms_status)
         if sms_id:
             status_message += ' (ID: {})'.format(sms_id)
         response_message = status_message
