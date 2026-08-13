@@ -2,14 +2,12 @@
 {% block content %}
 <!-- Main content -->
 <section class="content">
-    {% for message in messages %}
-        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Zamknij">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    {% endfor %}
+    <div id="sms-notifications" style="position: fixed; top: 1rem; right: 1rem; width: min(28rem, calc(100% - 2rem)); z-index: 1050;"></div>
+    <div id="sms-server-messages" hidden>
+        {% for message in messages %}
+            <span data-level="{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">{{ message }}</span>
+        {% endfor %}
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -62,4 +60,65 @@
         </div>
     </div>
 </section>
+<script>
+(function () {
+    var storageKey = 'kasy.sms.notifications';
+    var container = document.getElementById('sms-notifications');
+    var source = document.getElementById('sms-server-messages');
+    var allowedLevels = ['success', 'danger', 'warning', 'info'];
+
+    function loadNotifications() {
+        try {
+            return JSON.parse(sessionStorage.getItem(storageKey)) || [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function saveNotifications(notifications) {
+        sessionStorage.setItem(storageKey, JSON.stringify(notifications));
+    }
+
+    function render(notifications) {
+        container.innerHTML = '';
+        notifications.forEach(function (notification) {
+            var alert = document.createElement('div');
+            var level = allowedLevels.indexOf(notification.level) !== -1
+                ? notification.level : 'info';
+            alert.className = 'alert alert-' + level + ' alert-dismissible fade show shadow';
+            alert.setAttribute('role', 'alert');
+            alert.setAttribute('data-notification-id', notification.id);
+            alert.appendChild(document.createTextNode(notification.text));
+
+            var closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'close';
+            closeButton.setAttribute('data-dismiss', 'alert');
+            closeButton.setAttribute('aria-label', 'Zamknij');
+            closeButton.innerHTML = '<span aria-hidden="true">&times;</span>';
+            alert.appendChild(closeButton);
+            container.appendChild(alert);
+        });
+    }
+
+    var notifications = loadNotifications();
+    Array.prototype.forEach.call(source.querySelectorAll('[data-level]'), function (message) {
+        notifications.unshift({
+            id: String(Date.now()) + '-' + Math.random().toString(16).slice(2),
+            level: message.getAttribute('data-level'),
+            text: message.textContent.trim()
+        });
+    });
+    saveNotifications(notifications);
+    render(notifications);
+
+    $(container).on('closed.bs.alert', '.alert', function () {
+        var closedId = this.getAttribute('data-notification-id');
+        notifications = notifications.filter(function (notification) {
+            return notification.id !== closedId;
+        });
+        saveNotifications(notifications);
+    });
+}());
+</script>
 {% endblock content %}

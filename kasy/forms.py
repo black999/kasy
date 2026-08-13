@@ -43,20 +43,24 @@ class PrzegladForm(forms.ModelForm):
 
 
 class PrzegladRokMiesiac(forms.Form):
-    rok_biezacy = datetime.date.today().year
-    mie_biezacy = datetime.date.today().month
-    lata = [('2018', '2018'), ('2019', '2019'),
-            ('2020', '2020'), ('2021', '2021')]
     miesiace = [('0', 'cały rok'), ('1', 'styczeń'), ('2', 'luty'),
                 ('3', 'marzec'), ('4', 'kwiecień'),
                 ('5', 'maj'), ('6', 'czerwiec'),
                 ('7', 'lipiec'), ('8', 'sierpien'),
                 ('9', 'wrzesień'), ('10', 'październik'),
                 ('11', 'listopad'), ('12', 'grudzień')]
-    rok = forms.ChoiceField(label='', choices=lata,
-                            initial=rok_biezacy, widget=forms.Select())
+    rok = forms.ChoiceField(label='', choices=(), widget=forms.Select())
     mie = forms.ChoiceField(label='', choices=miesiace,
-                            initial=mie_biezacy, widget=forms.Select())
+                            initial=datetime.date.today().month,
+                            widget=forms.Select())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        rok_biezacy = datetime.date.today().year
+        self.fields['rok'].choices = [
+            (str(rok), str(rok)) for rok in range(2018, rok_biezacy + 1)
+        ]
+        self.fields['rok'].initial = rok_biezacy
 
 
 class OdczytForm(forms.ModelForm):
