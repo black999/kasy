@@ -24,6 +24,7 @@
                         <thead class="thead">
                             <tr>
                                 <th>Model</th>
+								<th>Nr. unikatowy</th>
                                 <th>Podatnik</th>
                                 <th>Telefon</th>
                                 <th>Data nast. przeglądu</th>
@@ -34,6 +35,7 @@
                             {% for kasa in kasy %}
                             <tr>
                                 <td><a href="{% url 'kasa_detale' pk=kasa.pk %}">{{ kasa.model_kasy }}</a></td>
+								<td>{{ kasa.nr_unikatowy }}</td>
                                 <td><a href="{% url 'podatnik_detale' pk=kasa.podatnik.pk %}">{{ kasa.podatnik }}</a></td>
                                 <td>{% if kasa.podatnik.telefon %}{{ kasa.podatnik.telefon }}{% endif %}</td>
                                 <td>{{ kasa.nastepny_przeg }}</td>

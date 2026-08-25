@@ -109,7 +109,7 @@ class Kasa(models.Model):
             self.nastepny_przeg = data + datetime.timedelta(730)
 
     def przesun_przeglad(self):
-        self.nastepny_przeg += datetime.timedelta(7)
+        self.nastepny_przeg += datetime.timedelta(14)
 
     def odczytaj(self):
         self.odczytana = True
