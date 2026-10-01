@@ -139,5 +139,5 @@ SMSAPI_ACCESS_TOKEN = os.environ.get('SMSAPI_ACCESS_TOKEN', '')
 SMSAPI_SENDER = os.environ.get('SMSAPI_SENDER', '')
 SMSAPI_MESSAGE_TEMPLATE = os.environ.get(
     'SMSAPI_MESSAGE_TEMPLATE',
-    'Przypominamy o przeglądzie kasy fiskalnej w dniu {date}. Prosze o dostarczenie kasy lub kontakt pod numerem 601-078-330.',
+    'Przypominamy o przeglądzie kasy fiskalnej. Prosze o dostarczenie kasy do dnia {date}, lub kontakt pod numerem 601-078-330.',
 )
